@@ -1,0 +1,300 @@
+
+---
+laptops:
+  columns:
+  - id
+  - brand
+  - model
+  - cpuSpeed
+  - ram
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Lenovo
+    - T430
+    - 2.6
+    - 4
+    - '2013-06-06 08:10:52.434083'
+    - '2013-06-06 08:10:52.434083'
+
+---
+categories:
+  columns:
+  - id
+  - nameCategory
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - laptop
+    - '2013-06-06 06:03:07.422497'
+    - '2013-06-06 06:03:07.422497'
+  - - 2
+    - clothing
+    - '2013-06-06 06:03:28.480497'
+    - '2013-06-06 06:03:28.480497'
+
+---
+territories:
+  columns:
+  - id
+  - nameTerritory
+  - region_id
+  - created_at
+  - updated_at
+  - idTerritory
+  records: 
+  - - 1
+    - Mumbai
+    - 2
+    - '2013-06-06 11:49:10.202896'
+    - '2013-06-06 12:02:48.640719'
+    - BOM
+  - - 2
+    - Banglore
+    - 5
+    - '2013-06-06 11:50:26.135896'
+    - '2013-06-06 12:03:03.785747'
+    - BANG
+  - - 3
+    - Hyderabad
+    - 5
+    - '2013-06-06 11:50:42.601896'
+    - '2013-06-06 12:03:33.725734'
+    - HYD
+  - - 4
+    - Chennai
+    - 5
+    - '2013-06-06 11:50:53.584896'
+    - '2013-06-06 12:03:45.129014'
+    - CHE
+  - - 5
+    - Delhi
+    - 6
+    - '2013-06-07 12:04:10.783523'
+    - '2013-06-07 12:04:10.783523'
+    - DELHI
+  - - 6
+    - Nagpur
+    - 8
+    - '2013-06-11 06:07:13.016703'
+    - '2013-06-11 06:07:22.719903'
+    - NGP
+
+---
+stations:
+  columns:
+  - id
+  - nameStation
+  - territory_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - station1
+    - 4
+    - '2013-06-04 11:15:15.578821'
+    - '2013-06-05 12:27:22.916254'
+  - - 2
+    - station2
+    - 2
+    - '2013-06-04 11:15:26.603821'
+    - '2013-06-04 11:15:26.603821'
+  - - 3
+    - station3
+    - 5
+    - '2013-06-04 11:15:38.538821'
+    - '2013-06-11 05:55:02.177303'
+  - - 4
+    - station4
+    - 2
+    - '2013-06-04 18:22:12.830614'
+    - '2013-06-04 18:22:12.830614'
+  - - 5
+    - station5
+    - 3
+    - '2013-06-04 18:23:11.250956'
+    - '2013-06-04 18:23:11.250956'
+  - - 7
+    - station6
+    - 1
+    - '2013-06-05 12:05:03.580450'
+    - '2013-06-05 12:05:03.580450'
+  - - 8
+    - station9
+    - 1
+    - '2013-06-07 12:03:44.328878'
+    - '2013-06-07 12:03:44.328878'
+  - - 9
+    - station10
+    - 5
+    - '2013-06-11 06:05:21.975903'
+    - '2013-06-11 06:05:21.975903'
+
+---
+regions:
+  columns:
+  - id
+  - idRegion
+  - nameRegion
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - IND
+    - India
+    - '2013-06-05 12:23:59.364485'
+    - '2013-06-05 12:23:59.364485'
+  - - 2
+    - WEST
+    - Western India
+    - '2013-06-04 11:13:09.818821'
+    - '2013-06-05 12:24:51.970223'
+  - - 5
+    - SOUTH
+    - South India
+    - '2013-06-05 12:31:18.507254'
+    - '2013-06-07 08:51:00.984603'
+  - - 6
+    - NORTH
+    - North India
+    - '2013-06-05 12:32:05.631254'
+    - '2013-06-05 12:45:17.675854'
+  - - 7
+    - EAST
+    - East India
+    - '2013-06-07 08:51:54.251929'
+    - '2013-06-07 08:51:54.251929'
+  - - 8
+    - CENT
+    - Central India
+    - '2013-06-11 06:06:25.717503'
+    - '2013-06-11 06:06:25.717503'
+
+---
+users:
+  columns:
+  - id
+  - name
+  - email
+  - phone
+  - password_digest
+  - admin
+  - remember_token
+  - created_at
+  - updated_at
+  - level_id
+  - level_type
+  records: 
+  - - 1
+    - shivam bansal
+    - shivamb@amazon.com
+    - 8553304993
+    - $2a$10$0LdNILwU1hDMJt/cU7saI.vwojtbZMO3SCiYzoSurxMHCbF1.BCK.
+    - true
+    - DWwMACKJMVPgl6MXvI9VUg
+    - '2013-06-04 08:35:24.249637'
+    - '2013-06-07 05:40:43.951594'
+    - 1
+    - Region
+  - - 2
+    - xyz xyz
+    - xyz@amazon.com
+    - 1232132131
+    - $2a$10$I2U0aL89U40ZOzuy5XGrauGE0OHmX9y1qbUrLqJoSz3cTwbES2Lou
+    - false
+    - qkF-UAfTCRu8JdKjFVwNRw
+    - '2013-06-04 08:41:55.997808'
+    - '2013-06-07 08:28:43.241334'
+    - 5
+    - Region
+  - - 3
+    - Raja Silavarajan
+    - raja@amazon.com
+    - 1234567890
+    - $2a$10$xvjZp67aog5Eh8GekQhatu/8ei/wcmWoEMbv66lzsWCrV54eZJQJq
+    - false
+    - h7DPjlb4UkKnhBEZ-zHutg
+    - '2013-06-05 04:06:25.416513'
+    - '2013-06-10 14:12:40.836645'
+    - 1
+    - Region
+  - - 4
+    - anonymous
+    - anon@amazon.com
+    - 1234567890
+    - $2a$10$tIRbH3Bpj9V331nJBNcDIeUrAe6omUY0HGu9azLcbgwjQMcJYlUiu
+    - false
+    - trBlEUaJBqhDdUM_pJ1BPw
+    - '2013-06-06 11:10:44.224094'
+    - '2013-06-11 06:28:12.228016'
+    - 
+    - 
+  - - 5
+    - asd asd
+    - asd@amazon.com
+    - 1231231321
+    - $2a$10$y8qiuea89H48RuFAVnt.I./FPhQ0YVDau1gXXlx2bFJzb67p8ud0e
+    - false
+    - W2tVcQM97l9Hs9QjkfN4wA
+    - '2013-06-07 11:51:47.026155'
+    - '2013-06-10 14:03:04.132329'
+    - 
+    - 
+  - - 6
+    - prakhar saxena
+    - prakhar@amazon.com
+    - 1231231231
+    - $2a$10$tKzhfgCD22rV00rUyFH2HuultWHlQRQikG4Yi.ULp00nSXc1PPc4u
+    - false
+    - rSnRWrEIKLWJ3ZiEU8BfzQ
+    - '2013-06-07 12:08:45.969039'
+    - '2013-06-10 04:19:03.590328'
+    - 1
+    - Territory
+  - - 7
+    - yash agarwal
+    - yash@amazon.com
+    - 1231231231
+    - $2a$10$MI7NG0AFOszzHfFWwm4vOu3j37U/P8SgvRrqVCGLLZSA3AJPaIg.y
+    - false
+    - MPwBz8l4TBa3Y6JIfUgjbQ
+    - '2013-06-07 12:19:35.929028'
+    - '2013-06-11 06:33:12.142042'
+    - 4
+    - Station
+  - - 8
+    - Prenit Wankhede
+    - prenit@amazon.com
+    - 9876543210
+    - $2a$10$a/AXNX0xRj7XsiS/v3K4QePKuH5ciQbhg4JDS2IHiOWOhl7qGOEOW
+    - false
+    - 73X7zh-Bw3ljqG_r1Plsfw
+    - '2013-06-11 06:15:32.966503'
+    - '2013-06-11 06:15:53.059303'
+    - 8
+    - Region
+
+---
+vendors:
+  columns:
+  - id
+  - nameVendor
+  - email
+  - phone
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Staples
+    - staples@staples.com
+    - 9876345320
+    - '2013-06-09 16:37:03.120076'
+    - '2013-06-11 06:08:47.006703'
+  - - 2
+    - Leneovo
+    - lv@lenevo.co.in
+    - 7122237401
+    - '2013-06-09 16:42:31.737872'
+    - '2013-06-09 16:42:31.737872'

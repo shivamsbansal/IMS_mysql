@@ -1,0 +1,22 @@
+<% provide(:title, 'New Laptop') %>
+<h2>New Laptop</h2>
+
+<div class="row">
+<div class="span3 offset3">
+	<form>
+		Brand: <input type="text"><br>
+		Model Number: <input type="text"><br>
+		CPU in GHz: <input type="number"><br>
+		RAM in GB: <input type="number" step=".01"><br>
+		Cost in Rs: <input type="number"><br>
+		Life Cycle in days: <input type="number"><br>
+		Lead Time in days: <input type="number"><br>
+		<input type=submit value="create">
+	</form>
+</div>
+</div>
+<div class="row">
+	<div class="span8 offset3">
+		formula to calculate projection:<b> DateOfProcurement + LifeCycle - LeadTime </b>
+	</div>
+</div>
