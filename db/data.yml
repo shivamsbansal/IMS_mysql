@@ -17,6 +17,106 @@ categories:
     - 2013-06-06 06:03:28.000000000 Z
 
 ---
+clothings:
+  columns:
+  - id
+  - clothCategory
+  - brand
+  - size
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - shirt
+    - Peter England
+    - '42'
+    - 2013-06-13 12:01:31.000000000 Z
+    - 2013-06-13 12:01:31.000000000 Z
+  - - 2
+    - trouser
+    - Peter England
+    - '40'
+    - 2013-06-13 13:48:41.000000000 Z
+    - 2013-06-13 13:48:41.000000000 Z
+
+---
+items:
+  columns:
+  - id
+  - nameItem
+  - lifeCycle
+  - cost
+  - leadTime
+  - itemCategory_id
+  - itemCategory_type
+  - created_at
+  - updated_at
+  - codeItem
+  - vendor_id
+  - minimumStock
+  records: 
+  - - 1
+    - dell inspiron
+    - 3
+    - 50000
+    - 0
+    - 9
+    - Laptop
+    - 2013-06-13 11:37:13.000000000 Z
+    - 2013-06-13 11:37:13.000000000 Z
+    - LAP
+    - 1
+    - 3
+  - - 2
+    - plain shirt
+    - 1
+    - 400
+    - 1
+    - 1
+    - Clothing
+    - 2013-06-13 12:01:31.000000000 Z
+    - 2013-06-13 12:01:31.000000000 Z
+    - PE
+    - 1
+    - 50
+  - - 3
+    - dell xps
+    - 3
+    - 55000
+    - 1
+    - 10
+    - Laptop
+    - 2013-06-13 12:03:43.000000000 Z
+    - 2013-06-13 12:03:43.000000000 Z
+    - lap2
+    - 1
+    - 0
+  - - 4
+    - hp pavalion
+    - 3
+    - 55000
+    - 1
+    - 11
+    - Laptop
+    - 2013-06-13 12:06:32.000000000 Z
+    - 2013-06-13 12:06:32.000000000 Z
+    - Lap3
+    - 1
+    - 0
+  - - 5
+    - Peter England trousers
+    - 1
+    - 1000
+    - 1
+    - 2
+    - Clothing
+    - 2013-06-13 13:48:41.000000000 Z
+    - 2013-06-13 13:48:41.000000000 Z
+    - PET
+    - 1
+    - 10
+
+---
 laptops:
   columns:
   - id
@@ -34,6 +134,27 @@ laptops:
     - 4
     - 2013-06-06 08:10:52.000000000 Z
     - 2013-06-06 08:10:52.000000000 Z
+  - - 9
+    - dell
+    - n5010
+    - 2.0
+    - 4
+    - 2013-06-13 11:37:13.000000000 Z
+    - 2013-06-13 11:37:13.000000000 Z
+  - - 10
+    - dell
+    - m5010
+    - 3.0
+    - 4
+    - 2013-06-13 12:03:43.000000000 Z
+    - 2013-06-13 12:03:43.000000000 Z
+  - - 11
+    - hp
+    - '231'
+    - 2.0
+    - 4
+    - 2013-06-13 12:06:32.000000000 Z
+    - 2013-06-13 12:06:32.000000000 Z
 
 ---
 regions:
@@ -74,6 +195,11 @@ regions:
     - Central India
     - 2013-06-11 06:06:26.000000000 Z
     - 2013-06-11 06:06:26.000000000 Z
+  - - 9
+    - CR
+    - Central Region
+    - 2013-06-13 05:54:34.000000000 Z
+    - 2013-06-13 05:54:34.000000000 Z
 
 ---
 stations:
@@ -124,6 +250,11 @@ stations:
     - 5
     - 2013-06-11 06:05:22.000000000 Z
     - 2013-06-11 06:05:22.000000000 Z
+  - - 10
+    - ATS-WTC
+    - 7
+    - 2013-06-13 05:55:21.000000000 Z
+    - 2013-06-13 05:55:21.000000000 Z
 
 ---
 territories:
@@ -171,6 +302,12 @@ territories:
     - 2013-06-11 06:07:13.000000000 Z
     - 2013-06-11 06:07:23.000000000 Z
     - NGP
+  - - 7
+    - Central Territory
+    - 9
+    - 2013-06-13 05:54:58.000000000 Z
+    - 2013-06-13 05:54:58.000000000 Z
+    - CT
 
 ---
 users:
@@ -188,25 +325,25 @@ users:
   - level_type
   records: 
   - - 1
-    - shivam bansal
+    - Shivam Bansal
     - shivamb@amazon.com
     - 8553304993
-    - $2a$10$0LdNILwU1hDMJt/cU7saI.vwojtbZMO3SCiYzoSurxMHCbF1.BCK.
+    - $2a$10$Gqnnr73pTLj9qZYSPspKuu8fE4pHcppMkApz2OQbScXjVlV7kDd.G
     - true
-    - DWwMACKJMVPgl6MXvI9VUg
+    - cAuFwKYQUrowj4cfLgxGNg
     - 2013-06-04 08:35:24.000000000 Z
-    - 2013-06-07 05:40:44.000000000 Z
+    - 2013-06-13 06:59:48.000000000 Z
     - 1
     - Region
   - - 2
-    - xyz xyz
+    - xyz abc
     - xyz@amazon.com
     - 1232132131
-    - $2a$10$I2U0aL89U40ZOzuy5XGrauGE0OHmX9y1qbUrLqJoSz3cTwbES2Lou
+    - $2a$10$3HaOaXpdwcWRRctwmDS0iONEGl3ixbCfFzYR/zJuMmxk4qdlb.Mr.
     - false
-    - qkF-UAfTCRu8JdKjFVwNRw
+    - A9A2UmuVrABamV2u021kdA
     - 2013-06-04 08:41:56.000000000 Z
-    - 2013-06-07 08:28:43.000000000 Z
+    - 2013-06-13 05:51:40.000000000 Z
     - 5
     - Region
   - - 3
@@ -254,14 +391,14 @@ users:
     - 1
     - Territory
   - - 7
-    - yash agarwal
+    - Yash agarwal
     - yash@amazon.com
-    - 1231231231
-    - $2a$10$MI7NG0AFOszzHfFWwm4vOu3j37U/P8SgvRrqVCGLLZSA3AJPaIg.y
+    - 9231231231
+    - $2a$10$SqKt/5m7RcgU1YC6sG0UBewVC8VWD1.0t26tQ6FZolc..uvidJ2Ue
     - false
-    - MPwBz8l4TBa3Y6JIfUgjbQ
+    - 2B8jinyu88wHORnScIDyMw
     - 2013-06-07 12:19:36.000000000 Z
-    - 2013-06-11 06:33:12.000000000 Z
+    - 2013-06-13 05:53:25.000000000 Z
     - 4
     - Station
   - - 8
@@ -275,6 +412,17 @@ users:
     - 2013-06-11 06:15:53.000000000 Z
     - 8
     - Region
+  - - 9
+    - vinay
+    - vinay@amazon.com
+    - 7687687671
+    - $2a$10$CEzAqpt8MC6WiIFqLqjE..bf7ydvbpgcQL9EBnu/63DStHbj/Gi4e
+    - false
+    - YzQOPdqlHBFGEOisj5Q_fQ
+    - 2013-06-13 06:34:58.000000000 Z
+    - 2013-06-13 06:34:58.000000000 Z
+    - 
+    - 
 
 ---
 vendors:
@@ -292,9 +440,3 @@ vendors:
     - 9876345320
     - 2013-06-09 16:37:03.000000000 Z
     - 2013-06-11 06:08:47.000000000 Z
-  - - 2
-    - Leneovo
-    - lv@lenevo.co.in
-    - 7122237401
-    - 2013-06-09 16:42:32.000000000 Z
-    - 2013-06-09 16:42:32.000000000 Z
