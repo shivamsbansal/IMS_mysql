@@ -2,6 +2,7 @@ class Station < ActiveRecord::Base
 	has_many :users, as: :level, dependent: :nullify
 	belongs_to :territory, validate: true
 
+	accepts_nested_attributes_for :users
 	attr_accessible :nameStation, :territory_id
 
 	validate :ensure_territory_exist

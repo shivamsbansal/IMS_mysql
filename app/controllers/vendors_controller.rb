@@ -34,4 +34,10 @@ class VendorsController < ApplicationController
 	    	render 'new'
 	  	end
 	end
+
+	def destroy
+    Vendor.find(params[:id]).destroy
+    flash[:success] = "Vendor destroyed."
+    redirect_to vendors_url
+  end
 end

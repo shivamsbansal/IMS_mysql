@@ -25,13 +25,11 @@ class User < ActiveRecord::Base
     def ensure_level_exist
       if self.level_id.nil?
         true
+      elsif self.level_type.constantize.find(self.level_id).nil?
+        errors.add(:level_id, 'Level does not exist')
+        false
       else
-        if self.level_type.constantize.find(self.level_id).nil?
-          errors.add(:level_id, 'Level does not exist')
-          false
-        else
-          true
-        end
+        true
       end
     end
 

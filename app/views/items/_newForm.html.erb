@@ -1,0 +1,35 @@
+<div class="row">
+  <%= form_for(@item) do |f| %>
+  
+  <div class="span5 offset3">
+
+   <%= hidden_field_tag(:category, @category) %>
+
+    <%= f.label :code %>
+    <%= f.text_field :codeItem %>
+
+    <%= f.label :name %>
+    <%= f.text_field :nameItem %>
+
+    <%= f.label 'Cost Per Item' %>
+    <%= f.text_field :cost, step: 1 %>
+
+    <%= f.label 'Lifecycle' %>
+    <%= f.text_field :lifeCycle %>
+
+    <%= f.label 'Lead Time' %>
+    <%= f.text_field :leadTime %>
+
+    <%= f.label 'Minimum Stock' %>
+    <%= f.text_field :minimumStock %>
+
+    <%= f.label 'Vendor' %>
+    <% status = Vendor.all.map { |vendor| [vendor.nameVendor, vendor.id]} %>
+    <%= f.select :vendor_id, status %>
+
+     <%= render "items/#{@category}" , f: f %>
+ 
+    <%= f.submit "Create new Item", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
