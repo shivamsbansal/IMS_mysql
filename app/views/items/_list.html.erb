@@ -1,5 +1,6 @@
 
 <table class="table table-striped table-bordered table-condensed">
+  <caption>List</caption>
   <thead>
     <tr>
       <th>Code</th>
@@ -26,7 +27,7 @@
       <td><%= list.leadTime %></td>
       <td><%= list.minimumStock %></td>
       <td><%= list.vendor.nameVendor %></td>
-      <td><%=link_to "details", list.itemCategory %></td>      
+      <td><%=link_to "details", "/details/#{list.id}", remote: true %></td>      
         <% if current_user.admin? %>
       <td><%=link_to "edit", edit_item_path(list[:id]) %></td>
       <td><%= link_to "delete ", list, method: :delete, data: { confirm: "You sure?" } %></td>

@@ -1,0 +1,17 @@
+<% if @details != nil %>
+<table class="table table-striped table-bordered table-condensed">
+  <caption>Details</caption>
+  <thead>
+    <tr>
+			<% for attribute in @details.attributes.keys %>
+			  <th><%= attribute.humanize %> </th>
+			<% end %>
+		</tr>
+		<tr>
+			<% for attribute in @details.attributes.keys %>
+			  <td><%= @details.attributes[attribute].to_s %> </td>
+			<% end %>
+		</tr>
+	</thead>
+</table>
+<% end %>

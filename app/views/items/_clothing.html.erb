@@ -1,12 +1,12 @@
 <%= f.fields_for :clothing do |cloth| %>
   
   <%= cloth.label :brand %>
- 	<%= cloth.text_field :brand %>
+ 	<%= cloth.text_field :brand, value: item.brand %>
 
  	<%= cloth.label 'Clothing Category' %>
-  <%= cloth.text_field :clothCategory %>
+  <%= cloth.text_field :clothCategory, value: item.clothCategory %>
 
   <%= cloth.label :size %>
-  <%= cloth.text_field :size %>
+  <%= cloth.text_field :size, value: item.size %>
   
 <% end %>

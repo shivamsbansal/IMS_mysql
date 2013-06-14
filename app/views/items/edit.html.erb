@@ -1,9 +1,13 @@
+<% provide(:title, 'Edit Item') %>
+<h1>Edit Item</h1>
+
 <div class="row">
   <%= form_for(@item) do |f| %>
   
   <div class="span5 offset3">
 
    <%= hidden_field_tag(:category, @category) %>
+   <%= hidden_field_tag(:id, @item.id) %>
 
     <%= f.label :code %>
     <%= f.text_field :codeItem %>
@@ -11,25 +15,26 @@
     <%= f.label :name %>
     <%= f.text_field :nameItem %>
 
-    <%= f.label 'Cost Per Item' %>
+    <%= f.label :cost, 'Cost Per Item' %>
     <%= f.text_field :cost, step: 1 %>
 
-    <%= f.label 'Lifecycle' %>
+    <%= f.label :lifeCycle,'Lifecycle' %>
     <%= f.text_field :lifeCycle %>
 
-    <%= f.label 'Lead Time' %>
+    <%= f.label :leadTime, 'Lead Time' %>
     <%= f.text_field :leadTime %>
 
-    <%= f.label 'Minimum Stock' %>
+    <%= f.label :minimumStock, 'Minimum Stock' %>
     <%= f.text_field :minimumStock %>
 
     <%= f.label 'Vendor' %>
     <% status = Vendor.all.map { |vendor| [vendor.nameVendor, vendor.id]} %>
     <%= f.select :vendor_id, status %>
 
-     <%= render "items/#{@category}" , f: f , item: @category.capitalize.constantize.new %>
+     <%= render "items/#{@category.downcase}" , f: f , item: @item.itemCategory %>
  
-    <%= f.submit "Create new Item", class: "btn btn-primary" %>
+    <%= f.submit "Edit Item", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
+

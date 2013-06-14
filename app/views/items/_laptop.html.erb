@@ -1,15 +1,15 @@
 <%= f.fields_for :laptop do |laptop| %>
   
   <%= laptop.label :brand %>
- 	<%= laptop.text_field :brand %>
+ 	<%= laptop.text_field :brand, value: item.brand %>
 
  	<%= laptop.label :model %>
-  <%= laptop.text_field :model %>
+  <%= laptop.text_field :model, value: item.model %>
 
-  <%= laptop.label 'Cpu Speed' %>
-  <%= laptop.text_field :cpuSpeed %>
+  <%= laptop.label :cpuSpeed, 'Cpu Speed' %>
+  <%= laptop.text_field :cpuSpeed, value: item.cpuSpeed %>
 
   <%= laptop.label :ram %>
-  <%= laptop.text_field :ram %>
+  <%= laptop.text_field :ram, value: item.ram %>
   
 <% end %>
