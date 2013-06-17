@@ -7,33 +7,36 @@
     <li><%= link_to "Assign Station", "/unassignedUser" %></li>
   </ul>
 </li>
+
 <li id="fat-menu" class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Stations <b class="caret"></b>
+    Levels <b class="caret"></b>
   </a>
-  <ul class="dropdown-menu">
-    <li><%= link_to "All", stations_path %></li>
-    <li><%= link_to "Add/New", new_station_path %></li>
+  <ul class="dropdown-menu" >
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">Stations</a>
+      <ul class="dropdown-menu">
+        <li><%= link_to "List", stations_path %></li>
+        <li><%= link_to "Add/New", new_station_path %></li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">Territory</a>
+      <ul class="dropdown-menu">
+        <li><%= link_to "List", territories_path %></li>
+        <li><%= link_to "Add/New", new_territory_path %></li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">Region</a>
+      <ul class="dropdown-menu">
+        <li><%= link_to "List", regions_path %></li>
+        <li><%= link_to "Add/New", new_region_path %></li>
+      </ul>
+    </li>
   </ul>
 </li>
-<li id="fat-menu" class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Territory <b class="caret"></b>
-  </a>
-  <ul class="dropdown-menu">
-    <li><%= link_to "List", territories_path %></li>
-    <li><%= link_to "Add/New", new_territory_path %></li>
-  </ul>
-</li>
-<li id="fat-menu" class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Regions <b class="caret"></b>
-  </a>
-  <ul class="dropdown-menu">
-    <li><%= link_to "All", regions_path %></li>
-    <li><%= link_to "Add/New", new_region_path %></li>
-  </ul>
-</li>
+
 <li id="fat-menu" class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     Items <b class="caret"></b>

@@ -16,7 +16,7 @@
 <% if current_user[:level_type]!=nil %>
   <% @stations.each do |station| %>
     <tr>
-      <td><%=link_to station.nameStation, station %></td>
+      <td><%=link_to station.nameStation, '#' %></td>
       <td><%=station.territory.idTerritory %></td>
       <td><%=station.territory.region.idRegion %></td>
       <% if current_user.admin? %>

@@ -1,10 +1,12 @@
 Test2::Application.routes.draw do
 
 
+  get "associates/new"
+
   match '/details/:id', to: 'items#details' , via: 'get'
   match '/items/redirect', to: 'items#redirect', via: 'get'
   match '/items/list', to: 'items#list', via: 'get'
-  resources :regions, :items, :laptops, :clothings, :territories, :vendors
+  resources :regions, :items, :territories, :vendors
   resources :users
   resources :stations
   resources :sessions, only: [:new, :create, :destroy]

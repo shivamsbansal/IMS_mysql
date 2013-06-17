@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613140359) do
+ActiveRecord::Schema.define(:version => 20130617080745) do
+
+  create_table "assets", :force => true do |t|
+    t.string   "assetSrNo",  :limit => 40
+    t.integer  "stock_id"
+    t.boolean  "issued"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "associates", :force => true do |t|
+    t.string   "name",          :limit => 50
+    t.string   "email",         :limit => 30
+    t.date     "dateOfJoining"
+    t.integer  "station_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "nameCategory"
@@ -27,6 +44,15 @@ ActiveRecord::Schema.define(:version => 20130613140359) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "issued_items", :force => true do |t|
+    t.integer  "asset_id"
+    t.integer  "associate_id"
+    t.date     "dateOfIssue"
+    t.integer  "quantity"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "items", :force => true do |t|
     t.string   "nameItem"
     t.integer  "lifeCycle"
@@ -39,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20130613140359) do
     t.string   "codeItem"
     t.integer  "vendor_id"
     t.integer  "minimumStock"
+    t.string   "assetType"
   end
 
   create_table "laptops", :force => true do |t|
@@ -62,6 +89,21 @@ ActiveRecord::Schema.define(:version => 20130613140359) do
     t.integer  "territory_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "stocks", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "station_id"
+    t.string   "poId",           :limit => 20
+    t.date     "poDate"
+    t.string   "invoiceNo",      :limit => 40
+    t.date     "invoiceDate"
+    t.integer  "warrantyPeriod"
+    t.integer  "initialStock"
+    t.integer  "presentStock"
+    t.string   "issuedReason"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "territories", :force => true do |t|

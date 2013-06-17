@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-     item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], vendor_id: params[:item][:vendor_id] }
+     item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
     @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
 
     @categoryItem = Item.find(params[:id]).itemCategory
@@ -63,7 +63,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], vendor_id: params[:item][:vendor_id] }
+    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
     @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
 
     @categoryItem = params[:category].capitalize.constantize.new(params[:item][params[:category].to_s])

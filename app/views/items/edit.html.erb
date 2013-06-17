@@ -27,6 +27,10 @@
     <%= f.label :minimumStock, 'Minimum Stock' %>
     <%= f.text_field :minimumStock %>
 
+    <%= f.label 'Asset Type' %>
+    <% type = [['Fixed', 'fixed'], ['Consumable', 'consumable']] %>
+    <%= f.select :assetType, type %>
+
     <%= f.label 'Vendor' %>
     <% status = Vendor.all.map { |vendor| [vendor.nameVendor, vendor.id]} %>
     <%= f.select :vendor_id, status %>

@@ -1,5 +1,6 @@
 class Station < ActiveRecord::Base
 	has_many :users, as: :level, dependent: :nullify
+	has_many :associates ,dependent: :restrict
 	belongs_to :territory, validate: true
 
 	accepts_nested_attributes_for :users

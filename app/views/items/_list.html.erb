@@ -9,6 +9,7 @@
       <th>Life Cycle</th>
       <th>Lead Time</th>
       <th>Minimum Stock</th>
+      <th>Asset Type</th>
       <th>Vendor</th>
       <th>Details</th>
       <% if current_user.admin? %>
@@ -26,7 +27,14 @@
       <td><%= list.lifeCycle %></td>
       <td><%= list.leadTime %></td>
       <td><%= list.minimumStock %></td>
-      <td><%= list.vendor.nameVendor %></td>
+      <td><%= list.assetType.capitalize %></td>
+      <td><%= if list.vendor != nil
+                list.vendor.nameVendor
+              else 
+                'No vendor'
+              end
+          %>
+      </td>
       <td><%=link_to "details", "/details/#{list.id}", remote: true %></td>      
         <% if current_user.admin? %>
       <td><%=link_to "edit", edit_item_path(list[:id]) %></td>
