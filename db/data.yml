@@ -29,9 +29,9 @@ clothings:
   - - 1
     - shirt
     - Peter England
-    - '42'
+    - '36'
     - 2013-06-13 12:01:31.000000000 Z
-    - 2013-06-13 12:01:31.000000000 Z
+    - 2013-06-14 11:17:15.000000000 Z
   - - 2
     - trouser
     - Peter England
@@ -54,6 +54,7 @@ items:
   - codeItem
   - vendor_id
   - minimumStock
+  - assetType
   records: 
   - - 1
     - dell inspiron
@@ -63,10 +64,11 @@ items:
     - 9
     - Laptop
     - 2013-06-13 11:37:13.000000000 Z
-    - 2013-06-13 11:37:13.000000000 Z
+    - 2013-06-17 09:37:50.000000000 Z
     - LAP
-    - 1
+    - 
     - 3
+    - fixed
   - - 2
     - plain shirt
     - 1
@@ -79,18 +81,20 @@ items:
     - PE
     - 1
     - 50
+    - consumable
   - - 3
-    - dell xps
+    - mac book pro
     - 3
     - 55000
     - 1
     - 10
     - Laptop
     - 2013-06-13 12:03:43.000000000 Z
-    - 2013-06-13 12:03:43.000000000 Z
+    - 2013-06-17 09:47:15.000000000 Z
     - lap2
     - 1
     - 0
+    - fixed
   - - 4
     - hp pavalion
     - 3
@@ -103,6 +107,7 @@ items:
     - Lap3
     - 1
     - 0
+    - fixed
   - - 5
     - Peter England trousers
     - 1
@@ -115,6 +120,7 @@ items:
     - PET
     - 1
     - 10
+    - consumable
 
 ---
 laptops:
@@ -145,9 +151,9 @@ laptops:
     - dell
     - m5010
     - 3.0
-    - 4
+    - 3
     - 2013-06-13 12:03:43.000000000 Z
-    - 2013-06-13 12:03:43.000000000 Z
+    - 2013-06-14 11:30:25.000000000 Z
   - - 11
     - hp
     - '231'
