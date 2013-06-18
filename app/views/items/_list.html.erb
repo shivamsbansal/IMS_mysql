@@ -5,7 +5,9 @@
     <tr>
       <th>Code</th>
       <th>Name</th>
+      <% if current_user.admin? %>
       <th>Cost per item</th>
+      <% end %>
       <th>Life Cycle</th>
       <th>Lead Time</th>
       <th>Minimum Stock</th>
@@ -23,7 +25,9 @@
     <tr>
       <td><%= list.codeItem %></td>
       <td><%= list.nameItem %></td>
+      <% if current_user.admin? %>
       <td><%= list.cost %></td>
+      <% end %>
       <td><%= list.lifeCycle %></td>
       <td><%= list.leadTime %></td>
       <td><%= list.minimumStock %></td>
