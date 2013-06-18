@@ -18,6 +18,9 @@
       <%= label_tag(:phone, "Phone:") %>
       <%= number_field_tag(:phone, @vendor.phone) %>
 
+      <%= label_tag(:itemCategory, "Category:") %>
+      <%= select_tag(:itemCategory, options_for_select(@itemCategory)) %>
+
       <%= f.submit "Add vendor", class: "btn btn-primary" %>
     <% end %>
   </div>

@@ -32,8 +32,12 @@
     <%= f.select :assetType, type %>
 
     <%= f.label 'Vendor' %>
-    <% status = Vendor.all.map { |vendor| [vendor.nameVendor, vendor.id]} %>
-    <%= f.select :vendor_id, status %>
+    <%  if @category == 'All'
+            vendors = Vendor.all.map { |vendor| [vendor.nameVendor, vendor_id]}
+        else vendors = Vendor.where("itemCategory LIKE '#{@category}' OR itemCategory LIKE 'All' ").map { |vendor| [vendor.nameVendor, vendor.id]} 
+        end
+    %>
+    <%= f.select :vendor_id, vendors %>
 
      <%= render "items/#{@category.downcase}" , f: f , item: @item.itemCategory %>
  

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   before_save :create_remember_token
 
   attr_accessible :name, :email, :phone, :level_id, :level_type, :password, :password_confirmation
+  attr_accessible :admin , :as => :admin
 
   attr_accessor :is_admin_applying_update
 
@@ -23,7 +24,7 @@ class User < ActiveRecord::Base
   	end
 
     def ensure_level_exist
-      if self.level_id.nil?
+      if self.level_id.nil? || self.level_type == 'admin'
         true
       elsif self.level_type.constantize.find(self.level_id).nil?
         errors.add(:level_id, 'Level does not exist')

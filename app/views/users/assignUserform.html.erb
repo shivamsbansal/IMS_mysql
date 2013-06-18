@@ -17,7 +17,7 @@
 
           <%= hidden_field_tag(:id, user.id) %>
           
-          <% level_array =[["Regional Manager", "Region"],["Territory Manager","Territory"],["Station Manager","Station"]] %>
+          <% level_array =[["Regional Manager", "Region"],["Territory Manager","Territory"],["Station Manager","Station"], ["Central Team", "admin"]] %>
           <%= select_tag(:level_type, options_for_select(level_array)) %>
           <%= submit_tag "Choose", class: "btn btn-primary" %> 
 

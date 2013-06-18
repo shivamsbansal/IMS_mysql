@@ -22,8 +22,11 @@ class StationsController < ApplicationController
 
 	def index
 		if current_user[:level_type]!= nil 
-			if current_user.admin? || Region.find(current_user.level_id).nameRegion=="India"
-				@stations=Station.all 
+			if current_user.admin?
+				@stations = Station.all
+				@name = "Central Team" 
+			elsif Region.find(current_user.level_id).nameRegion=="India"
+				@stations=Station.where("nameStation NOT LIKE 'ATS-WTC'")
 				@name = "India"
 			else
 				@stations=[]

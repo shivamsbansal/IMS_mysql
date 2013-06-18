@@ -9,6 +9,7 @@
       <th>Vendor Name</th>
       <th>Email</th>
       <th>Phone</th>
+      <th>Category</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -18,6 +19,7 @@
       <td><%=vendor.nameVendor %></td>
       <td><%=vendor.email %></td>
       <td><%=vendor.phone %></td>
+      <td><%=vendor.itemCategory %></td>
       <td><%=link_to "edit", edit_vendor_path(vendor[:id]) %></td>
       <td><%= link_to "delete ", vendor, method: :delete, data: { confirm: "You sure?" } %></td>
     </tr>     

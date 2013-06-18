@@ -56,7 +56,10 @@ class UsersController < ApplicationController
     @user.is_admin_applying_update = true
     @user.level_type = params[:level_type]
     @user.level_id = params[:level_id]
-    if @user.save 
+    if params[:level_type] == 'admin'
+      @user.admin = true
+    end
+    if @user.save(as: :admin) 
       flash[:success] = "User authorised"
       redirect_to users_url
     else
@@ -71,7 +74,9 @@ class UsersController < ApplicationController
     @id = params[:id]
     @user = User.find(params[:id])
     @level_type = params[:level_type]
-    if params[:level_type] == "Region"
+    if params[:level_type] == "admin"
+      @array = [["Not Applicable","1"]]
+    elsif params[:level_type] == "Region"
       @array = Region.all.map { |region| ["#{region.nameRegion}", region.id]}
     elsif params[:level_type] == "Territory"
       @array = Territory.all.map { |territory| ["#{territory.nameTerritory}, #{territory.region.nameRegion}", territory.id]}
@@ -85,6 +90,9 @@ class UsersController < ApplicationController
 
   def retainLevel
     @user = User.find(params[:id])
+    if @user.level_type == 'admin'
+      @user.admin = false
+    end
     @user.level_type = nil
     @user.level_id = nil
     if @user.save validate: false
