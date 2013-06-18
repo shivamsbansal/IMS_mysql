@@ -6,7 +6,7 @@ Test2::Application.routes.draw do
   match '/details/:id', to: 'items#details' , via: 'get'
   match '/items/redirect', to: 'items#redirect', via: 'get'
   match '/items/list', to: 'items#list', via: 'get'
-  resources :regions, :items, :territories, :vendors
+  resources :regions, :items, :territories, :vendors, :associates
   resources :users
   resources :stations
   resources :sessions, only: [:new, :create, :destroy]

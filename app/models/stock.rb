@@ -3,7 +3,7 @@ class Stock < ActiveRecord::Base
 	has_many :assets, dependent: :destroy
 	has_many :transits, dependent: :restrict
 
-	accept_nested_attributes_for :assets, :transits
+	accepts_nested_attributes_for :assets, :transits
 
   attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :issuedReason 
 
