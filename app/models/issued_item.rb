@@ -1,5 +1,6 @@
 class IssuedItem < ActiveRecord::Base
-   belongs_to :associate, :asset
+   belongs_to :associate
+   belongs_to :asset
 
    attr_accessible :asset_id, :associate_id, :dateOfIssue, :quantity
    

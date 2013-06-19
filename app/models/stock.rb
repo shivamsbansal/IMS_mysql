@@ -1,5 +1,6 @@
 class Stock < ActiveRecord::Base
-	belongs_to :station, :item
+	belongs_to :station
+  belongs_to :item
 	has_many :assets, dependent: :destroy
 	has_many :transits, dependent: :restrict
 

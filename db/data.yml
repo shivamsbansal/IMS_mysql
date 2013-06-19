@@ -1,5 +1,38 @@
 
 ---
+associates:
+  columns:
+  - id
+  - name
+  - email
+  - dateOfJoining
+  - station_id
+  - created_at
+  - updated_at
+  records: 
+  - - 2
+    - Shivam Bansal
+    - shivamb@amazom.com
+    - 2013-05-12
+    - 10
+    - 2013-06-19 05:24:22.000000000 Z
+    - 2013-06-19 09:19:14.000000000 Z
+  - - 3
+    - anobn
+    - anon@asd.fg
+    - 2013-02-14
+    - 1
+    - 2013-06-19 07:09:07.000000000 Z
+    - 2013-06-19 07:09:07.000000000 Z
+  - - 4
+    - dsfsdf
+    - dsfsd@sdf.df
+    - 2013-06-19
+    - 1
+    - 2013-06-19 07:14:56.000000000 Z
+    - 2013-06-19 07:14:56.000000000 Z
+
+---
 categories:
   columns:
   - id
@@ -450,8 +483,8 @@ vendors:
     - All
   - - 5
     - Dell India
-    - dell@dell.co.in
+    - dell@dell.co
     - 8778322312
     - 2013-06-18 06:48:19.000000000 Z
-    - 2013-06-18 07:18:38.000000000 Z
+    - 2013-06-19 09:17:18.000000000 Z
     - laptop

@@ -1,5 +1,6 @@
 class Associate < ActiveRecord::Base
   belongs_to :station
+  before_save { self.email = email.downcase }
   has_many :issued_items, dependent: :destroy
 
   accepts_nested_attributes_for :issued_items
@@ -10,7 +11,7 @@ class Associate < ActiveRecord::Base
   validates :name , presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
-  validates :dateOfJoining, presence: true
+  validates :dateOfJoining, presence: {:message => 'is Bank/invalid'}
   validates :station_id, presence: true	
 
   private

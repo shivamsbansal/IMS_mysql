@@ -1,6 +1,62 @@
 class AssociatesController < ApplicationController
+	before_filter :signed_in_user
+
   def new
-  	@associate = Associate.new
+  	@associate=Associate.new
+  end
+
+  def edit
+    @associate = Associate.find(params[:id])
+  end
+
+  def update
+		@associate = Associate.find(params[:id])
+		begin
+  		@date= Date.new(params[:associate][:'dateOfJoining(1i)'].to_i, params[:associate][:'dateOfJoining(2i)'].to_i, params[:associate][:'dateOfJoining(3i)'].to_i)
+  	rescue ArgumentError
+  		@date=nil
+  	end
+		if @associate.update_attributes(name: params[:name], email: params[:email], dateOfJoining: @date, station_id: params[:station_id])
+      flash[:success] = "Associate updated"
+      redirect_to associates_path
+    else
+      render 'edit'
+    end
+	end
+
+  def create
+  	begin
+  		@date= Date.new(params[:associate][:'dateOfJoining(1i)'].to_i, params[:associate][:'dateOfJoining(2i)'].to_i, params[:associate][:'dateOfJoining(3i)'].to_i)
+  	rescue ArgumentError
+  		@date=nil
+  	end
+  	@associate = Associate.new(name: params[:name], email: params[:email], station_id: params[:station_id], dateOfJoining: @date)
+    	
+  	if @associate.save
+      flash[:success] = "Successfully added #{@associate.name}"
+      redirect_to associates_path
+    else
+    	render 'new'
+  	end
+	end
+
+	def index
+		@stations = user_access_stations(current_user)
+		@stationList = @stations[:stations].map { |station| [station.nameStation, station.id]}
+	end
+
+	def list
+    @station = Station.find(params[:station])
+    @associates = @station.associates
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def destroy
+    Associate.find(params[:id]).destroy
+    flash[:success] = "Associate destroyed."
+    redirect_to associates_url
   end
 
 end

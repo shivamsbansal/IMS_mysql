@@ -9,14 +9,10 @@ class VendorsController < ApplicationController
 
 	def new
 		@vendor = Vendor.new
-		@itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
-    @itemCategory = @itemCategory + [['All', 'All']]
 	end
 
 	def edit
 		@vendor = Vendor.find(params[:id])
-		@itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
-    @itemCategory = @itemCategory + [['All', 'All']]
 	end
 
 	def update

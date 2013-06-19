@@ -1,6 +1,10 @@
 module StationsHelper
 
 	def user_access_stations(user)
+		@result ||= aux_user_access_stations(user)
+	end
+
+	def aux_user_access_stations(user)
 		if user[:level_type]!= nil 
 			if user.admin?
 				@stations = Station.all
@@ -28,7 +32,6 @@ module StationsHelper
 			{stations: @stations, name: @name}
 		else
 			nil
-		end		
+		end
 	end
-	
 end
