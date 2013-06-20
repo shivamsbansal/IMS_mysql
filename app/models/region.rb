@@ -1,5 +1,6 @@
 class Region < ActiveRecord::Base
 	has_many :territories, dependent: :restrict
+	has_many :stations, through: :territories
 	has_many :users, as: :level, dependent: :nullify
 
 	accepts_nested_attributes_for :territories, :users

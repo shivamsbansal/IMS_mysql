@@ -1,7 +1,7 @@
 class Asset < ActiveRecord::Base
 	belongs_to :stock
-	has_many :issued_items, dependent: :destroy
-
+	has_many :issued_items
+  has_many :associates, through: :issued_items
 	accepts_nested_attributes_for :issued_items
   attr_accessible :assetSrNo, :stock_id, :issued
 

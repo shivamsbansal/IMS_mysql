@@ -1,7 +1,8 @@
 class Associate < ActiveRecord::Base
   belongs_to :station
   before_save { self.email = email.downcase }
-  has_many :issued_items, dependent: :destroy
+  has_many :issued_items
+  has_many :assets, through: :issued_items
 
   accepts_nested_attributes_for :issued_items
   before_save { self.email = email.downcase }

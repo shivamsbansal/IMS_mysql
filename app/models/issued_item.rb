@@ -6,7 +6,7 @@ class IssuedItem < ActiveRecord::Base
    
    validates :associate_id, presence: true
    validates :asset_id, presence: true
-   validates :quantity, presence: true 
+   validates :quantity, presence: true , numericality: true
    validates :dateOfIssue, presence: true
    validate :ensure_associate_exist
    validate :ensure_asset_exist

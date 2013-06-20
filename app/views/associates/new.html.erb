@@ -7,8 +7,6 @@
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= hidden_field_tag(:id, @associate.id) %>
-
       <%= label_tag(:station_id, "Station:") %>
       <% result = user_access_stations(current_user) %>
       <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation")) %>

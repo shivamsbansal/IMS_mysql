@@ -15,12 +15,8 @@ module StationsHelper
 			else
 				@stations=[]
 				if user.level_type == "Region" 
-					@region = Region.find(user.level_id)
-					@territories = @region.territories.all
-					@territories.each do |t|
-						@stations =@stations + t.stations
-					end
-					@name = @region.nameRegion
+					@stations = Region.find(user.level_id).stations
+					@name = Region.find(user.level_id).nameRegion
 				elsif user[:level_type] == "Territory"
 					@stations = Territory.find(user.level_id).stations
 					@name=Territory.find(user.level_id).nameTerritory

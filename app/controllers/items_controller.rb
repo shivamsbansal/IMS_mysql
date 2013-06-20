@@ -4,8 +4,7 @@ class ItemsController < ApplicationController
 	before_filter :admin_user, except: [:index, :list, :details]
 
   def index
-  	@itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
-    @itemCategory = @itemCategory + [['All', 'All']]
+  	@itemCategory = categoryList
   end
 
   def new
