@@ -17,7 +17,7 @@
 
        <%= label_tag(:region_id, "Region:") %>
       <% region_array = Region.all.map { |region| [region.nameRegion, region.id]} %>
-      <%= select_tag(:region_id, options_for_select(region_array)) %>
+      <%= select_tag(:region_id, options_for_select(region_array, @territory.region_id)) %>
 
       <%= f.submit "Add territory", class: "btn btn-primary" %>
     <% end %>

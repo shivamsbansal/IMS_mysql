@@ -14,11 +14,13 @@
     <%= f.label 'Cost Per Item' %>
     <%= f.text_field :cost, step: 1 %>
 
-    <%= f.label 'Lifecycle' %>
-    <%= f.text_field :lifeCycle %>
+    <%= label_tag(:lifeCycle, "Life Cycle") %>
+    <%= timePeriod('lifeCycle') %>
+    <%= timePeriodType('lifeCycle') %>
 
-    <%= f.label 'Lead Time' %>
-    <%= f.text_field :leadTime %>
+    <%= label_tag(:leadTime, "Lead Time") %>
+    <%= timePeriod('leadTime') %>
+    <%= timePeriodType('leadTime') %>
 
     <%= f.label 'Minimum Stock' %>
     <%= f.text_field :minimumStock %>

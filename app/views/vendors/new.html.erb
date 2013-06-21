@@ -7,19 +7,19 @@
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= label_tag(:nameVendor, "Vendor name:") %>
-      <%= text_field_tag(:nameVendor) %>
+      <%= label_tag(:nameVendor, "Vendor name:")%>
+      <%= text_field_tag(:nameVendor, @vendor.nameVendor) %>
 
       <%= label_tag(:email, "Email:") %>
-      <%= text_field_tag(:email) %>
+      <%= text_field_tag(:email, @vendor.email )%>
 
       <%= label_tag(:phone, "Phone:") %>
-      <%= number_field_tag(:phone) %>
+      <%= number_field_tag(:phone, @vendor.phone) %>
 
       <%= label_tag(:itemCategory, "Category:") %>
       <%  @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
           @itemCategory = @itemCategory + [['All', 'All']] %>
-      <%= select_tag(:itemCategory, options_for_select(@itemCategory)) %>
+      <%= select_tag(:itemCategory, options_for_select(@itemCategory, @vendor.itemCategory)) %>
 
       <%= f.submit "Add vendor", class: "btn btn-primary" %>
     <% end %>

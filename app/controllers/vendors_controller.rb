@@ -18,21 +18,21 @@ class VendorsController < ApplicationController
 	def update
 		@vendor = Vendor.find(params[:id])
 		if @vendor.update_attributes(nameVendor: params[:nameVendor], email: params[:email], phone: params[:phone], itemCategory: params[:itemCategory])
-	      flash[:success] = "Vendor updated"
-	      redirect_to vendors_path
-	    else
-	      render 'edit'
-	    end
+      flash[:success] = "Vendor updated"
+      redirect_to vendors_path
+    else
+      render 'edit'
+    end
 	end
 
 	def create
 		@vendor = Vendor.new(nameVendor: params[:nameVendor], email: params[:email], phone: params[:phone], itemCategory: params[:itemCategory])
-	  	if @vendor.save
-	      flash[:success] = "Successfully added #{@vendor.nameVendor}"
-	      redirect_to vendors_path
-	    else
-	    	render 'new'
-	  	end
+  	if @vendor.save
+      flash[:success] = "Successfully added #{@vendor.nameVendor}"
+      redirect_to vendors_path
+    else
+    	render 'new'
+  	end
 	end
 
 	def destroy

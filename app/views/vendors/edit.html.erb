@@ -21,7 +21,7 @@
       <%= label_tag(:itemCategory, "Category:") %>
       <%  @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
           @itemCategory = @itemCategory + [['All', 'All']] %>
-      <%= select_tag(:itemCategory, options_for_select(@itemCategory)) %>
+      <%= select_tag(:itemCategory, options_for_select(@itemCategory, @vendor.itemCategory)) %>
 
       <%= f.submit "Edit vendor", class: "btn btn-primary" %>
     <% end %>

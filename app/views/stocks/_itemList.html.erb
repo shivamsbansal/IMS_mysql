@@ -1,0 +1,2 @@
+<%  @items = Item.where(itemCategory_type: @category.capitalize) %>
+<%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem")) %>

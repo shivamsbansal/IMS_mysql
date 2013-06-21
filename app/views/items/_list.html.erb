@@ -28,8 +28,8 @@
       <% if current_user.admin? %>
       <td><%= list.cost %></td>
       <% end %>
-      <td><%= list.lifeCycle %></td>
-      <td><%= list.leadTime %></td>
+      <td><%= toSensibleWords(toSensibleTime(list.lifeCycle)) %></td>
+      <td><%= toSensibleWords toSensibleTime list.leadTime %></td>
       <td><%= list.minimumStock %></td>
       <td><%= list.assetType.capitalize %></td>
       <td><%= if list.vendor != nil

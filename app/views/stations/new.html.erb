@@ -7,11 +7,11 @@
 
       <%= render 'shared/error_messages', object: f.object %>
       <%= label_tag(:nameStation, "Station name:") %>
-      <%= text_field_tag(:nameStation) %>
+      <%= text_field_tag(:nameStation, @station.nameStation) %>
 
       <%= label_tag(:territory_id, "Territory:") %>
       <% territory_array = Territory.all.map { |territory| [territory.nameTerritory, territory.id]} %>
-      <%= select_tag(:territory_id, options_for_select(territory_array)) %>
+      <%= select_tag(:territory_id, options_for_select(territory_array, @station.territory_id)) %>
 
       <%= f.submit "Create new Station", class: "btn  btn-primary" %>
 

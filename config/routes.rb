@@ -1,5 +1,7 @@
 Test2::Application.routes.draw do
 
+  match '/stocks/itemList', to: 'stocks#itemList', via: 'get'
+  match '/stocks/categoryList', to: 'stocks#categoryList', via: 'get'
   match '/stocks/choice', to: 'stocks#choice', via: 'get'
   match '/associates/list', to: 'associates#list', via: 'get'
   match '/details/:id', to: 'items#details' , via: 'get'

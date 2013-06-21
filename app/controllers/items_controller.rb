@@ -12,28 +12,28 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    flash.now[:notice] = "reset lifeCycle and leadTime"
     @item = Item.find(params[:id])
     @category = @item.itemCategory_type
   end
 
   def update
-     item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
-    @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
+    @lifeCycle = params[:lifeCycle].to_i.send(params[:lifeCycleType]).to_i
+    @leadTime = params[:leadTime].to_i.send(params[:leadTimeType]).to_i
 
-    @categoryItem = Item.find(params[:id]).itemCategory
-    @category = Item.find(params[:id]).itemCategory_type
-    @categoryItem.assign_attributes(params[:item][params[:category].downcase.to_s])
-    if @categoryItem.valid?
-      @item = Item.find(params[:id])
-      @item.assign_attributes(item_hash)
-      if @item.valid?
-          @categoryItem.save
-          @item.save
-          redirect_to items_path
-      else
-        render 'edit'
-      end
+    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
+    @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
+    @item = Item.find(params[:id])
+    @categoryItem = @item.itemCategory
+    @category = @item.itemCategory_type
+    @categoryItem.assign_attributes(params[:item][params[:category].downcase.to_sym])
+    @item.assign_attributes(item_hash)
+    if ([@categoryItem, @item].map(&:valid?)).all?
+      @categoryItem.save
+      @item.save
+      redirect_to items_path
     else
+      flash.now[:notice] = "reset lifeCycle and leadTime"
       render 'edit'
     end
   end
@@ -62,10 +62,13 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: params[:item][:lifeCycle], leadTime: params[:item][:leadTime],minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
+    @lifeCycle = params[:lifeCycle].to_i.send(params[:lifeCycleType]).to_i
+    @leadTime = params[:leadTime].to_i.send(params[:leadTimeType]).to_i
+
+    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
     @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
 
-    @categoryItem = params[:category].capitalize.constantize.new(params[:item][params[:category].to_s])
+    @categoryItem = params[:category].capitalize.constantize.new(params[:item][params[:category].to_sym])
     if @categoryItem.valid?
       @item = @categoryItem.items.new(item_hash)
       if @item.valid?
@@ -73,9 +76,11 @@ class ItemsController < ApplicationController
           @item.save
           redirect_to items_path
       else
+        flash.now[:notice] = "reset lifeCycle and leadTime"
         render 'new'
       end
     else
+      flash.now[:notice] = "reset lifeCycle and leadTime"
       render 'new'
     end
   end

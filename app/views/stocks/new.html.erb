@@ -21,41 +21,38 @@
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= hidden_field_tag(:id, @stock.id) %>
-
       <%= label_tag(:station_id, "Station:") %>
       <%  result = user_access_stations(current_user) %>
-      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation")) %>
+      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation", @stock.station_id)) %>
 
       <%= label_tag(:item_id, "Item:") %>
       <%  @items = Item.all %>
-      
-      <%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem")) %>
+      <%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem", @stock.item_id)) %>
 
       <%= label_tag(:poId, "Procurement Id") %>
-      <%= text_field_tag(:poId) %>
+      <%= text_field_tag(:poId, @stock.poId) %>
 
       <%= label_tag(:poDate, "Procurement Date:") %>
-      <%= date_select(:stock,:poDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year) %>
+      <%= date_select(:stock,:poDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.poDate}) %>
 
       <%= label_tag(:invoiceNo, "Invoice Number:") %>
-      <%= text_field_tag(:invoiceNo) %>
+      <%= text_field_tag(:invoiceNo, @stock.invoiceNo) %>
 
       <%= label_tag(:invoiceDate, "Invoice Date:") %>
-      <%= date_select(:stock,:invoiceDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year) %>
+      <%= date_select(:stock,:invoiceDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.invoiceDate}) %>
 
       <%= label_tag(:warrantyPeriod, "Warranty Period:") %>
       <%= timePeriod('warrantyPeriod') %>
       <%= timePeriodType('warrantyPeriod') %>
 
       <%= label_tag(:initialStock, "Initial Stock:") %>
-      <%= text_field_tag(:initialStock) %>
+      <%= text_field_tag(:initialStock, @stock.initialStock) %>
 
       <%= label_tag(:presentStock, "Present Stock:") %>
-      <%= text_field_tag(:presentStock) %>
+      <%= text_field_tag(:presentStock, @stock.presentStock) %>
 
       <%= label_tag(:issuedReason, "Issued Reason") %>
-      <%= text_field_tag(:issuedReason) %>
+      <%= text_field_tag(:issuedReason, @stock.issuedReason) %>
 
       <%= f.submit "Add stock", class: "btn btn-primary" %>
     <% end %>

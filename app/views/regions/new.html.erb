@@ -8,10 +8,10 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= label_tag(:nameRegion, "Region name:") %>
-      <%= text_field_tag(:nameRegion) %>
+      <%= text_field_tag(:nameRegion, @region.nameRegion) %>
 
       <%= label_tag(:idRegion, "Region Id:") %>
-      <%= text_field_tag(:idRegion) %>
+      <%= text_field_tag(:idRegion, @region.idRegion) %>
 
       <%= f.submit "Add region", class: "btn btn-primary" %>
     <% end %>

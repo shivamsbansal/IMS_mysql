@@ -13,12 +13,12 @@ class Stock < ActiveRecord::Base
   validates :item_id, presence: true
   validates :station_id, presence: true
   validates :poId, presence: true
-  validates :poDate, presence: true
+  validates :poDate, presence: {:message => 'is Bank/invalid'}
   validates :invoiceNo, presence: true
-  validates :invoiceDate, presence: true
+  validates :invoiceDate, presence: {:message => 'is Bank/invalid'}
   validates :warrantyPeriod, presence: true
-  validates :initialStock, presence: true
-  validates :presentStock, presence: true
+  validates :initialStock, presence: true, numericality: true
+  validates :presentStock, presence: true, numericality: true
   validates :issuedReason, presence: true
 
   private

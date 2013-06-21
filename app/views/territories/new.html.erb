@@ -8,14 +8,14 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= label_tag(:nameTerritory, "Territory name:") %>
-      <%= text_field_tag(:nameTerritory) %>
+      <%= text_field_tag(:nameTerritory, @territory.nameTerritory) %>
 
       <%= label_tag(:idTerritory, "Territory Id:") %>
-      <%= text_field_tag(:idTerritory) %>
+      <%= text_field_tag(:idTerritory, @territory.idTerritory) %>
 
        <%= label_tag(:region_id, "Region:") %>
       <% region_array = Region.all.map { |region| [region.nameRegion, region.id]} %>
-      <%= select_tag(:region_id, options_for_select(region_array)) %>
+      <%= select_tag(:region_id, options_for_select(region_array, @territory.region_id)) %>
 
       <%= f.submit "Add territory", class: "btn btn-primary" %>
     <% end %>

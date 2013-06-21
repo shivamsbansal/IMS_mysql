@@ -9,16 +9,16 @@
 
       <%= label_tag(:station_id, "Station:") %>
       <% result = user_access_stations(current_user) %>
-      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation")) %>
+      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation", @associate.station_id)) %>
 
       <%= label_tag(:name, "Associate name:") %>
-      <%= text_field_tag(:name) %>
+      <%= text_field_tag(:name, @associate.name) %>
 
       <%= label_tag(:email, "Email:") %>
-      <%= text_field_tag(:email) %>
+      <%= text_field_tag(:email, @associate.email) %>
 
       <%= label_tag(:dateOfJoining, "Date of Joining:") %>
-      <%= date_select(:associate,:dateOfJoining, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year) %>
+      <%= date_select(:associate,:dateOfJoining, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @associate.dateOfJoining}) %>
 
       <%= f.submit "Add associate", class: "btn btn-primary" %>
     <% end %>

@@ -5,6 +5,8 @@
   <%= form_for(@item) do |f| %>
   
   <div class="span5 offset3">
+    <%= render 'shared/error_messages', object: @item %>
+    <%= render 'shared/error_messages', object: @item.itemCategory %>
 
    <%= hidden_field_tag(:category, @category) %>
    <%= hidden_field_tag(:id, @item.id) %>
@@ -18,11 +20,13 @@
     <%= f.label :cost, 'Cost Per Item' %>
     <%= f.text_field :cost, step: 1 %>
 
-    <%= f.label :lifeCycle,'Lifecycle' %>
-    <%= f.text_field :lifeCycle %>
+    <%= label_tag(:lifeCycle, "Life Cycle") %>
+    <%= timePeriod('lifeCycle') %>
+    <%= timePeriodType('lifeCycle') %>
 
-    <%= f.label :leadTime, 'Lead Time' %>
-    <%= f.text_field :leadTime %>
+    <%= label_tag(:leadTime, "Lead Time") %>
+    <%= timePeriod('leadTime') %>
+    <%= timePeriodType('leadTime') %>
 
     <%= f.label :minimumStock, 'Minimum Stock' %>
     <%= f.text_field :minimumStock %>
