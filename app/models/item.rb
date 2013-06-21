@@ -1,6 +1,7 @@
 class Item < ActiveRecord::Base
 	belongs_to :itemCategory, :polymorphic =>true
 	belongs_to :vendor, validate: true
+	has_many :stocks, dependent: :restrict
 
 	attr_accessible :codeItem, :nameItem, :lifeCycle, :leadTime, :itemCategory_id, :itemCategory_type, :vendor_id, :minimumStock, :cost, :assetType
 

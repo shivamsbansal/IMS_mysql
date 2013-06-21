@@ -12,7 +12,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    flash.now[:notice] = "reset lifeCycle and leadTime"
     @item = Item.find(params[:id])
     @category = @item.itemCategory_type
   end
@@ -33,7 +32,6 @@ class ItemsController < ApplicationController
       @item.save
       redirect_to items_path
     else
-      flash.now[:notice] = "reset lifeCycle and leadTime"
       render 'edit'
     end
   end
@@ -76,11 +74,9 @@ class ItemsController < ApplicationController
           @item.save
           redirect_to items_path
       else
-        flash.now[:notice] = "reset lifeCycle and leadTime"
         render 'new'
       end
     else
-      flash.now[:notice] = "reset lifeCycle and leadTime"
       render 'new'
     end
   end

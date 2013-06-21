@@ -1,20 +1,5 @@
-<% provide(:title, 'Add stock') %>
-<h1>Add stock</h1> 
-
-
-
-<div class="row">
-  <div class="span4 offset4">
-    <%= form_tag("/stocks/choice", method: :get, remote: true) do %>
-
-      <%= label_tag(:category, "Category:") %>
-      <% @itemCategory = categoryList %>
-      <%= select_tag(:category, options_for_select(@itemCategory)) %>
-
-      <%= submit_tag "Select a category", class: "btn  btn-primary" %>
-  	<% end %>
-  </div>
-</div>
+<% provide(:title, 'Update Stock') %>
+<h1>Update Stock</h1>
 
 <div class="row">
   <div class="span4 offset3">
@@ -44,7 +29,7 @@
 
       <%= label_tag(:warrantyPeriod, "Warranty Period:") %>
       <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value] ) %>
-      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period]) %>
+      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period])%>
 
       <%= label_tag(:initialStock, "Initial Stock:") %>
       <%= text_field_tag(:initialStock, @stock.initialStock) %>
@@ -59,4 +44,3 @@
     <% end %>
   </div>
 </div>
-

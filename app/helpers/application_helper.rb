@@ -10,12 +10,12 @@ module ApplicationHelper
     end
   end
 
-  def timePeriod(name)
-  	select_tag(name.to_sym, options_for_select((1..30).each {|n| ["#{n}",n]} ))
+  def timePeriod(name, default)
+  	select_tag(name.to_sym, options_for_select((1..30).each {|n| ["#{n}",n]}, default ))
   end
 
-  def timePeriodType(name)
-   	select_tag("#{name}Type".to_sym, options_for_select(['day','month','year'].each {|n| [n,n]} )) 
+  def timePeriodType(name, default)
+   	select_tag("#{name}Type".to_sym, options_for_select(['day','month','year'].each {|n| [n,n]}, default )) 
   end
 
   def toSensibleTime(seconds)
@@ -37,6 +37,20 @@ module ApplicationHelper
       string = "#{string} #{hash[:days]} days"
     end
     string
+  end
+
+  def toInsensibleTime(seconds)
+    if seconds != nil
+      if (seconds % 31557600) == 0
+        result = {value: (seconds/31557600), period: "year"}
+      elsif (seconds % 2592000) == 0
+        result = {value: (seconds/2592000), period: "month"}
+      else
+        result = {value: (seconds/86400), period: "day"}
+      end
+    else
+      result = {value: 1, period: "day"}
+    end
   end
 
 end

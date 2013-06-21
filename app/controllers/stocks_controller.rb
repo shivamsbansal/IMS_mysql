@@ -1,4 +1,6 @@
 class StocksController < ApplicationController
+  before_filter :signed_in_user
+  
   def new
   	@stock =Stock.new
   end
@@ -32,7 +34,6 @@ class StocksController < ApplicationController
       flash[:success] = "Stock added"
       redirect_to stocks_path
     else
-      flash.now[:notice] = "reset warranty period"
       render 'new'
     end
   end
@@ -48,14 +49,23 @@ class StocksController < ApplicationController
   end
 
   def itemList
+    result = user_access_stations(current_user)
     @item = Item.find(params[:item_id])
     if params[:station_id] == 'All'
-      @stocks = Stock.where(item_id: params[:item_id])
+      @stocks = []
+      result[:stations].each do |station|
+        @stocks = @stocks + station.stocks.where(item_id: params[:item_id])
+      end
     else
       @stocks = Stock.where(item_id: params[:item_id], station_id: params[:station_id]) 
     end
     respond_to do |format|
       format.js
     end
+  end
+
+  def edit
+    @stock = Stock.find(params[:id])
+    #@category = @item.itemCategory_type
   end
 end

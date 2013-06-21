@@ -21,12 +21,12 @@
     <%= f.text_field :cost, step: 1 %>
 
     <%= label_tag(:lifeCycle, "Life Cycle") %>
-    <%= timePeriod('lifeCycle') %>
-    <%= timePeriodType('lifeCycle') %>
+    <%= timePeriod('lifeCycle', toInsensibleTime(@item.lifeCycle)[:value]) %>
+    <%= timePeriodType('lifeCycle', toInsensibleTime(@item.lifeCycle)[:period]) %>
 
     <%= label_tag(:leadTime, "Lead Time") %>
-    <%= timePeriod('leadTime') %>
-    <%= timePeriodType('leadTime') %>
+    <%= timePeriod('leadTime', toInsensibleTime(@item.leadTime)[:value]) %>
+    <%= timePeriodType('leadTime', toInsensibleTime(@item.leadTime)[:period]) %>
 
     <%= f.label :minimumStock, 'Minimum Stock' %>
     <%= f.text_field :minimumStock %>
