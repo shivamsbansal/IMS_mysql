@@ -54,8 +54,17 @@ class AssociatesController < ApplicationController
   end
 
   def destroy
-    Associate.find(params[:id]).destroy
-    flash[:success] = "Associate destroyed."
+    @associate = Associate.find(params[:id])
+    @assets = @associate.assets
+    @assets.each do |asset|
+      asset.issued = false
+      @stock = asset.stock
+      @stock.presentStock = @stock.presentStock + 1
+      @stock.save
+      @asset.save
+    end
+    @associate.destroy
+    flash[:success] = "Associate destroyed , issued items retained and stock updated"
     redirect_to associates_url
   end
 

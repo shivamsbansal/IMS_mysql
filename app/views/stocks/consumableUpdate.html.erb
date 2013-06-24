@@ -8,11 +8,11 @@
 
 <div class="row">
   <div class="span4 offset3">
-    <%= form_for(@stock, url: 'stocks/present_stock_update') do |f| %>
+    <%= form_for(@stock, url: '/present_stock_update') do |f| %>
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= hidden_field_tag(:id, @stock[:id]) %>
+      <%= hidden_field_tag(:id, @stock.id) %>
 
       <%= label_tag(:consumedStock, "Stock Consumed:") %>
       <%= text_field_tag(:consumedStock) %>

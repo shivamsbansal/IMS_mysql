@@ -7,15 +7,15 @@
 <%= render 'stockList' %>
 
 <div class="row">
-  <div class="span4 offset3">
-    <%= form_for(@asset, url: 'stocks/present_stock_update') do |f| %>
+  <div class="span10 offset1">
+    <%= form_for(@asset, url: '/present_stock_update', method: 'put') do |f| %>
 
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= hidden_field_tag(:id, @stock[:id]) %>
 
-      <%= label_tag(:assetSrNo, "Asset Serial Number:") %>
-      <%= text_field_tag(:assetSrNo) %>
+      <%= label_tag(:assetSrNo, "Asset Serial Numbers (input multiple serial number comma seperated):") %>
+      <%= text_field_tag(:assetSrNo, @asset.assetSrNo) %>
 
       <%= f.submit "Update present stock", class: "btn btn-primary" %>
     <% end %>

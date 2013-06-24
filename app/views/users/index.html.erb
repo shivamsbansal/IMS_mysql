@@ -34,7 +34,7 @@
       </div>
       <div class="span2">
         <% if user.level_id!=nil %>
-          <%= link_to "retain level", "/retainLevel/#{user.id}", method: :delete, data: { confirm: "You sure?" } %>
+          <%= link_to "withdraw level", "/retainLevel/#{user.id}", method: :delete, data: { confirm: "You sure?" } %>
         <% end %>
       </div>
       <div class="span1">

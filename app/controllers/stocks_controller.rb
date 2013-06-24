@@ -30,7 +30,12 @@ class StocksController < ApplicationController
       @invoiceDate=nil
     end
     @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
-    @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:presentStock], issuedReason: params[:issuedReason]  )
+    if Item.find(params[:item_id]).assetType == 'consumable'
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason]  )
+    else 
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason]  )
+    end
+      
     if @stock.save
       flash[:success] = "Stock added"
       redirect_to stocks_path
@@ -89,7 +94,7 @@ class StocksController < ApplicationController
         @invoiceDate=nil
       end
       @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
-      @stock.assign_attributes(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:presentStock], issuedReason: params[:issuedReason]  )
+      @stock.assign_attributes(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], issuedReason: params[:issuedReason]  )
     else
       @disable = true
       @stock.assign_attributes(presentStock: params[:presentStock])
@@ -117,7 +122,7 @@ class StocksController < ApplicationController
   def present_stock_update
     @stock = Stock.find(params[:id])
     if @stock.item.assetType == 'consumable'
-      @stock.presentStock = @stock.presentStock - params[:consumedStock]
+      @stock.presentStock = @stock.presentStock - params[:consumedStock].to_i
       if @stock.save
         flash[:success] = "Present Stock updated"
         redirect_to stocks_path
@@ -125,16 +130,25 @@ class StocksController < ApplicationController
         redirect_to "/present_stock_edit/#{params[:id]}"
       end
     else
-      @stock.presentStock = @stock.presentStock + 1
-      @asset = Asset.new(stock_id: params[:id], assetSrNo: params[:assetSrNo], issued: false)
-      if ([@stock, @asset].map(&:valid?)).all?
-        @stock.save
-        @asset.save
-        flash[:success] = "Present Stock updated"
-        redirect_to stocks_path
-      else
-        redirect_to "/present_stock_edit/#{params[:id]}"
+      @assetSrNo = params[:assetSrNo].split(/,\s*/)
+      @assetSrNo.each do |serialNo|
+        @asset = @stock.assets.build(assetSrNo: serialNo)
+        if @asset.save 
+          @stock.presentStock = @stock.presentStock + 1
+          @stock.save
+        else
+          @stocks = [@stock]
+          @item = @stock.item
+          render "fixedUpdate"
+          return
+        end
       end
+      flash.now[:success] = "Present Stock updated"
+      @assets = @stock.assets
+      @item = @stock.item
+      @stocks = [@stock]
+      render 'asset_list'
     end
   end
+
 end

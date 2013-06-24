@@ -1,0 +1,33 @@
+<% provide(:title, 'Assets') %>
+<h1>Asset List</h1>
+
+<%= render 'stocks/stockList', item: @item %>
+
+<table class="table table-striped table-bordered table-condensed">
+  <caption>Asset List</caption>
+  <thead>
+    <tr>
+      <th>Serial Number</th>
+      <th>Issued to</th>
+      <th>Issue to Associate</th>
+      <th>Delete</th>
+    </tr>
+
+<% if @assets!=nil %>
+  <% @assets.each do |list| %>
+    <tr>
+      <td><%= list.assetSrNo %></td>
+      <% if list.issued == true %>
+      <td><%= link_to list.associate.email, "/assets/issued_list/#{list.associate.id}" %></td>
+      <td>N.A.</td>
+      <% else %>
+      <td>None</td>
+      <td><%=link_to "issue", "/assets/issue_asset/#{list.id}"%></td>
+      <% end %>
+      <td><%= link_to "delete ", list, method: :delete, data: { confirm: "You sure?" } %></td>
+    </tr>     
+  <% end %>
+<% end %>
+
+  </thead>
+</table>

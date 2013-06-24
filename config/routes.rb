@@ -1,6 +1,13 @@
 Test2::Application.routes.draw do
 
-  match '/present_stock_update', to: 'stocks#present_stock_update', via: 'get'
+  match '/assets/withdraw_asset/:id', to: 'assets#withdraw_asset', via: 'get'
+  match '/assets/issued_list/:id', to: 'assets#issued_list', via: 'get'
+  match '/issueAsset', to: 'assets#issueAsset', via: 'put'
+  match '/assets/associate_list', to: 'assets#associate_list', via: 'get'
+  resources :assets, only: [:destroy]
+  match '/assets/issue_asset/:id', to: 'assets#issue_asset', via: 'get'
+  match '/asset_list/:id', to: 'assets#asset_list', via: 'get'
+  match '/present_stock_update', to: 'stocks#present_stock_update', via: 'put'
   match '/present_stock_edit/:id', to: 'stocks#present_stock_edit', via: 'get'
   match '/stocks/itemList', to: 'stocks#itemList', via: 'get'
   match '/stocks/categoryList', to: 'stocks#categoryList', via: 'get'

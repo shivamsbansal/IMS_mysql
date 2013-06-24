@@ -6,14 +6,13 @@ class IssuedItem < ActiveRecord::Base
    
    validates :associate_id, presence: true
    validates :asset_id, presence: true
-   validates :quantity, presence: true , numericality: true
    validates :dateOfIssue, presence: true
    validate :ensure_associate_exist
    validate :ensure_asset_exist
 
    private
 
-   	def ensure_level_exist
+   	def ensure_associate_exist
       if Associate.find(self.associate_id).nil?
         errors.add(:associate_id, 'Associate does not exist')
         false
@@ -22,7 +21,7 @@ class IssuedItem < ActiveRecord::Base
       end
     end
 
-    def ensure_level_exist
+    def ensure_asset_exist
       if Asset.find(self.asset_id).nil?
         errors.add(:asset_id, 'Asset does not exist')
         false
