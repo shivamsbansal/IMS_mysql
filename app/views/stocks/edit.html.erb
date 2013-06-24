@@ -9,36 +9,33 @@
 
       <%= label_tag(:station_id, "Station:") %>
       <%  result = user_access_stations(current_user) %>
-      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation", @stock.station_id)) %>
+      <%= select_tag(:station_id, options_from_collection_for_select(result[:stations], "id","nameStation", @stock.station_id), disabled: @disable) %>
 
       <%= label_tag(:item_id, "Item:") %>
       <%  @items = Item.all %>
-      <%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem", @stock.item_id)) %>
+      <%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem", @stock.item_id), disabled: @disable) %>
 
       <%= label_tag(:poId, "Procurement Id") %>
-      <%= text_field_tag(:poId, @stock.poId) %>
+      <%= text_field_tag(:poId, @stock.poId, disabled: @disable) %>
 
       <%= label_tag(:poDate, "Procurement Date:") %>
-      <%= date_select(:stock,:poDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.poDate}) %>
+      <%= date_select(:stock,:poDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.poDate}, disabled: @disable) %>
 
       <%= label_tag(:invoiceNo, "Invoice Number:") %>
-      <%= text_field_tag(:invoiceNo, @stock.invoiceNo) %>
+      <%= text_field_tag(:invoiceNo, @stock.invoiceNo, disabled: @disable) %>
 
       <%= label_tag(:invoiceDate, "Invoice Date:") %>
-      <%= date_select(:stock,:invoiceDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.invoiceDate}) %>
+      <%= date_select(:stock,:invoiceDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.invoiceDate}, disabled: @disable) %>
 
       <%= label_tag(:warrantyPeriod, "Warranty Period:") %>
-      <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value] ) %>
-      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period])%>
+      <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value], @disable ) %>
+      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period], @disable)%>
 
       <%= label_tag(:initialStock, "Initial Stock:") %>
-      <%= text_field_tag(:initialStock, @stock.initialStock) %>
-
-      <%= label_tag(:presentStock, "Present Stock:") %>
-      <%= text_field_tag(:presentStock, @stock.presentStock) %>
+      <%= text_field_tag(:initialStock, @stock.initialStock, disabled: @disable) %>
 
       <%= label_tag(:issuedReason, "Issued Reason") %>
-      <%= text_field_tag(:issuedReason, @stock.issuedReason) %>
+      <%= select_tag(:issuedReason, options_for_select(['consumed','destroyed','transferred','sold'].each {|n| [n,n]}, @stock.issuedReason ), disabled: @disable) %>
 
       <%= f.submit "Add stock", class: "btn btn-primary" %>
     <% end %>

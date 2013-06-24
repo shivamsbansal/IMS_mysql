@@ -1,5 +1,6 @@
 class StocksController < ApplicationController
   before_filter :signed_in_user
+  before_filter :admin_user, only: [:update, :edit]
   
   def new
   	@stock =Stock.new
@@ -65,7 +66,75 @@ class StocksController < ApplicationController
   end
 
   def edit
+    if current_user.admin?
+      @disable = false
+    else
+      @disable = true
+    end
     @stock = Stock.find(params[:id])
-    #@category = @item.itemCategory_type
+  end
+
+  def update
+    @stock = Stock.find(params[:id])
+    if current_user.admin?
+      @disable = false
+      begin
+        @poDate= Date.new(params[:stock][:'poDate(1i)'].to_i, params[:stock][:'poDate(2i)'].to_i, params[:stock][:'poDate(3i)'].to_i)
+      rescue ArgumentError
+        @poDate=nil
+      end
+      begin
+        @invoiceDate= Date.new(params[:stock][:'invoiceDate(1i)'].to_i, params[:stock][:'invoiceDate(2i)'].to_i, params[:stock][:'invoiceDate(3i)'].to_i)
+      rescue ArgumentError
+        @invoiceDate=nil
+      end
+      @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
+      @stock.assign_attributes(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:presentStock], issuedReason: params[:issuedReason]  )
+    else
+      @disable = true
+      @stock.assign_attributes(presentStock: params[:presentStock])
+    end
+    if @stock.save
+      flash[:success] = "Stock updated"
+      redirect_to stocks_path
+    else
+      render 'edit'
+    end
+  end
+
+  def present_stock_edit
+    @stock = Stock.find(params[:id])
+    @stocks = [@stock]
+    @item = @stock.item
+    if @stock.item.assetType == 'consumable'
+      render 'consumableUpdate'
+    else
+      @asset = Asset.new
+      render 'fixedUpdate'
+    end
+  end
+
+  def present_stock_update
+    @stock = Stock.find(params[:id])
+    if @stock.item.assetType == 'consumable'
+      @stock.presentStock = @stock.presentStock - params[:consumedStock]
+      if @stock.save
+        flash[:success] = "Present Stock updated"
+        redirect_to stocks_path
+      else
+        redirect_to "/present_stock_edit/#{params[:id]}"
+      end
+    else
+      @stock.presentStock = @stock.presentStock + 1
+      @asset = Asset.new(stock_id: params[:id], assetSrNo: params[:assetSrNo], issued: false)
+      if ([@stock, @asset].map(&:valid?)).all?
+        @stock.save
+        @asset.save
+        flash[:success] = "Present Stock updated"
+        redirect_to stocks_path
+      else
+        redirect_to "/present_stock_edit/#{params[:id]}"
+      end
+    end
   end
 end

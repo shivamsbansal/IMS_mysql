@@ -9,8 +9,18 @@ class Asset < ActiveRecord::Base
   validates :stock_id, presence: true
   validates :issued, presence: true
   validate :ensure_stock_exists
+  validate :ensure_present_stock_is_correct
 
   private
+
+    def ensure_present_stock_is_correct
+      if Stock.find(self.stock_id).presentStock - 1 == Stock.assets
+        true
+      else
+        errors.add('Stock')
+        false
+      end
+    end
 
   	def ensure_stock_exists
   		if Stock.find(self.stock_id).nil?

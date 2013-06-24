@@ -43,17 +43,14 @@
       <%= date_select(:stock,:invoiceDate, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year, default: {day: @stock.invoiceDate}) %>
 
       <%= label_tag(:warrantyPeriod, "Warranty Period:") %>
-      <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value] ) %>
-      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period]) %>
+      <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value] , false) %>
+      <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period], false) %>
 
       <%= label_tag(:initialStock, "Initial Stock:") %>
       <%= text_field_tag(:initialStock, @stock.initialStock) %>
 
-      <%= label_tag(:presentStock, "Present Stock:") %>
-      <%= text_field_tag(:presentStock, @stock.presentStock) %>
-
       <%= label_tag(:issuedReason, "Issued Reason") %>
-      <%= text_field_tag(:issuedReason, @stock.issuedReason) %>
+      <%= select_tag(:issuedReason, options_for_select(['consumed','destroyed','transferred','sold'].each {|n| [n,n]}, @stock.issuedReason )) %>
 
       <%= f.submit "Add stock", class: "btn btn-primary" %>
     <% end %>

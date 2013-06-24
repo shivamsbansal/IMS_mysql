@@ -13,7 +13,11 @@
       <th>Initial Stock</th>
       <th>Present Stock</th>
       <th>Issued Reason</th>
-      <th>Update</th>
+      <th>Next Date Of Procurement</th>
+      <th>Update present stock</th>
+      <% if current_user.admin? %>
+      <th>Edit</th>
+      <% end %>
     </tr>
 
 <% if @stocks!=nil %>
@@ -28,7 +32,15 @@
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
       <td><%= list.issuedReason %></td>
-      <td><%=link_to "update", edit_stock_path(list[:id]) %></td>
+      <% if list.item.assetType == 'fixed' %>
+      <td><%= list.invoiceDate + list.item.lifeCycle.seconds - list.item.leadTime.seconds %></td>
+      <% else %>
+      <td>On reaching minimum stock level</td>
+      <% end %>
+      <td><%=link_to "update", "/present_stock_edit/#{list.id}"%></td>
+      <% if current_user.admin? %>
+      <td><%=link_to "edit", edit_stock_path(list[:id]) %></td>
+      <% end %>
     </tr>     
   <% end %>
 <% end %>

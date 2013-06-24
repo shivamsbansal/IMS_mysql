@@ -10,12 +10,12 @@ module ApplicationHelper
     end
   end
 
-  def timePeriod(name, default)
-  	select_tag(name.to_sym, options_for_select((1..30).each {|n| ["#{n}",n]}, default ))
+  def timePeriod(name, default, disable = false)
+  	select_tag(name.to_sym, options_for_select((1..30).each {|n| ["#{n}",n]}, default ), disabled: disable)
   end
 
-  def timePeriodType(name, default)
-   	select_tag("#{name}Type".to_sym, options_for_select(['day','month','year'].each {|n| [n,n]}, default )) 
+  def timePeriodType(name, default, disable = false)
+   	select_tag("#{name}Type".to_sym, options_for_select(['day','month','year'].each {|n| [n,n]}, default ), disabled: disable) 
   end
 
   def toSensibleTime(seconds)
