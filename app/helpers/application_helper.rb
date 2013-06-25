@@ -53,4 +53,9 @@ module ApplicationHelper
     end
   end
 
+  def atleast_one_station
+    if user_access_stations(current_user) == nil
+      redirect_to current_user, notice: "Currently no station assigned"
+    end
+  end
 end

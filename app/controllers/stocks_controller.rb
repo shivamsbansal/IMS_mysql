@@ -1,6 +1,7 @@
 class StocksController < ApplicationController
   before_filter :signed_in_user
   before_filter :admin_user, only: [:update, :edit]
+  before_filter :atleast_one_station
   
   def new
   	@stock =Stock.new
@@ -132,7 +133,7 @@ class StocksController < ApplicationController
     else
       @assetSrNo = params[:assetSrNo].split(/,\s*/)
       @assetSrNo.each do |serialNo|
-        @asset = @stock.assets.build(assetSrNo: serialNo)
+        @asset = @stock.assets.build(assetSrNo: serialNo, issued: false)
         if @asset.save 
           @stock.presentStock = @stock.presentStock + 1
           @stock.save
@@ -147,7 +148,7 @@ class StocksController < ApplicationController
       @assets = @stock.assets
       @item = @stock.item
       @stocks = [@stock]
-      render 'asset_list'
+      render 'assets/asset_list'
     end
   end
 

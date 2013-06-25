@@ -1,5 +1,6 @@
 class AssociatesController < ApplicationController
 	before_filter :signed_in_user
+  before_filter :atleast_one_station
 
   def new
   	@associate=Associate.new

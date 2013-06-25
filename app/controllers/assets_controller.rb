@@ -48,7 +48,7 @@ class AssetsController < ApplicationController
   def destroy
   	@asset = Asset.find(params[:id])
   	@stock = @asset.stock
-    if @asset.issued == false
+    if @asset.issued != true
   	 @stock.presentStock = @stock.presentStock - 1
   	end
     @stock.save
