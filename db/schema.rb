@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625060940) do
+ActiveRecord::Schema.define(:version => 20130625114139) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(:version => 20130625060940) do
     t.string   "size"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "issued_consumables", :force => true do |t|
+    t.integer  "stock_id"
+    t.integer  "associate_id"
+    t.date     "dateOfIssue"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "issued_items", :force => true do |t|

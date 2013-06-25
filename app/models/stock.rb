@@ -3,8 +3,9 @@ class Stock < ActiveRecord::Base
   belongs_to :item
 	has_many :assets, dependent: :destroy
 	has_many :transfers, dependent: :restrict
+  has_many :issued_consumables, dependent: :destroy
 
-	accepts_nested_attributes_for :assets, :transfers
+	accepts_nested_attributes_for :assets, :transfers, :issued_consumables
 
   attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :issuedReason, :inTransit
 
@@ -13,9 +14,9 @@ class Stock < ActiveRecord::Base
   validates :item_id, presence: true
   validates :station_id, presence: true
   validates :poId, presence: true
-  validates :poDate, presence: {:message => 'is Bank/invalid'}
+  validates :poDate, presence: {:message => 'is blank/invalid'}
   validates :invoiceNo, presence: true
-  validates :invoiceDate, presence: {:message => 'is Bank/invalid'}
+  validates :invoiceDate, presence: {:message => 'is blank/invalid'}
   validates :warrantyPeriod, presence: true
   validates :initialStock, presence: true, numericality: true
   validates :presentStock, presence: true, :numericality => { :greater_than_or_equal_to => 0 }

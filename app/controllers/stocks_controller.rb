@@ -190,8 +190,8 @@ class StocksController < ApplicationController
     if @stock.item.assetType == 'consumable'
       if ([@stock, @transfer_stock, @transfer].map(&:valid?)).all?
         @stock.save
-        @transfer[:stock_id] = @stock.id
         @transfer_stock.save
+        @transfer[:stock_id] = @transfer_stock.id
         @transfer.save
         flash[:success] = "Stock Transferred"
         redirect_to stocks_path
@@ -204,8 +204,8 @@ class StocksController < ApplicationController
     elsif @stock.item.assetType == 'fixed'
       if ([@stock, @transfer_stock, @transfer].map(&:valid?)).all?
         @stock.save
-        @transfer[:stock_id] = @stock.id
         @transfer_stock.save
+        @transfer[:stock_id] = @transfer_stock.id
         @transfer.save
         params[:assets].each do |asset_id|
           @asset = Asset.find(asset_id)
@@ -230,11 +230,33 @@ class StocksController < ApplicationController
 
   def station_transfers
     @station = Station.find(params[:station])
-    @transfers_to = Transfers.where(to: params[:station])
-    @transfers_from = Transfers.where(from: params[:station])
+    @transfers_to = Transfers.where(to: params[:station], dateOfReceipt: nil)
+    @transfers_from = Transfers.where(from: params[:station], dateOfReceipt: nil)
     respond_to do |format|
       format.js
     end
+  end
+
+  def acknowledge_receipt_stock
+    @transfer = Transfers.find(params[:id])
+    @stock = Stock.find(@transfer.stock_id)
+    @stock[:inTransit] = false
+    @transfer.dateOfReceipt = Date.today
+    if ([@stock, @transfer].map(&:valid?)).all?
+      @stock.save
+      @transfer.save
+      flash[:success] = "acknowledged"
+      redirect_to '/transfers_list'
+    else
+      flash[:notice] = "error"
+      redirect_to '/transfers_list'
+    end
+  end
+
+  def show_stock
+    @stock = Stock.find(params[:id])
+    @stocks = [@stock]
+    @item = @stock.item
   end
 
 end

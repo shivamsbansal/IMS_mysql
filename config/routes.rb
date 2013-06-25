@@ -1,5 +1,9 @@
 Test2::Application.routes.draw do
 
+  match '/consumables/withdraw/:id', to: 'consumables#withdraw', via: 'get'
+  match '/show_stock/:id', to: 'stocks#show_stock', via: 'get'
+  match '/issueConsumable', to: 'consumables#issueConsumable', via: 'put'
+  match '/consumable_issue/:id', to: 'consumables#consumable_issue', via: 'get'
   match '/station_transfers', to: 'stocks#station_transfers', via: 'get'
   match '/transfers_list', to: 'stocks#transfers_list', via: 'get'
   match '/initialise_transfer_stock/:id', to: 'stocks#initialise_transfer_stock', via: 'get'

@@ -1,0 +1,52 @@
+<% provide(:title, 'Consumable Issue') %>
+<h1>Consumable Issue</h1>
+
+<div id="item_details">
+</div>
+
+<%= render 'stocks/itemDetails', item: @item %>
+
+<table class="table table-striped table-bordered table-condensed">
+  <caption>Consumable Details</caption>
+  <thead>
+    <tr>
+      <th>Station</th>
+      <th>Stock Id</th>
+      <th>Invoice Number</th>
+      <th>Item Name</th>
+      <th>Warranty Period</th>
+      <th>Present Stock</th>
+    </tr>
+
+	<% if @stock!=nil %>
+    <tr>
+      <td><%= @station.nameStation %></td>
+      <td><%= @stock.id %></td>
+      <td><%= @stock.invoiceNo %></td>
+      <td><%= @stock.item.nameItem %></td>
+      <td><%= toSensibleWords toSensibleTime @stock.warrantyPeriod %></td>
+      <td><%= @stock.presentStock %></td>
+    </tr>
+	<% end %>
+
+  </thead>
+</table>
+
+<div class="row">
+  <div class="span4 offset4">
+    <%= form_tag("/issueConsumable", method: "put") do %>
+	
+			<%= hidden_field_tag(:stock_id, @stock.id) %>
+
+    	<%= label_tag(:dateOfIssue, "Date of Issue:") %>
+      <%= date_select(:issued_consumable,:dateOfIssue, :order => [:day, :month, :year], :start_year => Time.now.year - 20, :end_year => Time.now.year) %>
+
+     	<%= label_tag(:associate_id, "Associate:") %>
+			<% @array = @associates.map {|f| ["#{f.name}, #{f.dateOfJoining}",f.id] } %>
+			<%= select_tag(:associate_id, options_for_select(@array)) %>
+
+      <%= submit_tag "Issue Consumable", class: "btn  btn-primary" %>
+  	<% end %>
+
+	</div>
+</div>

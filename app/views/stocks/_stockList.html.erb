@@ -19,6 +19,8 @@
       <% if @item.assetType == 'fixed' %>
       <th>Next Date Of Procurement</th>
       <th>View asset list</th>
+      <% else %>
+      <th>Issue stock</th>
       <% end %>
       <th>Update present stock</th>
       <th>Transfer</th>
@@ -28,9 +30,13 @@
     </tr>
 
 <% if @stocks!=nil %>
+  <%  total_initial_stock = 0 
+      total_present_stock = 0 %>
   <% @stocks.each do |list| %>
   <% if list.inTransit == false %>
     <tr>
+      <%  total_initial_stock += list.initialStock 
+          total_present_stock += list.presentStock %>
       <td><%= list.station.nameStation %></td>
       <td><%= list.poId %></td>
       <td><%= list.poDate %></td>
@@ -43,9 +49,16 @@
       <% if list.item.assetType == 'fixed' %>
       <td><%= list.invoiceDate + list.item.lifeCycle.seconds - list.item.leadTime.seconds %></td>
       <td><%=link_to "view", "/asset_list/#{list.id}"%></td>
+      <% else %>
+      <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
       <% end %>
-      <td><%=link_to "update", "/present_stock_edit/#{list.id}"%></td>
-      <td><%=link_to "transfer", "/initialise_transfer_stock/#{list.id}"%></td>
+      <% if list.presentStock > 0 %>
+      <td><%=link_to "update", "/present_stock_edit/#{list.id}" %></td>
+      <td><%=link_to "transfer", "/initialise_transfer_stock/#{list.id}" %></td>
+      <% else %>
+      <td>N.A.</td>
+      <td>N.A.</td>
+      <% end %>
       <% if current_user.admin? %>
       <td><%=link_to "edit", edit_stock_path(list[:id]) %></td>
       <% end %>
@@ -56,3 +69,5 @@
 
   </thead>
 </table>
+
+<strongd><%= "Total initial stock: #{total_initial_stock},  Total present stock: #{total_present_stock}" %></strong>

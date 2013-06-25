@@ -2,7 +2,7 @@ class IssuedItem < ActiveRecord::Base
    belongs_to :associate
    belongs_to :asset
 
-   attr_accessible :asset_id, :associate_id, :dateOfIssue, :quantity
+   attr_accessible :asset_id, :associate_id, :dateOfIssue
    
    validates :associate_id, presence: true
    validates :asset_id, presence: true

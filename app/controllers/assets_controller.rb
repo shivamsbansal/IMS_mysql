@@ -1,5 +1,6 @@
 class AssetsController < ApplicationController
 	before_filter :signed_in_user
+  before_filter :atleast_one_station
 
   def asset_list
     @stock = Stock.find(params[:id])
@@ -35,7 +36,7 @@ class AssetsController < ApplicationController
       @issued_item.save
       flash[:success] = "Successfully issued"
     else
-      flash[:error] = "Unsuccessfull issue"
+      flash[:error] = "Unsuccessfull issue check date"
     end
     redirect_to "/asset_list/#{@stock.id}"
   end
@@ -43,6 +44,7 @@ class AssetsController < ApplicationController
   def issued_list
     @associate = Associate.find(params[:id])
     @assets = @associate.assets
+    @consumables = @associate.issued_consumables
   end
 
   def destroy

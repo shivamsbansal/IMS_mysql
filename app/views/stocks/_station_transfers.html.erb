@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>Station</th>
+      <th>Item name</th>
       <th>PO Id</th>
       <th>PO Date</th>
       <th>Invoice No.</th>
@@ -10,8 +11,9 @@
       <th>Warranty Period</th>
       <th>Initial Stock</th>
       <th>Present Stock</th>
-      <th>Issued Reason</th>
+      <th>Date Of Dispatch</th>
       <th>From</th>
+      <th>Acknowledge</th>
     </tr>
 
 <% if @transfers_to!=nil %>
@@ -19,6 +21,7 @@
     <tr>
       <% list = transfer.stock %>
       <td><%= list.station.nameStation %></td>
+      <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
       <td><%= list.poDate %></td>
       <td><%= list.invoiceNo %></td>
@@ -26,8 +29,9 @@
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
-      <td><%= list.issuedReason %></td>
+      <td><%= transfer.dateOfDispatch %></td>
       <td><%= Station.find(transfer.from).nameStation %></td>
+      <td><%= link_to "acknowledge", "/acknowledge_receipt_stock/#{transfer.id}" %>
     </tr>     
   <% end %>
 <% end %>
@@ -40,6 +44,7 @@
   <thead>
     <tr>
       <th>Station</th>
+      <th>Item Name</th>
       <th>PO Id</th>
       <th>PO Date</th>
       <th>Invoice No.</th>
@@ -47,7 +52,7 @@
       <th>Warranty Period</th>
       <th>Initial Stock</th>
       <th>Present Stock</th>
-      <th>Issued Reason</th>
+      <th>Date Of Dispatch</th>
       <th>To</th>
     </tr>
 
@@ -56,6 +61,7 @@
     <tr>
       <% list = transfer.stock %>
       <td><%= list.station.nameStation %></td>
+      <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
       <td><%= list.poDate %></td>
       <td><%= list.invoiceNo %></td>
@@ -63,7 +69,7 @@
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
-      <td><%= list.issuedReason %></td>
+      <td><%= transfer.dateOfDispatch %></td>
       <td><%= Station.find(transfer.to).nameStation %></td>
     </tr>     
   <% end %>
