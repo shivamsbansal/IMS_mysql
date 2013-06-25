@@ -1,5 +1,10 @@
 Test2::Application.routes.draw do
 
+  match '/station_transfers', to: 'stocks#station_transfers', via: 'get'
+  match '/transfers_list', to: 'stocks#transfers_list', via: 'get'
+  match '/initialise_transfer_stock/:id', to: 'stocks#initialise_transfer_stock', via: 'get'
+  match '/transfer_stock', to: 'stocks#transfer_stock', via: 'post'
+  match '/acknowledge_receipt_stock/:id', to: 'stocks#acknowledge_receipt_stock', via: 'get' 
   match '/assets/withdraw_asset/:id', to: 'assets#withdraw_asset', via: 'get'
   match '/assets/issued_list/:id', to: 'assets#issued_list', via: 'get'
   match '/issueAsset', to: 'assets#issueAsset', via: 'put'

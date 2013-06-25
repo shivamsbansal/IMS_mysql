@@ -128,7 +128,10 @@ class StocksController < ApplicationController
         flash[:success] = "Present Stock updated"
         redirect_to stocks_path
       else
-        redirect_to "/present_stock_edit/#{params[:id]}"
+        @stock.presentStock += params[:consumedStock].to_i
+        @stocks = [@stock]
+        @item = @stock.item
+        render "consumableUpdate"
       end
     else
       @assetSrNo = params[:assetSrNo].split(/,\s*/)
@@ -149,6 +152,88 @@ class StocksController < ApplicationController
       @item = @stock.item
       @stocks = [@stock]
       render 'assets/asset_list'
+    end
+  end
+
+  def initialise_transfer_stock
+    @stock = Stock.find(params[:id])
+    @stocks = [@stock]
+    @transfer = Transfers.new
+    @item = @stock.item
+    if @stock.item.assetType == 'consumable'
+      render 'consumable_transfer'
+    else
+      @assets = @stock.assets
+      render 'fixed_transfer'
+    end
+  end
+
+  def transfer_stock
+    begin
+      @date= Date.new(params[:transfer][:'dateOfDispatch(1i)'].to_i, params[:transfer][:'dateOfDispatch(2i)'].to_i, params[:transfer][:'dateOfDispatch(3i)'].to_i)
+    rescue ArgumentError
+      @date=nil
+    end
+    @stock = Stock.find(params[:id])
+    @transfer_stock = myclone(params[:id])
+    if @stock.item.assetType == 'consumable'
+      @quantity = params[:quantity].to_i
+    else
+      @quantity = params[:assets].size
+    end
+    @transfer_stock[:initialStock] = @quantity
+    @transfer_stock[:presentStock] = @quantity
+    @transfer_stock[:station_id] = params[:station_id]
+    @transfer_stock[:inTransit] = true
+    @stock.presentStock = @stock.presentStock - @quantity
+    @transfer = Transfers.new(from: @stock.station_id, to: params[:station_id], dateOfDispatch: @date)
+    if @stock.item.assetType == 'consumable'
+      if ([@stock, @transfer_stock, @transfer].map(&:valid?)).all?
+        @stock.save
+        @transfer[:stock_id] = @stock.id
+        @transfer_stock.save
+        @transfer.save
+        flash[:success] = "Stock Transferred"
+        redirect_to stocks_path
+      else
+        @stock.presentStock += @quantity
+        @stocks = [@stock]
+        @item = @stock.item
+        render 'consumable_transfer'
+      end
+    elsif @stock.item.assetType == 'fixed'
+      if ([@stock, @transfer_stock, @transfer].map(&:valid?)).all?
+        @stock.save
+        @transfer[:stock_id] = @stock.id
+        @transfer_stock.save
+        @transfer.save
+        params[:assets].each do |asset_id|
+          @asset = Asset.find(asset_id)
+          @asset.update_attributes(stock_id: @transfer_stock.id)
+        end
+        flash[:success] = "Stock Transferred"
+        redirect_to stocks_path
+      else
+        @stock.presentStock += @quantity
+        @stocks = [@stock]
+        @assets = @stock.assets
+        @item = @stock.item
+        render 'fixed_transfer'
+      end
+    end
+  end 
+
+  def transfers_list
+    @stations = user_access_stations(current_user)
+    @stationList = @stations[:stations].map { |station| [station.nameStation, station.id]}
+  end
+
+  def station_transfers
+    @station = Station.find(params[:station])
+    @transfers_to = Transfers.where(to: params[:station])
+    @transfers_from = Transfers.where(from: params[:station])
+    respond_to do |format|
+      format.js
     end
   end
 

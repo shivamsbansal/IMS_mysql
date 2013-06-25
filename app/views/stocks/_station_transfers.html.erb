@@ -1,0 +1,73 @@
+<table class="table table-striped table-bordered table-condensed">
+  <caption><%= "Transfers to #{@station.nameStation}" %></caption>
+  <thead>
+    <tr>
+      <th>Station</th>
+      <th>PO Id</th>
+      <th>PO Date</th>
+      <th>Invoice No.</th>
+      <th>Invoice Date</th>
+      <th>Warranty Period</th>
+      <th>Initial Stock</th>
+      <th>Present Stock</th>
+      <th>Issued Reason</th>
+      <th>From</th>
+    </tr>
+
+<% if @transfers_to!=nil %>
+  <% @transfers_to.each do |transfer| %>
+    <tr>
+      <% list = transfer.stock %>
+      <td><%= list.station.nameStation %></td>
+      <td><%= list.poId %></td>
+      <td><%= list.poDate %></td>
+      <td><%= list.invoiceNo %></td>
+      <td><%= list.invoiceDate %></td>
+      <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
+      <td><%= list.initialStock %></td>
+      <td><%= list.presentStock %></td>
+      <td><%= list.issuedReason %></td>
+      <td><%= Station.find(transfer.from).nameStation %></td>
+    </tr>     
+  <% end %>
+<% end %>
+
+  </thead>
+</table>
+
+<table class="table table-striped table-bordered table-condensed">
+  <caption><%= "Transfers from #{@station.nameStation}" %></caption>
+  <thead>
+    <tr>
+      <th>Station</th>
+      <th>PO Id</th>
+      <th>PO Date</th>
+      <th>Invoice No.</th>
+      <th>Invoice Date</th>
+      <th>Warranty Period</th>
+      <th>Initial Stock</th>
+      <th>Present Stock</th>
+      <th>Issued Reason</th>
+      <th>To</th>
+    </tr>
+
+<% if @transfers_from!=nil %>
+  <% @transfers_from.each do |transfer| %>
+    <tr>
+      <% list = transfer.stock %>
+      <td><%= list.station.nameStation %></td>
+      <td><%= list.poId %></td>
+      <td><%= list.poDate %></td>
+      <td><%= list.invoiceNo %></td>
+      <td><%= list.invoiceDate %></td>
+      <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
+      <td><%= list.initialStock %></td>
+      <td><%= list.presentStock %></td>
+      <td><%= list.issuedReason %></td>
+      <td><%= Station.find(transfer.to).nameStation %></td>
+    </tr>     
+  <% end %>
+<% end %>
+
+  </thead>
+</table>

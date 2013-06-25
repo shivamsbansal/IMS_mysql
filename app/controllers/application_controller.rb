@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
   include StationsHelper
   include ItemsHelper
   include ApplicationHelper
+  include StocksHelper
 end
