@@ -18,21 +18,21 @@ class RegionsController < ApplicationController
 	def update
 		@region = Region.find(params[:id])
 		if @region.update_attributes(nameRegion: params[:nameRegion], idRegion: params[:idRegion])
-	      flash[:success] = "Region updated"
-	      redirect_to regions_path
-	    else
-	      render 'edit'
-	    end
+      flash[:success] = "Region updated"
+      redirect_to regions_path
+    else
+      render 'edit'
+    end
 	end
 
 	def create
 		@region = Region.new(nameRegion: params[:nameRegion], idRegion: params[:idRegion])
-	  	if @region.save
-	      flash[:success] = "Successfully added #{@region.nameRegion}"
-	      redirect_to regions_path
-	    else
-	    	render 'new'
-	  	end
+  	if @region.save
+      flash[:success] = "Successfully added #{@region.nameRegion}"
+      redirect_to regions_path
+    else
+    	render 'new'
+  	end
 	end
 
 end

@@ -52,7 +52,7 @@
       <% else %>
       <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
       <% end %>
-      <% if list.presentStock > 0 %>
+      <% if list.presentStock > 0 || list.item.assetType != 'consumable'%>
       <td><%=link_to "update", "/present_stock_edit/#{list.id}" %></td>
       <td><%=link_to "transfer", "/initialise_transfer_stock/#{list.id}" %></td>
       <% else %>

@@ -178,8 +178,12 @@ class StocksController < ApplicationController
     @transfer_stock = myclone(params[:id])
     if @stock.item.assetType == 'consumable'
       @quantity = params[:quantity].to_i
-    else
+    elsif @stock.item.assetType == 'fixed' &&params[:assets] != nil
       @quantity = params[:assets].size
+    else
+      flash[:notice] = "No assets to transfer"
+      redirect_to "/asset_list/#{params[:id]}"
+      return
     end
     @transfer_stock[:initialStock] = @quantity
     @transfer_stock[:presentStock] = @quantity
