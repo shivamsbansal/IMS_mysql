@@ -1,5 +1,11 @@
 Test2::Application.routes.draw do
 
+  match '/alerts_lifecycle', to: 'stocks#alerts_lifecycle', via: 'get'
+  match '/calculate_lifecycle_alerts', to: 'stocks#calculate_lifecycle_alerts', via: 'get'
+  match '/remove_alert/:id', to: 'stocks#remove_alert', via: 'get'
+  match '/alerts_minimum', to: 'stocks#alerts_minimum', via: 'get'
+  match '/stations_cost', to: 'stocks#stations_cost', via: 'get'
+  match '/total_costs', to: 'stocks#total_costs', via: 'get'
   match '/consumables/withdraw/:id', to: 'consumables#withdraw', via: 'get'
   match '/show_stock/:id', to: 'stocks#show_stock', via: 'get'
   match '/issueConsumable', to: 'consumables#issueConsumable', via: 'put'

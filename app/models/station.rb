@@ -3,6 +3,7 @@ class Station < ActiveRecord::Base
 	has_many :associates ,dependent: :restrict
 	has_many :stocks, dependent: :restrict
 	belongs_to :territory, validate: true
+	has_many :items, through: :stocks
 
 	accepts_nested_attributes_for :users
 	attr_accessible :nameStation, :territory_id

@@ -1,0 +1,61 @@
+<% provide(:title, 'Stock alerts') %>
+<h1>Stock alerts</h1>
+
+<h2>Station: <%= @station.nameStation %></h2>
+
+<strong>Start Date: <%= @dateStart.strftime('%d %b %Y') %></strong><br>
+<strong>End Date: <%= @dateEnd.strftime('%d %b %Y') %></strong>
+
+<table class="table table-striped table-bordered table-condensed">
+  <caption>For Fixed Items</caption>
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Item name</th>
+      <th>Initial Stock</th>
+      <th>Present Stock</th>
+      <th>Date of invoice</th>
+      <th>Next Date of procurement</th>
+    </tr>
+
+<% if @lifecycle_fixed!=nil %>
+  <% @lifecycle_fixed.each do |ms| %>
+    <tr>
+      <td><%= link_to 'details', "/show_stock/#{ms.id}"%></td>
+      <td><%= ms.item.nameItem %></td>
+      <td><%= ms.initialStock %></td>
+      <td><%= ms.presentStock %></td>
+      <td><%= ms.invoiceDate.strftime('%d %b %Y') %></td>
+      <td><%= (ms.invoiceDate + ms.item.lifeCycle.seconds - ms.item.leadTime.seconds).to_date.strftime('%d %b %Y') %></td>
+    </tr>     
+  <% end %>
+<% end %>
+
+  </thead>
+</table>
+
+<table class="table table-striped table-bordered table-condensed">
+  <caption>For Consumable Items</caption>
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Item name</th>
+      <th>Present Stock</th>
+      <th>Quantity to be Issued</th>
+    </tr>
+
+<% if @lifecycle_consumable!=nil %>
+  <% @lifecycle_consumable.each do |list| %>
+    <tr>
+    	<% ms = list.first %>
+      <td><%= link_to 'details', "/show_stock/#{ms.id}"%></td>
+      <td><%= ms.item.nameItem %></td>
+      <td><%= ms.presentStock %></td>
+      <td><%= list.last %></td>
+    </tr>     
+  <% end %>
+<% end %>
+
+  </thead>
+</table>
+

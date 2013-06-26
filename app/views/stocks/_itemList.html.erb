@@ -1,2 +1,8 @@
-<%  @items = Item.where(itemCategory_type: @category.capitalize) %>
-<%= select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem")) %>
+<%=  if @category != 'All'
+		@items = Item.where(itemCategory_type: @category.capitalize)
+		select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem"))
+		else
+		@items = Item.all
+		select_tag(:item_id,content_tag(:option,'All',:value=>"All") + options_from_collection_for_select(@items, "id","nameItem"))
+		end
+%>

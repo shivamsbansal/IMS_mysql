@@ -1,7 +1,7 @@
 module StationsHelper
 
 	def user_access_stations(user)
-		@result ||= aux_user_access_stations(user)
+		@user_access_stations ||= aux_user_access_stations(user)
 	end
 
 	def aux_user_access_stations(user)

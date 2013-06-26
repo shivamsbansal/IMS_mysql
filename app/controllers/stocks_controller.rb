@@ -57,14 +57,26 @@ class StocksController < ApplicationController
 
   def itemList
     result = user_access_stations(current_user)
-    @item = Item.find(params[:item_id])
-    if params[:station_id] == 'All'
-      @stocks = []
-      result[:stations].each do |station|
-        @stocks = @stocks + station.stocks.where(item_id: params[:item_id])
+    if params[:item_id] != 'All'
+      @item = Item.find(params[:item_id])
+      if params[:station_id] == 'All'
+        @stocks = []
+        result[:stations].each do |station|
+          @stocks = @stocks + station.stocks.where(item_id: params[:item_id])
+        end
+      else
+        @stocks = Stock.where(item_id: params[:item_id], station_id: params[:station_id]) 
       end
     else
-      @stocks = Stock.where(item_id: params[:item_id], station_id: params[:station_id]) 
+      @item = nil
+      if params[:station_id] == 'All'
+        @stocks = []
+        result[:stations].each do |station|
+          @stocks = @stocks + station.stocks
+        end
+      else
+        @stocks = Stock.where(station_id: params[:station_id]) 
+      end
     end
     respond_to do |format|
       format.js
@@ -261,6 +273,93 @@ class StocksController < ApplicationController
     @stock = Stock.find(params[:id])
     @stocks = [@stock]
     @item = @stock.item
+  end
+
+  def total_costs
+    @stations = user_access_stations(current_user)[:stations]
+  end
+
+  def stations_cost
+    @total_cost = 0
+    if params[:stations] != nil
+      @stations = Station.find(params[:stations])
+      @stations.each do |station|
+        @stocks = station.stocks.where(inTransit: false)
+        @stocks.each do |stock|
+          @total_cost += stock.presentStock * stock.item.cost
+        end
+      end
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def alerts_minimum
+    @stations = user_access_stations(current_user)[:stations] 
+    @minimum_stocks = []
+    @stations.each do |station|
+      @stocks = station.stocks.where(inTransit: false, alert: true)
+      @stocks.each do |stock|
+        if stock.item.minimumStock > stock.presentStock
+          @minimum_stocks += [stock]
+        end
+      end
+    end
+  end
+
+  def remove_alert
+    @stock = Stock.find(params[:id])
+    @stock.alert = false
+    if @stock.save
+      flash[:success] = "Alert removed"
+    else
+      flash[:error] = "Alert not removed"
+    end
+    redirect_to '/alerts'
+  end
+
+  def alerts_lifecycle
+    @stations = user_access_stations(current_user)
+    @stationList = @stations[:stations].map { |station| [station.nameStation, station.id]}
+  end
+
+  def calculate_lifecycle_alerts
+    @goes = false
+    begin
+      @dateEnd= Date.new(params[:alert][:'dateEnd(1i)'].to_i, params[:alert][:'dateEnd(2i)'].to_i, params[:alert][:'dateEnd(3i)'].to_i)
+    rescue ArgumentError
+      @dateEnd=nil
+    end
+
+    begin
+      @dateStart= Date.new(params[:alert][:'dateStart(1i)'].to_i, params[:alert][:'dateStart(2i)'].to_i, params[:alert][:'dateStart(3i)'].to_i)
+    rescue ArgumentError
+      @dateStart=nil
+    end
+    @lifecycle_fixed = []
+    @lifecycle_consumable = []
+    @station = Station.find(params[:station])
+    @stocks = @station.stocks.where(inTransit: false)
+    @stocks.each do |stock|
+      @item = stock.item
+      @next_dateOfPro = (stock.invoiceDate + @item.lifeCycle.seconds - @item.leadTime.seconds).to_date
+      if @item.assetType == 'fixed' && @next_dateOfPro >= @dateStart && @next_dateOfPro <= @dateEnd
+        @lifecycle_fixed += [stock]
+      elsif @item.assetType = 'consumable'
+        @issued_consumables = stock.issued_consumables
+        @count = 0
+        @issued_consumables.each do |consumable|
+          @next_dateOfIssue = (consumable.dateOfIssue + @item.lifeCycle.seconds).to_date
+          if  @next_dateOfIssue >= @dateStart && @next_dateOfIssue <= @dateEnd
+            @count += 1
+          end
+        end
+        if @count != 0
+          @lifecycle_consumable += [[stock, @count]]
+        end
+      end
+    end
   end
 
 end

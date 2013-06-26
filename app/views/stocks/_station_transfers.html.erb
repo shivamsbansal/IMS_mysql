@@ -23,13 +23,13 @@
       <td><%= list.station.nameStation %></td>
       <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
-      <td><%= list.poDate %></td>
+      <td><%= list.poDate.strftime('%d %b %Y') %></td>
       <td><%= list.invoiceNo %></td>
-      <td><%= list.invoiceDate %></td>
+      <td><%= list.invoiceDate.strftime('%d %b %Y') %></td>
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
-      <td><%= transfer.dateOfDispatch %></td>
+      <td><%= transfer.dateOfDispatch.strftime('%d %b %Y') %></td>
       <td><%= Station.find(transfer.from).nameStation %></td>
       <td><%= link_to "acknowledge", "/acknowledge_receipt_stock/#{transfer.id}" %>
     </tr>     
@@ -63,13 +63,13 @@
       <td><%= list.station.nameStation %></td>
       <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
-      <td><%= list.poDate %></td>
+      <td><%= list.poDate.strftime('%d %b %Y') %></td>
       <td><%= list.invoiceNo %></td>
-      <td><%= list.invoiceDate %></td>
+      <td><%= list.invoiceDate.strftime('%d %b %Y') %></td>
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
-      <td><%= transfer.dateOfDispatch %></td>
+      <td><%= transfer.dateOfDispatch.strftime('%d %b %Y') %></td>
       <td><%= Station.find(transfer.to).nameStation %></td>
     </tr>     
   <% end %>
