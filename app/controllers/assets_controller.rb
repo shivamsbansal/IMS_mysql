@@ -4,6 +4,9 @@ class AssetsController < ApplicationController
 
   def asset_list
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @assets = @stock.assets
     @item = @stock.item
     @stocks = [@stock]
@@ -13,6 +16,9 @@ class AssetsController < ApplicationController
     @asset = Asset.find(params[:id])
     @stock = @asset.stock
     @station = @stock.station
+    if can_access_station(@station) == false
+      return
+    end
     @associates = @station.associates
   end
 
@@ -43,6 +49,9 @@ class AssetsController < ApplicationController
 
   def issued_list
     @associate = Associate.find(params[:id])
+    if can_access_station(@associate.station) == false
+      return
+    end
     @assets = @associate.assets
     @consumables = @associate.issued_consumables
   end
@@ -50,6 +59,9 @@ class AssetsController < ApplicationController
   def destroy
   	@asset = Asset.find(params[:id])
   	@stock = @asset.stock
+    if can_access_station(@stock.station) == false
+      return
+    end
     if @asset.issued != true
   	 @stock.presentStock = @stock.presentStock - 1
   	end
@@ -62,6 +74,9 @@ class AssetsController < ApplicationController
   def withdraw_asset
     @asset = Asset.find(params[:id])
     @stock = @asset.stock
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stock.presentStock = @stock.presentStock + 1
     @stock.save
     @asset.issued = false

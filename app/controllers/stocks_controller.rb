@@ -20,6 +20,9 @@ class StocksController < ApplicationController
   end
 
   def create
+    if can_access_station(params[:station_id]) == false
+      return
+    end
     begin
       @poDate= Date.new(params[:stock][:'poDate(1i)'].to_i, params[:stock][:'poDate(2i)'].to_i, params[:stock][:'poDate(3i)'].to_i)
     rescue ArgumentError
@@ -122,6 +125,9 @@ class StocksController < ApplicationController
 
   def present_stock_edit
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stocks = [@stock]
     @item = @stock.item
     if @stock.item.assetType == 'consumable'
@@ -134,6 +140,9 @@ class StocksController < ApplicationController
 
   def present_stock_update
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     if @stock.item.assetType == 'consumable'
       @stock.presentStock = @stock.presentStock - params[:consumedStock].to_i
       if @stock.save
@@ -169,6 +178,9 @@ class StocksController < ApplicationController
 
   def initialise_transfer_stock
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stocks = [@stock]
     @transfer = Transfers.new
     @item = @stock.item
@@ -187,6 +199,9 @@ class StocksController < ApplicationController
       @date=nil
     end
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @transfer_stock = myclone(params[:id])
     if @stock.item.assetType == 'consumable'
       @quantity = params[:quantity].to_i
@@ -246,6 +261,9 @@ class StocksController < ApplicationController
 
   def station_transfers
     @station = Station.find(params[:station])
+    if can_access_station(@station) == false
+      return
+    end
     @transfers_to = Transfers.where(to: params[:station], dateOfReceipt: nil)
     @transfers_from = Transfers.where(from: params[:station], dateOfReceipt: nil)
     respond_to do |format|
@@ -256,6 +274,9 @@ class StocksController < ApplicationController
   def acknowledge_receipt_stock
     @transfer = Transfers.find(params[:id])
     @stock = Stock.find(@transfer.stock_id)
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stock[:inTransit] = false
     @transfer.dateOfReceipt = Date.today
     if ([@stock, @transfer].map(&:valid?)).all?
@@ -271,6 +292,9 @@ class StocksController < ApplicationController
 
   def show_stock
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stocks = [@stock]
     @item = @stock.item
   end
@@ -284,6 +308,9 @@ class StocksController < ApplicationController
     if params[:stations] != nil
       @stations = Station.find(params[:stations])
       @stations.each do |station|
+        if can_access_station(station) == false
+          return
+        end
         @stocks = station.stocks.where(inTransit: false)
         @stocks.each do |stock|
           @total_cost += stock.presentStock * stock.item.cost
@@ -299,6 +326,9 @@ class StocksController < ApplicationController
     @stations = user_access_stations(current_user)[:stations] 
     @minimum_stocks = []
     @stations.each do |station|
+      if can_access_station(station) == false
+        return
+      end
       @stocks = station.stocks.where(inTransit: false, alert: true)
       @stocks.each do |stock|
         if stock.item.minimumStock > stock.presentStock
@@ -310,6 +340,9 @@ class StocksController < ApplicationController
 
   def remove_alert
     @stock = Stock.find(params[:id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stock.alert = false
     if @stock.save
       flash[:success] = "Alert removed"
@@ -340,6 +373,9 @@ class StocksController < ApplicationController
     @lifecycle_fixed = []
     @lifecycle_consumable = []
     @station = Station.find(params[:station])
+    if can_access_station(@station) == false
+      return
+    end
     @stocks = @station.stocks.where(inTransit: false)
     @stocks.each do |stock|
       @item = stock.item

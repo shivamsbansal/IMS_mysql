@@ -30,4 +30,16 @@ module StationsHelper
 			nil
 		end
 	end
+
+
+	def can_access_station(station)
+		if user_access_stations(current_user)[:stations].include? station
+			return true
+		else
+			flash.now[:notice] = "access denied"
+			@user = current_user
+      render 'users/show'
+      return false
+    end
+  end
 end

@@ -5,6 +5,9 @@ class ConsumablesController < ApplicationController
   def consumable_issue
   	@stock = Stock.find(params[:id])
   	@station = @stock.station
+    if can_access_station(@station) == false
+      return
+    end
     @associates = @station.associates
     @item = @stock.item
   end
@@ -18,6 +21,9 @@ class ConsumablesController < ApplicationController
     @issued = IssuedConsumable.new(stock_id: params[:stock_id], associate_id: params[:associate_id], dateOfIssue: @date)
 
     @stock = Stock.find(params[:stock_id])
+    if can_access_station(@stock.station) == false
+      return
+    end
     @stock.presentStock = @stock.presentStock - 1
 
     if ([@stock,@issued].map(&:valid?)).all?
@@ -33,7 +39,13 @@ class ConsumablesController < ApplicationController
   def withdraw
     @consumable = IssuedConsumable.find(params[:id])
     @stock = @consumable.stock
+    if can_access_station(@stock.station) == false
+      return
+    end
     @associate = @consumable.associate
+    if can_access_station(@associate.station) == false
+      return
+    end
     @stock.presentStock = @stock.presentStock + 1
     @stock.save
     @consumable.destroy

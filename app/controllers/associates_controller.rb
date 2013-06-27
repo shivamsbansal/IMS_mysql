@@ -8,10 +8,16 @@ class AssociatesController < ApplicationController
 
   def edit
     @associate = Associate.find(params[:id])
+    if can_access_station(@associate.station) == false
+      return
+    end
   end
 
   def update
 		@associate = Associate.find(params[:id])
+    if can_access_station(@associate.station) == false
+      return
+    end
 		begin
   		@date= Date.new(params[:associate][:'dateOfJoining(1i)'].to_i, params[:associate][:'dateOfJoining(2i)'].to_i, params[:associate][:'dateOfJoining(3i)'].to_i)
   	rescue ArgumentError
@@ -26,6 +32,9 @@ class AssociatesController < ApplicationController
 	end
 
   def create
+    if can_access_station(params[:station_id]) == false
+      return
+    end
   	begin
   		@date= Date.new(params[:associate][:'dateOfJoining(1i)'].to_i, params[:associate][:'dateOfJoining(2i)'].to_i, params[:associate][:'dateOfJoining(3i)'].to_i)
   	rescue ArgumentError
@@ -48,6 +57,9 @@ class AssociatesController < ApplicationController
 
 	def list
     @station = Station.find(params[:station])
+    if can_access_station(@station) == false
+      return
+    end
     @associates = @station.associates
     respond_to do |format|
       format.js
@@ -56,6 +68,9 @@ class AssociatesController < ApplicationController
 
   def destroy
     @associate = Associate.find(params[:id])
+    if can_access_station(@associate.station) == false
+      return
+    end
     @assets = @associate.assets
     @assets.each do |asset|
       asset.issued = false
