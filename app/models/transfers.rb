@@ -1,5 +1,5 @@
 class Transfers < ActiveRecord::Base
-	 attr_accessible :from, :to, :dateOfDispatch, :dateOfReceipt
+	 attr_accessible :from, :to, :dateOfDispatch, :dateOfReceipt, :comments, :chalanNo
 	 belongs_to :station, foreign_key: "from"
 	 belongs_to :station, foreign_key: "to"
 	 belongs_to :stock

@@ -32,7 +32,7 @@ class AssociatesController < ApplicationController
 	end
 
   def create
-    if can_access_station(params[:station_id]) == false
+    if can_access_station(Station.find(params[:station_id])) == false
       return
     end
   	begin

@@ -30,6 +30,9 @@
 			  <% end %>
 			<% end %>
 
+      <%= label_tag(:comments, "Comments:") %>
+      <%= text_field_tag(:comments, @stock.comments ) %>
+
       <%= f.submit "Transfer stock", class: "btn btn-primary" %>
     <% end %>
   </div>

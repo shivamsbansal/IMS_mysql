@@ -20,7 +20,7 @@ class StocksController < ApplicationController
   end
 
   def create
-    if can_access_station(params[:station_id]) == false
+    if can_access_station(Station.find(params[:station_id])) == false
       return
     end
     begin
@@ -35,9 +35,9 @@ class StocksController < ApplicationController
     end
     @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
     if Item.find(params[:item_id]).assetType == 'consumable'
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason], alert: true, comments: params[:comments]  )
     else 
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason], alert: true, comments: params[:comments]  )
     end
       
     if @stock.save
@@ -212,12 +212,15 @@ class StocksController < ApplicationController
       redirect_to "/asset_list/#{params[:id]}"
       return
     end
+
     @transfer_stock[:initialStock] = @quantity
     @transfer_stock[:presentStock] = @quantity
     @transfer_stock[:station_id] = params[:station_id]
     @transfer_stock[:inTransit] = true
+    @transfer_stock[:comments] = params[:comments]
+
     @stock.presentStock = @stock.presentStock - @quantity
-    @transfer = Transfers.new(from: @stock.station_id, to: params[:station_id], dateOfDispatch: @date)
+    @transfer = Transfers.new(from: @stock.station_id, to: params[:station_id], dateOfDispatch: @date, comments: params[:comments])
     if @stock.item.assetType == 'consumable'
       if ([@stock, @transfer_stock, @transfer].map(&:valid?)).all?
         @stock.save
@@ -395,6 +398,22 @@ class StocksController < ApplicationController
           @lifecycle_consumable += [[stock, @count]]
         end
       end
+    end
+  end
+
+  def transfer_comments
+    @transfer = Transfers.find(params[:id])
+    @comment = @transfer.comments
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def stock_comments
+    @stock = Stock.find(params[:id])
+    @comment = @stock.comments
+    respond_to do |format|
+      format.js
     end
   end
 

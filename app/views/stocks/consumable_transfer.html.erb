@@ -24,6 +24,9 @@
       <%= label_tag(:quantity, "Quantity of Stock Transfer:") %>
       <%= text_field_tag(:quantity) %>
 
+      <%= label_tag(:comments, "Comments:") %>
+      <%= text_field_tag(:comments, @stock.comments ) %>
+
       <%= f.submit "Transfer stock", class: "btn btn-primary" %>
     <% end %>
   </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626072055) do
+ActiveRecord::Schema.define(:version => 20130627172256) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20130626072055) do
     t.datetime "updated_at",                                      :null => false
     t.boolean  "inTransit",                    :default => false
     t.boolean  "alert"
+    t.string   "comments"
   end
 
   create_table "territories", :force => true do |t|
@@ -131,6 +132,8 @@ ActiveRecord::Schema.define(:version => 20130626072055) do
     t.integer  "stock_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "comments"
+    t.string   "chalanNo"
   end
 
   create_table "users", :force => true do |t|

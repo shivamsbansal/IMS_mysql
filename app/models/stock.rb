@@ -8,7 +8,7 @@ class Stock < ActiveRecord::Base
 
 	accepts_nested_attributes_for :assets, :transfers, :issued_consumables
 
-  attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :issuedReason, :inTransit, :alert
+  attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :issuedReason, :inTransit, :alert, :comments
 
   validate :ensure_station_exist
   validate :ensure_item_exist
