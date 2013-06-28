@@ -45,10 +45,12 @@
   </thead>
 </table>
 
+<%= form_tag( '/transfer_print', format: 'pdf', method: 'post') do %>
 <table class="table table-striped table-bordered table-condensed">
   <caption><%= "Transfers from #{@station.nameStation}" %></caption>
   <thead>
     <tr>
+      <th>To print</th>
       <th>Station</th>
       <th>Item Name</th>
       <th>PO Id</th>
@@ -67,6 +69,13 @@
   <% @transfers_from.each do |transfer| %>
     <tr>
       <% list = transfer.stock %>
+      <td>      
+          <% if transfer.chalanNo == nil %>
+          <%= check_box_tag "transfers[]", transfer.id , false %>
+          <% else %>
+          <%= transfer.chalanNo %>
+          <% end %> 
+      </td>
       <td><%= list.station.nameStation %></td>
       <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
@@ -85,3 +94,5 @@
 
   </thead>
 </table>
+<%= submit_tag "Print", class: "btn btn-primary" %>
+<% end %>

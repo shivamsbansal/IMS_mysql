@@ -1,5 +1,6 @@
 Test2::Application.routes.draw do
 
+  match '/transfer_print', to: 'stocks#transfer_print', via: 'post'
   match '/transfer_comments/:id', to: 'stocks#transfer_comments', via: 'get'
   match '/stock_comments/:id', to: 'stocks#stock_comments', via: 'get'
   match '/alerts_lifecycle', to: 'stocks#alerts_lifecycle', via: 'get'

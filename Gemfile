@@ -11,7 +11,7 @@ gem 'bootstrap-sass', '2.3.1.0'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'yaml_db'
-
+gem 'prawn'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

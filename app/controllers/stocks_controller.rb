@@ -199,7 +199,13 @@ class StocksController < ApplicationController
       @date=nil
     end
     @stock = Stock.find(params[:id])
+    
     if can_access_station(@stock.station) == false
+      return
+    end
+    if @stock.station.id == params[:station_id].to_i
+      flash[:notice] = "Stock cannot be transferred to same Station"
+      redirect_to "/initialise_transfer_stock/#{params[:id]}"
       return
     end
     @transfer_stock = myclone(params[:id])
@@ -416,5 +422,32 @@ class StocksController < ApplicationController
       format.js
     end
   end
+
+
+  def transfer_print
+    @transfers = Transfers.find(params[:transfers])
+    send_data(generate_pdf(@transfers), :filename => "output.pdf", :type => "application/pdf") 
+  end
+
+  private 
+    def generate_pdf(transfers)
+      Prawn::Document.new do |pdf|
+        pdf.move_down(30)
+
+        items = transfers.map do |transfer|
+        [
+          transfer.from,
+          transfer.to,
+          transfer.stock.invoiceNo,
+          transfer.stock.item.nameItem,
+          transfer.dateOfDispatch
+        ]
+        end
+
+        pdf.table items
+
+        pdf.move_down(10)
+      end.render 
+    end
 
 end
