@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627172256) do
+ActiveRecord::Schema.define(:version => 20130628103833) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20130627172256) do
     t.date     "dateOfIssue"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "quantity"
   end
 
   create_table "issued_items", :force => true do |t|
@@ -94,8 +95,12 @@ ActiveRecord::Schema.define(:version => 20130627172256) do
   create_table "stations", :force => true do |t|
     t.string   "nameStation"
     t.integer  "territory_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "addr1"
+    t.string   "addr2"
+    t.integer  "pincode"
+    t.string   "contactDetails"
   end
 
   create_table "stocks", :force => true do |t|
@@ -112,7 +117,6 @@ ActiveRecord::Schema.define(:version => 20130627172256) do
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
     t.boolean  "inTransit",                    :default => false
-    t.boolean  "alert"
     t.string   "comments"
   end
 

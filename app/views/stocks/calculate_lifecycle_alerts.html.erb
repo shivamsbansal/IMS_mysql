@@ -12,10 +12,8 @@
     <tr>
       <th>Stock</th>
       <th>Item name</th>
-      <th>Initial Stock</th>
-      <th>Present Stock</th>
       <th>Date of invoice</th>
-      <th>Next Date of procurement</th>
+      <th>Date of expiry</th>
     </tr>
 
 <% if @lifecycle_fixed!=nil %>
@@ -23,10 +21,8 @@
     <tr>
       <td><%= link_to 'details', "/show_stock/#{ms.id}"%></td>
       <td><%= ms.item.nameItem %></td>
-      <td><%= ms.initialStock %></td>
-      <td><%= ms.presentStock %></td>
       <td><%= ms.invoiceDate.strftime('%d %b %Y') %></td>
-      <td><%= (ms.invoiceDate + ms.item.lifeCycle.seconds - ms.item.leadTime.seconds).to_date.strftime('%d %b %Y') %></td>
+      <td><%= (ms.invoiceDate + ms.item.lifeCycle.seconds).to_date.strftime('%d %b %Y') %></td>
     </tr>     
   <% end %>
 <% end %>

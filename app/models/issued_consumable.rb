@@ -2,13 +2,14 @@ class IssuedConsumable < ActiveRecord::Base
   belongs_to :associate
  	belongs_to :stock
 
- 	attr_accessible :associate_id, :stock_id, :dateOfIssue
+ 	attr_accessible :associate_id, :stock_id, :dateOfIssue, :quantity
  
  	validates :associate_id, presence: true
  	validates :stock_id, presence: true
  	validates :dateOfIssue, presence: true
 	validate :ensure_associate_exist
 	validate :ensure_stock_exist
+	validates :quantity, presence: true, numericality: true
 
  	private
 

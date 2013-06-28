@@ -6,22 +6,19 @@
   <thead>
     <tr>
       <th>Station</th>
-      <th>Stock</th>
       <th>Item name</th>
       <th>Minimum stock level</th>
       <th>Present stock</th>
-      <th>Remove alert</th>
     </tr>
 
 <% if @minimum_stocks!=nil %>
-  <% @minimum_stocks.each do |ms| %>
+  <% @minimum_stocks.each do |list| %>
     <tr>
-      <td><%= ms.station.nameStation %></td>
-      <td><%= link_to 'details', "/show_stock/#{ms.id}"%></td>
-      <td><%= ms.item.nameItem %></td>
-      <td><%= ms.item.minimumStock %></td>
-      <td><%= ms.presentStock %></td>
-      <td><%= link_to 'remove alert', "/remove_alert/#{ms.id}"%></td>
+      <% ms = list.first %>
+      <td><%= list.last.nameStation %></td>
+      <td><%= ms.nameItem %></td>
+      <td><%= ms.minimumStock %></td>
+      <td><%= list[1] %></td>
     </tr>     
   <% end %>
 <% end %>

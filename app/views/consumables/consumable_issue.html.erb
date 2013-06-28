@@ -45,6 +45,9 @@
 			<% @array = @associates.map {|f| ["#{f.name}, #{f.dateOfJoining}",f.id] } %>
 			<%= select_tag(:associate_id, options_for_select(@array)) %>
 
+      <%= label_tag(:quantity, "Quantity:") %>
+      <%= text_field_tag(:quantity) %>
+
       <%= submit_tag "Issue Consumable", class: "btn  btn-primary" %>
   	<% end %>
 

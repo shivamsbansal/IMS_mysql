@@ -57,6 +57,7 @@
     <tr>
       <th>Stock</th>
       <th>Item Name</th>
+      <th>Quantity</th>      
       <th>Date Of Issue</th>
       <th>Next Date Of Issue</th>
       <th>Withdraw Consumable</th>
@@ -68,6 +69,7 @@
         <% @stock = list.stock %>
         <td><%= link_to 'details', "/show_stock/#{@stock.id}"%></td>
         <td><%= @stock.item.nameItem %></td>
+        <td><%= list.quantity %></td>
         <td><%= list.dateOfIssue.strftime('%d %b %Y') %></td>
         <td><%= (list.dateOfIssue + @stock.item.lifeCycle.seconds).to_date.strftime('%a %d %b %Y') %></td>
         <td><%= link_to "withdraw", "/consumables/withdraw/#{list.id}" %></td>

@@ -18,13 +18,19 @@ class ConsumablesController < ApplicationController
     rescue ArgumentError
       @date=nil
     end
-    @issued = IssuedConsumable.new(stock_id: params[:stock_id], associate_id: params[:associate_id], dateOfIssue: @date)
+    @issued = IssuedConsumable.new(stock_id: params[:stock_id], associate_id: params[:associate_id], dateOfIssue: @date, quantity: params[:quantity])
 
     @stock = Stock.find(params[:stock_id])
     if can_access_station(@stock.station) == false
       return
     end
-    @stock.presentStock = @stock.presentStock - 1
+    if params[:quantity].to_i > @stock.presentStock
+      flash[:notice] = "issued quantity should be less than present quantity"
+      redirect_to "/consumable_issue/#{@stock.id}"
+      return
+    end
+
+    @stock.presentStock = @stock.presentStock - params[:quantity].to_i
 
     if ([@stock,@issued].map(&:valid?)).all?
       @stock.save
@@ -46,7 +52,7 @@ class ConsumablesController < ApplicationController
     if can_access_station(@associate.station) == false
       return
     end
-    @stock.presentStock = @stock.presentStock + 1
+    @stock.presentStock = @stock.presentStock + @consumable.quantity
     @stock.save
     @consumable.destroy
     flash[:success] = "Consumable withdrawn."

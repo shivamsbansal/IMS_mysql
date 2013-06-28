@@ -4,7 +4,7 @@ class StationsController < ApplicationController
 
 	def update
 		@station = Station.find(params[:id])
-		if @station.update_attributes(nameStation: params[:nameStation], territory_id: params[:territory_id])
+		if @station.update_attributes(nameStation: params[:nameStation], territory_id: params[:territory_id], addr1: params[:addr1], addr2: params[:addr2], pincode: params[:pincode], contactDetails: params[:contactDetails])
 	      flash[:success] = "Territory updated"
 	      redirect_to stations_path
 	  else
@@ -31,7 +31,7 @@ class StationsController < ApplicationController
 	end
 
 	def create
-	  @station = Station.new(nameStation: params[:nameStation], territory_id: params[:territory_id])
+	  @station = Station.new(nameStation: params[:nameStation], territory_id: params[:territory_id], addr1: params[:addr1], addr2: params[:addr2], pincode: params[:pincode], contactDetails: params[:contactDetails])
 	  if @station.save
 	    flash[:success] = "Successfully added #{@station.nameStation}"
 	    redirect_to stations_path

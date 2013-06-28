@@ -6,6 +6,10 @@
   <thead>
     <tr>
       <th>Station Name</th>
+      <th>Address line 1</th>
+      <th>Address line 2</th>
+      <th>Pincode</th>
+      <th>Contact Details</th>
       <th>Territory Id</th>
       <th>Region Id</th>
       <% if current_user.admin? %>
@@ -17,6 +21,10 @@
   <% @stations.each do |station| %>
     <tr>
       <td><%=link_to station.nameStation, '#' %></td>
+      <td><%=station.addr1 %></td>
+      <td><%=station.addr2 %></td>
+      <td><%=station.pincode %></td>
+      <td><%=station.contactDetails %></td>
       <td><%=station.territory.idTerritory %></td>
       <td><%=station.territory.region.idRegion %></td>
       <% if current_user.admin? %>

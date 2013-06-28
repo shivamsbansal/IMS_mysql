@@ -313,17 +313,26 @@ class StocksController < ApplicationController
   end
 
   def stations_cost
-    @total_cost = 0
+    @station_cost = [] 
+    @items = Item.all
     if params[:stations] != nil
       @stations = Station.find(params[:stations])
       @stations.each do |station|
         if can_access_station(station) == false
           return
         end
-        @stocks = station.stocks.where(inTransit: false)
-        @stocks.each do |stock|
-          @total_cost += stock.presentStock * stock.item.cost
+        @total_cost = []
+        @items.each do |item|
+          @stocks = station.stocks.where(inTransit: false, item_id: item.id)
+          @cost = 0
+          if @stocks != []
+            @stocks.each do |stock|
+              @cost += stock.presentStock * stock.item.cost
+            end
+            @total_cost += [[item,@cost]]
+          end
         end
+        @station_cost += [[station,@total_cost]]
       end
     end
     respond_to do |format|
@@ -333,15 +342,22 @@ class StocksController < ApplicationController
 
   def alerts_minimum
     @stations = user_access_stations(current_user)[:stations] 
+    @items = Item.all
     @minimum_stocks = []
     @stations.each do |station|
       if can_access_station(station) == false
         return
       end
-      @stocks = station.stocks.where(inTransit: false, alert: true)
-      @stocks.each do |stock|
-        if stock.item.minimumStock > stock.presentStock
-          @minimum_stocks += [stock]
+      @items.each do |item|
+        @stocks = station.stocks.where(inTransit: false, item_id: item.id)
+        if @stocks != []
+          @presentStock = 0
+          @stocks.each do |stock|
+            @presentStock += stock.presentStock
+          end
+          if item.minimumStock > @presentStock
+            @minimum_stocks += [[item,@presentStock,station]]
+          end
         end
       end
     end

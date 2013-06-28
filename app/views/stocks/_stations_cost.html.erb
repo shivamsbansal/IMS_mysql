@@ -1,4 +1,26 @@
-<br>
-<strong>Total cost: Rs <%= @total_cost %></strong>
-<br>
-<strong>Cost calculated by (Present Stock * Cost Per Item)</strong>
+
+<% @station_cost.each do |station| %>
+<table class="table table-striped table-bordered table-condensed">
+  <caption><strong><%= station.first.nameStation %></strong></caption>
+  <thead>
+    <tr>
+      <th>Item name</th>
+      <th>Cost</th>
+    </tr>
+  <% total = 0 %>
+  <% total_cost = station.last %>
+  <% total_cost.each do |list| %>
+    <tr>
+    	<% total += list.last %>
+      <% item = list.first %>
+      <td><%= item.nameItem %></td>
+      <td><%= list.last %></td>
+    </tr>     
+  <% end %>
+
+  </thead>
+</table>
+
+<strong>Total cost of Present Stock : <%=total %></strong>
+
+<% end %>
