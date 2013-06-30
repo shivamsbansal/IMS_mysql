@@ -387,6 +387,8 @@ class StocksController < ApplicationController
     if can_access_station(@station) == false
       return
     end
+
+    @associate_list = []
     @stocks = @station.stocks.where(inTransit: false)
     @stocks.each do |stock|
       @item = stock.item
@@ -399,7 +401,8 @@ class StocksController < ApplicationController
         @issued_consumables.each do |consumable|
           @next_dateOfIssue = (consumable.dateOfIssue + @item.lifeCycle.seconds).to_date
           if  @next_dateOfIssue >= @dateStart && @next_dateOfIssue <= @dateEnd
-            @count += 1
+            @count += consumable.quantity
+            @associate_list += [consumable]  
           end
         end
         if @count != 0

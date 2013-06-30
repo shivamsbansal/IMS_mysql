@@ -23,7 +23,7 @@ class IssuedConsumable < ActiveRecord::Base
 	  end
 
 	  def ensure_stock_exist
-	    if Asset.find(self.stock_id).nil?
+	    if Stock.find(self.stock_id).nil?
 	      errors.add(:stock_id, 'Stock does not exist')
 	      false
 	    else

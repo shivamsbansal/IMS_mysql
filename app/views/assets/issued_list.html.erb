@@ -71,7 +71,7 @@
         <td><%= @stock.item.nameItem %></td>
         <td><%= list.quantity %></td>
         <td><%= list.dateOfIssue.strftime('%d/%m/%Y') %></td>
-        <td><%= (list.dateOfIssue + @stock.item.lifeCycle.seconds).to_date.strftime('%a %d/%m/%Y') %></td>
+        <td><%= (list.dateOfIssue + @stock.item.lifeCycle.seconds).to_date.strftime('%d/%m/%Y') %></td>
         <td><%= link_to "withdraw", "/consumables/withdraw/#{list.id}" %></td>
       </tr>
   <% end %>
