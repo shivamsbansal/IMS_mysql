@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130629231313) do
 
   create_table "assets", :force => true do |t|
-    t.string   "assetSrNo",  :limit => 20
+    t.string   "assetSrNo",  :limit => 40
     t.integer  "stock_id"
     t.boolean  "issued"
     t.datetime "created_at",               :null => false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
 
   create_table "associates", :force => true do |t|
     t.string   "name",          :limit => 50
-    t.string   "email"      
+    t.string   "email",         :limit => 30
     t.date     "dateOfJoining"
     t.integer  "station_id"
     t.datetime "created_at",                  :null => false
@@ -31,13 +31,13 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
   end
 
   create_table "categories", :force => true do |t|
-    t.string   "nameCategory",  :limit => 30
+    t.string   "nameCategory"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
   create_table "chalan_numbers", :force => true do |t|
-    t.string   "chalanNo",   :limit => 10
+    t.string   "chalanNo",   :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
   end
 
   create_table "items", :force => true do |t|
-    t.string   "nameItem"  , :limit => 50
+    t.string   "nameItem"
     t.integer  "lifeCycle"
     t.integer  "cost"
     t.integer  "leadTime"
@@ -76,10 +76,10 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
     t.string   "itemCategory_type"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.string   "codeItem", :limit => 10
+    t.string   "codeItem"
     t.integer  "vendor_id"
     t.integer  "minimumStock"
-    t.string   "assetType", :limit =>15
+    t.string   "assetType"
   end
 
   create_table "laptops", :force => true do |t|
@@ -92,14 +92,14 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
   end
 
   create_table "regions", :force => true do |t|
-    t.string   "idRegion", :limit => 10
-    t.string   "nameRegion", :limit => 30
+    t.string   "idRegion"
+    t.string   "nameRegion"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "stations", :force => true do |t|
-    t.string   "nameStation",     :limit => 30
+    t.string   "nameStation"
     t.integer  "territory_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
     t.integer  "station_id"
     t.string   "poId",           :limit => 20
     t.date     "poDate"
-    t.string   "invoiceNo",      :limit => 20
+    t.string   "invoiceNo",      :limit => 40
     t.date     "invoiceDate"
     t.integer  "warrantyPeriod"
     t.integer  "initialStock"
@@ -127,11 +127,11 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
   end
 
   create_table "territories", :force => true do |t|
-    t.string   "nameTerritory", :limit => 30
+    t.string   "nameTerritory"
     t.integer  "region_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "idTerritory",   :limit => 10
+    t.string   "idTerritory"
   end
 
   create_table "transfers", :force => true do |t|
@@ -143,11 +143,11 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "comments"
-    t.string   "chalanNo", :limit => 10
+    t.string   "chalanNo"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name", :limit => 50
+    t.string   "name"
     t.string   "email"
     t.integer  "phone",           :limit => 8
     t.string   "password_digest"
@@ -156,11 +156,11 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.integer  "level_id"
-    t.string   "level_type", :limit => 30
+    t.string   "level_type"
   end
 
   create_table "vendors", :force => true do |t|
-    t.string   "nameVendor", :limit => 50
+    t.string   "nameVendor"
     t.string   "email"
     t.integer  "phone",        :limit => 8
     t.datetime "created_at",                 :null => false
