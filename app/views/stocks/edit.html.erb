@@ -34,10 +34,7 @@
       <%= label_tag(:initialStock, "Stock Supplied:") %>
       <%= text_field_tag(:initialStock, @stock.initialStock, disabled: @disable) %>
 
-      <%= label_tag(:issuedReason, "Issued Reason") %>
-      <%= select_tag(:issuedReason, options_for_select(['consumed','destroyed','transferred','sold'].each {|n| [n,n]}, @stock.issuedReason ), disabled: @disable) %>
-
-      <%= f.submit "Add stock", class: "btn btn-primary" %>
+      <%= f.submit "Update stock", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

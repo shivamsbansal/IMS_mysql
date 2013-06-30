@@ -35,13 +35,16 @@ class StocksController < ApplicationController
     end
     @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
     if Item.find(params[:item_id]).assetType == 'consumable'
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason],  comments: params[:comments]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock],  comments: params[:comments]  )
     else 
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason],  comments: params[:comments]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0,  comments: params[:comments]  )
     end
       
     if @stock.save
       flash[:success] = "Stock added"
+      if @stock.item.assetType == 'fixed'
+        flash[:notice] = "Update The Serial Numbers of assets for the stock added"
+      end
       redirect_to stocks_path
     else
       render 'new'
@@ -110,7 +113,7 @@ class StocksController < ApplicationController
         @invoiceDate=nil
       end
       @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
-      @stock.assign_attributes(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], issuedReason: params[:issuedReason]  )
+      @stock.assign_attributes(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock]  )
     else
       @disable = true
       @stock.assign_attributes(presentStock: params[:presentStock])

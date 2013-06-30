@@ -11,6 +11,7 @@
 <% if @stocks!=nil %>
   <%  total_initial_stock = 0 
       total_present_stock = 0 
+      total_issued_stock = 0
       current_station = nil %>
   <% @stocks.each do |list| %>
 
@@ -28,7 +29,7 @@
       <th>Warranty Period</th>
       <th>Stock Supplied</th>
       <th>Present Stock</th>
-      <th>Issued Reason</th>
+      <th>Issued Stock</th>
       <th>Issue stock</th>
       <th>present stock</th>
       <th>Transfer</th>
@@ -51,10 +52,13 @@
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
-      <td><%= list.issuedReason %></td>
       <% if list.item.assetType == 'fixed' %>
+      <td><%= issuedNo = list.assets.where(issued: true).size %></td>
+      <% total_issued_stock += issuedNo %>
       <td><%=link_to "issue", "/asset_list/#{list.id}"%></td>
       <% else %>
+      <td><%= issuedNo = list.issued_consumables.size %></td>
+      <% total_issued_stock += issuedNo %>
       <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
       <% end %>
       <% if list.presentStock > 0 || list.item.assetType != 'consumable'%>
@@ -76,4 +80,4 @@
   </thead>
 </table>
 
-<strong><%= "Total stock supplied: #{total_initial_stock}, Total stock consumed: #{total_initial_stock - total_present_stock}, Total present stock: #{total_present_stock}" %></strong>
+<strong><%= "Total stock supplied: #{total_initial_stock}, Total present stock: #{total_present_stock}, Total issued stock: #{total_issued_stock}, Total stock consumed/transfered/destroyed: #{total_initial_stock - total_present_stock - total_issued_stock}" %></strong>

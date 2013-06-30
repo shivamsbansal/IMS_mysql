@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130629231313) do
+ActiveRecord::Schema.define(:version => 20130630164845) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(:version => 20130629231313) do
     t.integer  "warrantyPeriod"
     t.integer  "initialStock"
     t.integer  "presentStock"
-    t.string   "issuedReason"
     t.datetime "created_at",                                      :null => false
     t.datetime "updated_at",                                      :null => false
     t.boolean  "inTransit",                    :default => false
