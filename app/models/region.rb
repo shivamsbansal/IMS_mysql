@@ -6,6 +6,6 @@ class Region < ActiveRecord::Base
 	accepts_nested_attributes_for :territories, :users
 	attr_accessible :nameRegion, :idRegion
 
-	validates :idRegion, presence: true, length: {maximum: 6}, uniqueness: true
-	validates :nameRegion, presence: true, length: {maximum: 30}
+	validates :idRegion, presence: true, length: {maximum: 10}, uniqueness: true
+	validates :nameRegion, presence: true, length: {maximum: 30}, uniqueness: true
 end

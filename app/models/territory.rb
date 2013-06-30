@@ -10,7 +10,7 @@ class Territory < ActiveRecord::Base
 	validate :ensure_region_exist
 
 	validates :nameTerritory, presence: true, length: {maximum: 30}, uniqueness: true
-	validates :idTerritory, presence: true, length: {maximum: 6}, uniqueness: true
+	validates :idTerritory, presence: true, length: {maximum: 10}, uniqueness: true
 	validates :region_id, presence: true
 
 	private

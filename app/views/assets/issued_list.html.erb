@@ -17,7 +17,7 @@
     <tr>
       <td><%= @associate.name%></td>
       <td><%= @associate.email %></td>
-      <td><%= @associate.dateOfJoining.strftime('%d %b %Y') %></td>
+      <td><%= @associate.dateOfJoining.strftime('%d/%m/%Y') %></td>
       <td><%= @associate.station.nameStation %></td>
     </tr>   
 <% end %>
@@ -43,7 +43,7 @@
 	    	<% @stock = list.stock %>
 	      <td><%= link_to list.assetSrNo, "/asset_list/#{@stock.id}"%></td>
 	      <td><%= @stock.item.nameItem %></td>
-	      <td><%= list.issued_item.dateOfIssue.strftime('%d %b %Y') %></td>
+	      <td><%= list.issued_item.dateOfIssue.strftime('%d/%m/%Y') %></td>
 	      <td><%= link_to "withdraw", "/assets/withdraw_asset/#{list.id}" %></td>
 	    </tr>
 	<% end %>
@@ -70,8 +70,8 @@
         <td><%= link_to 'details', "/show_stock/#{@stock.id}"%></td>
         <td><%= @stock.item.nameItem %></td>
         <td><%= list.quantity %></td>
-        <td><%= list.dateOfIssue.strftime('%d %b %Y') %></td>
-        <td><%= (list.dateOfIssue + @stock.item.lifeCycle.seconds).to_date.strftime('%a %d %b %Y') %></td>
+        <td><%= list.dateOfIssue.strftime('%d/%m/%Y') %></td>
+        <td><%= (list.dateOfIssue + @stock.item.lifeCycle.seconds).to_date.strftime('%a %d/%m/%Y') %></td>
         <td><%= link_to "withdraw", "/consumables/withdraw/#{list.id}" %></td>
       </tr>
   <% end %>

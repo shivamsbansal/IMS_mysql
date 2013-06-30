@@ -3,8 +3,8 @@
 
 <h2>Station: <%= @station.nameStation %></h2>
 
-<strong>Start Date: <%= @dateStart.strftime('%d %b %Y') %></strong><br>
-<strong>End Date: <%= @dateEnd.strftime('%d %b %Y') %></strong>
+<strong>Start Date: <%= @dateStart.strftime('%d/%m/%Y') %></strong><br>
+<strong>End Date: <%= @dateEnd.strftime('%d/%m/%Y') %></strong>
 
 <table class="table table-striped table-bordered table-condensed">
   <caption>For Fixed Items</caption>
@@ -21,8 +21,8 @@
     <tr>
       <td><%= link_to 'details', "/show_stock/#{ms.id}"%></td>
       <td><%= ms.item.nameItem %></td>
-      <td><%= ms.invoiceDate.strftime('%d %b %Y') %></td>
-      <td><%= (ms.invoiceDate + ms.item.lifeCycle.seconds).to_date.strftime('%d %b %Y') %></td>
+      <td><%= ms.invoiceDate.strftime('%d/%m/%Y') %></td>
+      <td><%= (ms.invoiceDate + ms.item.lifeCycle.seconds).to_date.strftime('%d/%m/%Y') %></td>
     </tr>     
   <% end %>
 <% end %>

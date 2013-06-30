@@ -5,7 +5,7 @@ class Asset < ActiveRecord::Base
 	accepts_nested_attributes_for :issued_item
   attr_accessible :assetSrNo, :stock_id, :issued
 
-  validates :assetSrNo, presence: true
+  validates :assetSrNo, presence: true, length: { maximum: 20 }
   validates :stock_id, presence: true
   validate :ensure_stock_exists
  

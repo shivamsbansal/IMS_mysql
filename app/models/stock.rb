@@ -13,9 +13,9 @@ class Stock < ActiveRecord::Base
   validate :ensure_item_exist
   validates :item_id, presence: true
   validates :station_id, presence: true
-  validates :poId, presence: true
+  validates :poId, presence: true, length: {maximum: 20}
   validates :poDate, presence: {:message => 'is blank/invalid'}
-  validates :invoiceNo, presence: true
+  validates :invoiceNo, presence: true, length: {maximum: 20}
   validates :invoiceDate, presence: {:message => 'is blank/invalid'}
   validates :warrantyPeriod, presence: true
   validates :initialStock, presence: true, numericality: true

@@ -5,7 +5,6 @@ Test2::Application.routes.draw do
   match '/stock_comments/:id', to: 'stocks#stock_comments', via: 'get'
   match '/alerts_lifecycle', to: 'stocks#alerts_lifecycle', via: 'get'
   match '/calculate_lifecycle_alerts', to: 'stocks#calculate_lifecycle_alerts', via: 'get'
-  match '/remove_alert/:id', to: 'stocks#remove_alert', via: 'get'
   match '/alerts_minimum', to: 'stocks#alerts_minimum', via: 'get'
   match '/stations_cost', to: 'stocks#stations_cost', via: 'get'
   match '/total_costs', to: 'stocks#total_costs', via: 'get'

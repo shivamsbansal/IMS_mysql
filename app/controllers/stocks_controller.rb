@@ -35,9 +35,9 @@ class StocksController < ApplicationController
     end
     @warrantyPeriod = params[:warrantyPeriod].to_i.send(params[:warrantyPeriodType]).to_i
     if Item.find(params[:item_id]).assetType == 'consumable'
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason], alert: true, comments: params[:comments]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: params[:initialStock], issuedReason: params[:issuedReason],  comments: params[:comments]  )
     else 
-      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason], alert: true, comments: params[:comments]  )
+      @stock = Stock.new(station_id: params[:station_id], item_id: params[:item_id], poId: params[:poId], poDate: @poDate, invoiceNo: params[:invoiceNo], invoiceDate: @invoiceDate, warrantyPeriod: @warrantyPeriod, initialStock: params[:initialStock], presentStock: 0, issuedReason: params[:issuedReason],  comments: params[:comments]  )
     end
       
     if @stock.save
@@ -274,7 +274,7 @@ class StocksController < ApplicationController
       return
     end
     @transfers_to = Transfers.where(to: params[:station], dateOfReceipt: nil)
-    @transfers_from = Transfers.where(from: params[:station], dateOfReceipt: nil)
+    @transfers_from = Transfers.where(from: params[:station], dateOfReceipt: nil )
     respond_to do |format|
       format.js
     end
@@ -363,20 +363,6 @@ class StocksController < ApplicationController
     end
   end
 
-  def remove_alert
-    @stock = Stock.find(params[:id])
-    if can_access_station(@stock.station) == false
-      return
-    end
-    @stock.alert = false
-    if @stock.save
-      flash[:success] = "Alert removed"
-    else
-      flash[:error] = "Alert not removed"
-    end
-    redirect_to '/alerts'
-  end
-
   def alerts_lifecycle
     @stations = user_access_stations(current_user)
     @stationList = @stations[:stations].map { |station| [station.nameStation, station.id]}
@@ -442,28 +428,25 @@ class StocksController < ApplicationController
 
   def transfer_print
     @transfers = Transfers.find(params[:transfers])
-    send_data(generate_pdf(@transfers), :filename => "output.pdf", :type => "application/pdf") 
-  end
-
-  private 
-    def generate_pdf(transfers)
-      Prawn::Document.new do |pdf|
-        pdf.move_down(30)
-
-        items = transfers.map do |transfer|
-        [
-          transfer.from,
-          transfer.to,
-          transfer.stock.invoiceNo,
-          transfer.stock.item.nameItem,
-          transfer.dateOfDispatch
-        ]
-        end
-
-        pdf.table items
-
-        pdf.move_down(10)
-      end.render 
+    chalanNo = @transfers.first.chalanNo
+    station_to = @transfers.first.to
+    station_from = @transfers.first.from
+    @transfers.each do |transfer|
+      if transfer.to != station_to || transfer.from != station_from || chalanNo != transfer.chalanNo
+        flash[:error] = "Transfers choosed were not between same stations or different chalan numbers"
+        redirect_to '/transfers_list'
+        return
+      end
     end
+    if chalanNo == nil
+      chalanNo = ChalanNumber.find(1).chalanNo.to_i + 1
+      ChalanNumber.find(1).update_attributes(chalanNo: chalanNo)
+      @transfers.each do |transfer|
+        transfer.chalanNo = chalanNo
+        transfer.save
+      end
+    end
+    send_data(generate_pdf(@transfers, chalanNo), :filename => "output.pdf", :type => "application/pdf") 
+  end
 
 end

@@ -8,18 +8,25 @@
 <div id="stock_comments">
 </div>
 
+<% if @stocks!=nil %>
+  <%  total_initial_stock = 0 
+      total_present_stock = 0 
+      current_station = nil %>
+  <% @stocks.each do |list| %>
+
+<% if current_station != list.station_id %>
+<% current_station = list.station_id %>
 <table class="table table-striped table-bordered table-condensed">
-  <caption>Stock List</caption>
+  <caption><strong><%= Station.find(current_station).nameStation %></strong></caption>
   <thead>
     <tr>
-      <th>Station</th>
       <th>Item Name</th>
       <th>PO Id</th>
       <th>Procurement Date</th>
       <th>Invoice No.</th>
       <th>Invoice Date</th>
       <th>Warranty Period</th>
-      <th>Initial Stock</th>
+      <th>Stock Supplied</th>
       <th>Present Stock</th>
       <th>Issued Reason</th>
       <th>Issue stock</th>
@@ -30,21 +37,17 @@
       <th>Edit</th>
       <% end %>
     </tr>
+<% end %>
 
-<% if @stocks!=nil %>
-  <%  total_initial_stock = 0 
-      total_present_stock = 0 %>
-  <% @stocks.each do |list| %>
   <% if list.inTransit == false %>
     <tr>
       <%  total_initial_stock += list.initialStock 
           total_present_stock += list.presentStock %>
-      <td><%= list.station.nameStation %></td>
       <td><%= list.item.nameItem %></td>
       <td><%= list.poId %></td>
-      <td><%= list.poDate.strftime('%d %b %Y') %></td>
+      <td><%= list.poDate.strftime('%d/%m/%Y') %></td>
       <td><%= list.invoiceNo %></td>
-      <td><%= list.invoiceDate.strftime('%d %b %Y') %></td>
+      <td><%= list.invoiceDate.strftime('%d/%m/%Y') %></td>
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>

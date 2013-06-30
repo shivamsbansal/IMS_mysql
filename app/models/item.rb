@@ -7,13 +7,13 @@ class Item < ActiveRecord::Base
 
 	validate :ensure_vendor_exist
 	
-	validates :codeItem, presence: true
-	validates :nameItem, presence: true
+	validates :codeItem, presence: true, length: { maximum: 10 }, uniqueness: true
+	validates :nameItem, presence: true, length: { maximum: 50 }, uniqueness: true
 	validates :cost , presence:true ,numericality: true
 	validates :lifeCycle, presence: true, numericality: true
 	validates :leadTime, presence: true, numericality: true
 	validates :minimumStock, presence: true, numericality: true
-	validates :assetType, presence: true
+	validates :assetType, presence: true, length: { maximum: 15 }
 
 	
 	private

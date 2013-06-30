@@ -46,7 +46,7 @@
       <%= timePeriod('warrantyPeriod',toInsensibleTime(@stock.warrantyPeriod)[:value] , false) %>
       <%= timePeriodType('warrantyPeriod', toInsensibleTime(@stock.warrantyPeriod)[:period], false) %>
 
-      <%= label_tag(:initialStock, "Initial Stock:") %>
+      <%= label_tag(:initialStock, "Stock Supplied:") %>
       <%= text_field_tag(:initialStock, @stock.initialStock) %>
 
       <%= label_tag(:issuedReason, "Issued Reason:") %>
