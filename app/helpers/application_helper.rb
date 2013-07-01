@@ -25,10 +25,10 @@ module ApplicationHelper
       elsif (seconds % 2592000) == 0
         {years: 0, months: (seconds/2592000), days: 0}
       else
-        {years: 0, months: 0, days: 0}
+        {years: 0, months: 0, days: (seconds/86400)}
     	end
     else
-      {years: 0, months: 0, days: (seconds/86400)}
+      {years: 0, months: 0, days: 0}
     end
   	 
   end

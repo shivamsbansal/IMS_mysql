@@ -13,7 +13,7 @@ class Asset < ActiveRecord::Base
   private
   	def ensure_stock_exists
   		if Stock.find(self.stock_id).nil?
-				errors.add('Stock')
+				errors.add(:stock_id, 'Stock')
 				false
 			else
 				true

@@ -5,6 +5,9 @@
     <tr>
       <th>Code</th>
       <th>Name</th>
+      <th>Brand</th>
+      <th>Model</th>
+      <th>Distinction</th>
       <% if current_user.admin? %>
       <th>Cost per item</th>
       <% end %>
@@ -13,7 +16,6 @@
       <th>Minimum Stock</th>
       <th>Asset Type</th>
       <th>Vendor</th>
-      <th>Details</th>
       <% if current_user.admin? %>
       <th>Edit</th>
       <th>Delete</th>
@@ -25,11 +27,14 @@
     <tr>
       <td><%= list.codeItem %></td>
       <td><%= list.nameItem %></td>
+      <td><%= list.brand %></td>
+      <td><%= list.model %></td>
+      <td><%= list.distinction %></td>
       <% if current_user.admin? %>
       <td><%= list.cost %></td>
       <% end %>
       <td><%= toSensibleWords(toSensibleTime(list.lifeCycle)) %></td>
-      <td><%= toSensibleWords toSensibleTime list.leadTime %></td>
+      <td><%= toSensibleWords(toSensibleTime(list.leadTime)) %></td>
       <td><%= list.minimumStock %></td>
       <td><%= list.assetType.capitalize %></td>
       <td><%= if list.vendor != nil
@@ -38,8 +43,7 @@
                 'No vendor'
               end
           %>
-      </td>
-      <td><%=link_to "details", "/details/#{list.id}", remote: true %></td>      
+      </td>      
         <% if current_user.admin? %>
       <td><%=link_to "edit", edit_item_path(list[:id]) %></td>
       <td><%= link_to "delete ", list, method: :delete, data: { confirm: "You sure?" } %></td>

@@ -8,28 +8,29 @@ class ItemsController < ApplicationController
   end
 
   def new
+    @item = Item.new
   	@itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
   end
 
   def edit
     @item = Item.find(params[:id])
-    @category = @item.itemCategory_type
+    @category = @item.category.nameCategory
   end
 
   def update
     @lifeCycle = params[:lifeCycle].to_i.send(params[:lifeCycleType]).to_i
     @leadTime = params[:leadTime].to_i.send(params[:leadTimeType]).to_i
 
-    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
+    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] , brand: params[:item][:brand], distinction: params[:item][:distinction], model: params[:item][:model]}
+
     @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
     @item = Item.find(params[:id])
-    @categoryItem = @item.itemCategory
-    @category = @item.itemCategory_type
-    @categoryItem.assign_attributes(params[:item][params[:category].downcase.to_sym])
+    @category = @item.category.nameCategory
+
     @item.assign_attributes(item_hash)
-    if ([@categoryItem, @item].map(&:valid?)).all?
-      @categoryItem.save
+    if @item.valid?
       @item.save
+      flash[:success] = "Item updated"
       redirect_to items_path
     else
       render 'edit'
@@ -38,10 +39,12 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    @itemCategory = @item.itemCategory
-    @item.destroy
-    @itemCategory.destroy
-    flash[:success] = "Item deleted."
+    if @item.stocks != nil
+      flash[:notice] = "Since stock of this item exist it cannot be deleted"
+    else
+      @item.destroy
+      flash[:success] = "Item deleted."
+    end
     redirect_to items_url
   end
 
@@ -53,29 +56,18 @@ class ItemsController < ApplicationController
     end
   end
 
-  def details
-    if params[:id] !=0
-      @details = Item.find(params[:id]).itemCategory
-    end
-  end
-
   def create
     @lifeCycle = params[:lifeCycle].to_i.send(params[:lifeCycleType]).to_i
     @leadTime = params[:leadTime].to_i.send(params[:leadTimeType]).to_i
 
-    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] }
+    item_hash = {nameItem: params[:item][:nameItem], codeItem: params[:item][:codeItem], cost: params[:item][:cost], lifeCycle: @lifeCycle, leadTime: @leadTime,minimumStock: params[:item][:minimumStock], assetType: params[:item][:assetType], vendor_id: params[:item][:vendor_id] , brand: params[:item][:brand], distinction: params[:item][:distinction], model: params[:item][:model]}
     @itemCategory = Category.all.map { |category| [category.nameCategory, category.nameCategory]}
 
-    @categoryItem = params[:category].capitalize.constantize.new(params[:item][params[:category].to_sym])
-    if @categoryItem.valid?
-      @item = @categoryItem.items.new(item_hash)
-      if @item.valid?
-          @categoryItem.save
-          @item.save
-          redirect_to items_path
-      else
-        render 'new'
-      end
+    @item = Category.find_by_nameCategory(params[:category]).items.new(item_hash)
+    if @item.valid?
+        flash[:sucess] = "Item added"
+        @item.save
+        redirect_to items_path
     else
       render 'new'
     end
@@ -84,7 +76,7 @@ class ItemsController < ApplicationController
   def list
     @category = params[:category]
     if @category != 'All'
-      @list = Item.where(itemCategory_type: @category.capitalize)
+      @list = Category.find_by_nameCategory(@category).items
     else
       @list = Item.all
     end

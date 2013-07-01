@@ -1,45 +1,50 @@
 <div class="row">
-  <%= form_for(@item) do |f| %>
-  
   <div class="span5 offset3">
+    <%= form_for(@item) do |f| %>
+      <%= hidden_field_tag(:category, @category) %>
 
-   <%= hidden_field_tag(:category, @category) %>
+      <%= f.label :code %>
+      <%= f.text_field :codeItem %>
 
-    <%= f.label :code %>
-    <%= f.text_field :codeItem %>
+      <%= f.label :name %>
+      <%= f.text_field :nameItem %>
 
-    <%= f.label :name %>
-    <%= f.text_field :nameItem %>
+      <%= f.label 'Cost Per Item' %>
+      <%= f.text_field :cost, step: 1 %>
 
-    <%= f.label 'Cost Per Item' %>
-    <%= f.text_field :cost, step: 1 %>
+      <%= label_tag(:lifeCycle, "Life Cycle") %>
+      <%= timePeriod('lifeCycle', toInsensibleTime(@item.lifeCycle)[:value], false) %>
+      <%= timePeriodType('lifeCycle', toInsensibleTime(@item.lifeCycle)[:period], false) %>
 
-    <%= label_tag(:lifeCycle, "Life Cycle") %>
-    <%= timePeriod('lifeCycle', toInsensibleTime(@item.lifeCycle)[:value], false) %>
-    <%= timePeriodType('lifeCycle', toInsensibleTime(@item.lifeCycle)[:period], false) %>
+      <%= label_tag(:leadTime, "Lead Time") %>
+      <%= timePeriod('leadTime', toInsensibleTime(@item.leadTime)[:value], false) %>
+      <%= timePeriodType('leadTime', toInsensibleTime(@item.leadTime)[:period], false) %>
 
-    <%= label_tag(:leadTime, "Lead Time") %>
-    <%= timePeriod('leadTime', toInsensibleTime(@item.leadTime)[:value], false) %>
-    <%= timePeriodType('leadTime', toInsensibleTime(@item.leadTime)[:period], false) %>
+      <%= f.label 'Minimum Stock' %>
+      <%= f.text_field :minimumStock %>
 
-    <%= f.label 'Minimum Stock' %>
-    <%= f.text_field :minimumStock %>
+      <%= f.label 'Asset Type' %>
+      <% type = [['Fixed', 'fixed'], ['Consumable', 'consumable']] %>
+      <%= f.select :assetType, type %>
 
-    <%= f.label 'Asset Type' %>
-    <% type = [['Fixed', 'fixed'], ['Consumable', 'consumable']] %>
-    <%= f.select :assetType, type %>
+      <%= f.label 'Vendor' %>
+      <%  if @category == 'All'
+              vendors = Vendor.all.map { |vendor| [vendor.nameVendor, vendor_id]}
+          else vendors = Vendor.where("itemCategory LIKE '#{@category}' OR itemCategory LIKE 'All' ").map { |vendor| [vendor.nameVendor, vendor.id]} 
+          end
+      %>
+      <%= f.select :vendor_id, vendors %>
 
-    <%= f.label 'Vendor' %>
-    <%  if @category == 'All'
-            vendors = Vendor.all.map { |vendor| [vendor.nameVendor, vendor_id]}
-        else vendors = Vendor.where("itemCategory LIKE '#{@category}' OR itemCategory LIKE 'All' ").map { |vendor| [vendor.nameVendor, vendor.id]} 
-        end
-    %>
-    <%= f.select :vendor_id, vendors %>
+      <%= f.label :brand %>
+      <%= f.text_field :brand %>
 
-     <%= render "items/#{@category}" , f: f , item: @category.capitalize.constantize.new %>
- 
-    <%= f.submit "Create new Item", class: "btn btn-primary" %>
+      <%= f.label :model %>
+      <%= f.text_field :model %>      
+
+      <%= f.label :distinction %>
+      <%= f.text_field :distinction %>
+   
+      <%= f.submit "Create new Item", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

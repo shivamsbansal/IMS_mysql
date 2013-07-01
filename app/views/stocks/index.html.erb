@@ -6,7 +6,7 @@
     <%= form_tag("/stocks/categoryList", method: :get, remote: true) do %>
 
       <%= label_tag(:category, "Category:") %>
-      <%= select_tag(:category,content_tag(:option,'All',:value=>"All") + options_from_collection_for_select(Category.all, "nameCategory", "nameCategory")) %>
+      <%= select_tag(:category,content_tag(:option,'All',:value=>"All") + options_from_collection_for_select(Category.all, "id", "nameCategory")) %>
 
       <%= submit_tag "Select a category", class: "btn  btn-primary" %>
   	<% end %>

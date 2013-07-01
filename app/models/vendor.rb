@@ -15,7 +15,7 @@ class Vendor < ActiveRecord::Base
 
 		def ensure_category_exist
 			if Category.find_by_nameCategory(self.itemCategory).nil? && self.itemCategory != 'All'
-				errors.add('Category')
+				errors.add(:itemCategory, 'Category')
 				false
 			else
 				true

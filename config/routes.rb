@@ -30,7 +30,6 @@ Test2::Application.routes.draw do
   match '/stocks/categoryList', to: 'stocks#categoryList', via: 'get'
   match '/stocks/choice', to: 'stocks#choice', via: 'get'
   match '/associates/list', to: 'associates#list', via: 'get'
-  match '/details/:id', to: 'items#details' , via: 'get'
   match '/items/redirect', to: 'items#redirect', via: 'get'
   match '/items/list', to: 'items#list', via: 'get'
   resources :regions, :items, :territories, :vendors, :associates, :stocks

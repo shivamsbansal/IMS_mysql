@@ -6,10 +6,7 @@
   	<% if @item!=nil %>
   		<%= render 'shared/error_messages', object: @item %>
   	<% end %>
-  	<% if @categoryItem!=nil %>
-  		<%= render 'shared/error_messages', object: @categoryItem %>
-  	<% end %>
-
+  	
     <%= form_tag("/items/redirect", method: :get, remote: true) do %>
 
       <%= label_tag(:category, "Category:") %>

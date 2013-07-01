@@ -17,7 +17,7 @@ class Territory < ActiveRecord::Base
 
 		def ensure_region_exist
 			if Region.find(self.region_id).nil?
-				errors.add('Region')
+				errors.add(:region_id, 'Region')
 				false
 			else
 				true

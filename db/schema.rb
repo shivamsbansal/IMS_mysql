@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130630164845) do
+ActiveRecord::Schema.define(:version => 20130701183439) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -42,14 +42,6 @@ ActiveRecord::Schema.define(:version => 20130630164845) do
     t.datetime "updated_at",              :null => false
   end
 
-  create_table "clothings", :force => true do |t|
-    t.string   "clothCategory"
-    t.string   "brand"
-    t.string   "size"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
   create_table "issued_consumables", :force => true do |t|
     t.integer  "stock_id"
     t.integer  "associate_id"
@@ -72,23 +64,16 @@ ActiveRecord::Schema.define(:version => 20130630164845) do
     t.integer  "lifeCycle"
     t.integer  "cost"
     t.integer  "leadTime"
-    t.integer  "itemCategory_id"
-    t.string   "itemCategory_type"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.string   "codeItem"
     t.integer  "vendor_id"
     t.integer  "minimumStock"
     t.string   "assetType"
-  end
-
-  create_table "laptops", :force => true do |t|
-    t.string   "brand"
-    t.string   "model"
-    t.decimal  "cpuSpeed",   :precision => 10, :scale => 0
-    t.integer  "ram"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.integer  "category_id"
+    t.string   "brand",        :limit => 50
+    t.string   "distinction",  :limit => 50
+    t.string   "model",        :limit => 50
   end
 
   create_table "regions", :force => true do |t|

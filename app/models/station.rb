@@ -21,7 +21,7 @@ class Station < ActiveRecord::Base
 
 		def ensure_territory_exist
 			if Territory.find(self.territory_id).nil?
-				errors.add('Territory')
+				errors.add(:territory_id, 'Territory')
 				false
 			else
 				true

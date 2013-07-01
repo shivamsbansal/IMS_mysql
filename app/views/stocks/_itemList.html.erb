@@ -1,5 +1,5 @@
 <%=  if @category != 'All'
-		@items = Item.where(itemCategory_type: @category.capitalize)
+		@items = Category.find(@category).items
 		select_tag(:item_id, options_from_collection_for_select(@items, "id","nameItem"))
 		else
 		@items = Item.all
