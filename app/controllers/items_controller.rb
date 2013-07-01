@@ -85,4 +85,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def new_category
+    @category = Category.new
+  end
+
+  def create_category
+    Category.create(nameCategory: params[:category][:nameCategory])
+    flash[:success] = "Category created"
+    redirect_to items_path
+  end
 end
