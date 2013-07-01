@@ -7,11 +7,12 @@
 			  <th><%= attribute.humanize %> </th>
 			<% end %>
 		</tr>
+	</thead>
 		<tr>
 			<% for attribute in @details.attributes.keys %>
 			  <td><%= @details.attributes[attribute].to_s %> </td>
 			<% end %>
 		</tr>
-	</thead>
+
 </table>
 <% end %>

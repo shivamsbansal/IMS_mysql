@@ -20,6 +20,7 @@
       <th>Acknowledge</th>
       <th>Comments</th>
     </tr>
+  </thead>
 
 <% if @transfers_to!=nil %>
   <% @transfers_to.each do |transfer| %>
@@ -32,7 +33,7 @@
           <%= "--" %>
           <% end %> 
       </td>
-      <td><%= list.station.nameStation %></td>
+      <td><%= Station.find(transfer.from).nameStation %></td>
       <td><%= list.item.nameItem%></td>
       <td><%= list.poId %></td>
       <td><%= list.poDate.strftime('%d/%m/%Y') %></td>
@@ -46,9 +47,7 @@
       <td><%=link_to "comments", "/transfer_comments/#{transfer[:id]}", remote: true %></td>
     </tr>     
   <% end %>
-<% end %>
-
-  </thead>
+<% end %>  
 </table>
 
 <%= form_tag( '/transfer_print', format: 'pdf', method: 'post') do %>
@@ -70,6 +69,7 @@
       <th>Date Of Dispatch</th>
       <th>Comments</th>
     </tr>
+  </thead>
 
 <% if @transfers_from!=nil %>
   <% @transfers_from.each do |transfer| %>
@@ -98,7 +98,6 @@
   <% end %>
 <% end %>
 
-  </thead>
 </table>
 <%= submit_tag "Print", class: "btn btn-primary" %>
 <% end %>

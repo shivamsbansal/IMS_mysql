@@ -15,7 +15,7 @@
       <th>Vendor</th>
       <th>Details</th>
     </tr>
-
+  </thead>
     <tr>
       <td><%= item.codeItem %></td>
       <td><%= item.nameItem %></td>
@@ -36,6 +36,4 @@
       <td><%=link_to "details", "/details/#{item.id}", remote: true %></td>      
     </tr>     
 
-
-  </thead>
 </table>

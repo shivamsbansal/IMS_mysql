@@ -12,7 +12,7 @@
       <th>Date Of Joinin</th>
       <th>Station</th>
     </tr>
-
+  </thead>
 <% if @associate!=nil %>
     <tr>
       <td><%= @associate.name%></td>
@@ -22,7 +22,6 @@
     </tr>   
 <% end %>
 
-  </thead>
 </table>
 
 
@@ -36,7 +35,7 @@
       <th>Date Of Issue</th>
       <th>Withdraw Asset</th>
     </tr>
-
+  </thead>
 	<% if @assets!=nil %>
 		<% @assets.each do |list| %>
 	    <tr>
@@ -48,7 +47,7 @@
 	    </tr>
 	<% end %>
 <% end %>
-  </thead>
+
 </table>
 
 <table class="table table-striped table-bordered table-condensed">
@@ -62,7 +61,7 @@
       <th>Next Date Of Issue</th>
       <th>Withdraw Consumable</th>
     </tr>
-
+  </thead>
   <% if @consumables!=nil %>
     <% @consumables.each do |list| %>
       <tr>
@@ -76,5 +75,5 @@
       </tr>
   <% end %>
 <% end %>
-  </thead>
+
 </table>

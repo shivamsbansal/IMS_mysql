@@ -10,7 +10,7 @@
       <th>Region Id</th>
       <th>Edit</th>
     </tr>
-
+  </thead>  
   <% @regions.each do |region| %>
     <tr>
       <td><%=region.nameRegion %></td>
@@ -19,8 +19,6 @@
     </tr>     
   <% end %>
 
-
-  </thead>
 </table>
 
 <%= will_paginate @regions %>

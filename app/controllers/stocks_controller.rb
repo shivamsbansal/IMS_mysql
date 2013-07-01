@@ -68,20 +68,20 @@ class StocksController < ApplicationController
       if params[:station_id] == 'All'
         @stocks = []
         result[:stations].each do |station|
-          @stocks = @stocks + station.stocks.where(item_id: params[:item_id])
+          @stocks = @stocks + station.stocks.where(item_id: params[:item_id], inTransit: false).order('invoiceDate DESC')
         end
       else
-        @stocks = Stock.where(item_id: params[:item_id], station_id: params[:station_id]) 
+        @stocks = Stock.where(item_id: params[:item_id], station_id: params[:station_id], inTransit: false).order('invoiceDate DESC') 
       end
     else
       @item = nil
       if params[:station_id] == 'All'
         @stocks = []
         result[:stations].each do |station|
-          @stocks = @stocks + station.stocks
+          @stocks = @stocks + station.stocks.where(inTransit: false).order('invoiceDate DESC')
         end
       else
-        @stocks = Stock.where(station_id: params[:station_id]) 
+        @stocks = Stock.where(station_id: params[:station_id], inTransit: false).order('invoiceDate DESC') 
       end
     end
     respond_to do |format|

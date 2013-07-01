@@ -16,7 +16,7 @@
       <th>Edit</th>
       <% end %>
     </tr>
-
+  </thead>
 <% if current_user[:level_type]!=nil %>
   <% @stations.each do |station| %>
     <tr>
@@ -34,7 +34,6 @@
 <% end %>
 <% end %>
 
-  </thead>
 </table>
 
 

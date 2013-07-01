@@ -11,7 +11,7 @@
       <th>Region Name</th>
       <th>Edit</th>
     </tr>
-
+  </thead>
   <% @territories.each do |territory| %>
     <tr>
       <td><%=territory.nameTerritory %></td>
@@ -21,8 +21,6 @@
     </tr>     
   <% end %>
 
-
-  </thead>
 </table>
 
 <%= will_paginate @regions %>

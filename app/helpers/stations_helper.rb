@@ -10,7 +10,7 @@ module StationsHelper
 				@stations = Station.all
 				@name = "Central Team" 
 			elsif Region.find(user.level_id).nameRegion=="India"
-				@stations=Station.where("nameStation NOT LIKE 'ATS-WTC'")
+				@stations=Station.all - Region.find_by_nameRegion('Central Team Region').stations
 				@name = "India"
 			else
 				@stations=[]
@@ -21,7 +21,7 @@ module StationsHelper
 					@stations = Territory.find(user.level_id).stations
 					@name=Territory.find(user.level_id).nameTerritory
 				else
-					@stations = Station.find(user.level_id)
+					@stations =[Station.find(user.level_id)]
 					@name = Station.find(user).nameStation
 				end
 			end

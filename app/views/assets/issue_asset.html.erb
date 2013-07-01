@@ -10,6 +10,7 @@
       <th>Invoice Number</th>
       <th>Item Name</th>
     </tr>
+  </thead>
 
 	<% if @asset!=nil %>
     <tr>
@@ -19,8 +20,6 @@
       <td><%= @stock.item.nameItem %></td>
     </tr>
 	<% end %>
-
-  </thead>
 </table>
 
 <div class="row">
