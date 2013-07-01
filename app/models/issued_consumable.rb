@@ -33,7 +33,7 @@ class IssuedConsumable < ActiveRecord::Base
 	  end
 
 	  def date_is_not_in_future
-	    if self.dateOfIssue.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+	    if self.dateOfIssue > Date.today
 	      errors.add(:dateOfIssue, 'cannot be in future')
 	      false
 	    else

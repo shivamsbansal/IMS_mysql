@@ -52,6 +52,8 @@
       <%= label_tag(:comments, "Comments:") %>
       <%= text_field_tag(:comments, @stock.comments ) %>
 
+      <strong>Double check the details as a user you won't be able to edit the details.<strong>
+
       <%= f.submit "Add stock", class: "btn btn-primary" %>
     <% end %>
   </div>

@@ -29,7 +29,7 @@ class Associate < ActiveRecord::Base
     end
 
   def date_is_not_in_future
-    if self.dateOfJoining.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+    if self.dateOfJoining > Date.today
       errors.add(:dateOfJoining, 'cannot be in future')
       false
     else

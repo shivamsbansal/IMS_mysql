@@ -26,6 +26,8 @@
       <%= label_tag(:comments, "Comments:") %>
       <%= text_field_tag(:comments, @transfer.comments ) %>
 
+      <strong>Double check the details as a user you won't be able cancel the transfer.<strong><br>
+
       <%= f.submit "Transfer stock", class: "btn btn-primary" %>
     <% end %>
   </div>

@@ -44,6 +44,8 @@ class StocksController < ApplicationController
       flash[:success] = "Stock added"
       if @stock.item.assetType == 'fixed'
         flash[:notice] = "Update The Serial Numbers of assets for the stock added"
+        redirect_to "/present_stock_edit/#{@stock.id}"
+        return
       end
       redirect_to stocks_path
     else
@@ -158,7 +160,9 @@ class StocksController < ApplicationController
         render "consumableUpdate"
       end
     else
+      @params_assetSrNo = params[:assetSrNo]
       @assetSrNo = params[:assetSrNo].split(/,\s*/)
+      
       @assetSrNo.each do |serialNo|
         @asset = @stock.assets.build(assetSrNo: serialNo, issued: false)
         if @asset.save 

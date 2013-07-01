@@ -44,10 +44,10 @@ class Stock < ActiveRecord::Base
   	end
 
     def date_is_not_in_future
-      if self.poDate.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y') 
+      if self.poDate > Date.today 
         errors.add(:poDate, 'cannot be in future')
         false
-      elsif self.invoiceDate.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+      elsif self.invoiceDate > Date.today
         errors.add(:invoiceDate, 'cannot be in future')
         false 
       else
