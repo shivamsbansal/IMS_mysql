@@ -15,6 +15,7 @@ class Associate < ActiveRecord::Base
   validates :email, presence:   true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :dateOfJoining, presence: {:message => 'is Bank/invalid'}
   validates :station_id, presence: true	
+  validate :date_is_not_in_future
 
   private
 
@@ -26,4 +27,13 @@ class Associate < ActiveRecord::Base
         true
       end
     end
+
+  def date_is_not_in_future
+    if self.dateOfJoining.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+      errors.add(:dateOfJoining, 'cannot be in future')
+      false
+    else
+      true
+    end
+  end
 end

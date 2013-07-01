@@ -21,6 +21,7 @@ class Stock < ActiveRecord::Base
   validates :initialStock, presence: true, numericality: true
   validates :presentStock, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
   validates :inTransit, :inclusion => {:in => [true, false]}
+  validate :date_is_not_in_future
   
   private
 
@@ -41,5 +42,17 @@ class Stock < ActiveRecord::Base
         true
       end
   	end
+
+    def date_is_not_in_future
+      if self.poDate.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y') 
+        errors.add(:poDate, 'cannot be in future')
+        false
+      elsif self.invoiceDate.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+        errors.add(:invoiceDate, 'cannot be in future')
+        false 
+      else
+        true
+      end
+    end
 
 end

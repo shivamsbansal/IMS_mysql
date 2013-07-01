@@ -7,5 +7,17 @@ class Transfers < ActiveRecord::Base
 	 validates :from, presence: true
 	 validates :to, presence: true
 	 validates :dateOfDispatch, presence: true
+	 validate :date_is_not_in_future
+
+	private
+
+	 def date_is_not_in_future
+      if self.dateOfDispatch.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+        errors.add(:dateOfDispatch, 'cannot be in future')
+        false
+      else
+        true
+      end
+    end
 	 
 end

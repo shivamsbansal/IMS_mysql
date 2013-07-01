@@ -9,6 +9,7 @@ class IssuedItem < ActiveRecord::Base
    validates :dateOfIssue, presence: true
    validate :ensure_associate_exist
    validate :ensure_asset_exist
+   validate :date_is_not_in_future
 
    private
 
@@ -24,6 +25,15 @@ class IssuedItem < ActiveRecord::Base
     def ensure_asset_exist
       if Asset.find(self.asset_id).nil?
         errors.add(:asset_id, 'Asset does not exist')
+        false
+      else
+        true
+      end
+    end
+
+    def date_is_not_in_future
+      if self.dateOfIssue.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+        errors.add(:dateOfIssue, 'cannot be in future')
         false
       else
         true

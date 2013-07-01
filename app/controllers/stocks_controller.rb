@@ -242,6 +242,7 @@ class StocksController < ApplicationController
         @stock.presentStock += @quantity
         @stocks = [@stock]
         @item = @stock.item
+        flash.now[:error] = "Unsuccessfull, please check the form"
         render 'consumable_transfer'
       end
     elsif @stock.item.assetType == 'fixed'
@@ -261,6 +262,7 @@ class StocksController < ApplicationController
         @stocks = [@stock]
         @assets = @stock.assets
         @item = @stock.item
+        flash.now[:error] = "Unsuccessfull, please check the form"
         render 'fixed_transfer'
       end
     end

@@ -10,6 +10,7 @@ class IssuedConsumable < ActiveRecord::Base
 	validate :ensure_associate_exist
 	validate :ensure_stock_exist
 	validates :quantity, presence: true, numericality: true
+	validate :date_is_not_in_future
 
  	private
 
@@ -25,6 +26,15 @@ class IssuedConsumable < ActiveRecord::Base
 	  def ensure_stock_exist
 	    if Stock.find(self.stock_id).nil?
 	      errors.add(:stock_id, 'Stock does not exist')
+	      false
+	    else
+	      true
+	    end
+	  end
+
+	  def date_is_not_in_future
+	    if self.dateOfIssue.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+	      errors.add(:dateOfIssue, 'cannot be in future')
 	      false
 	    else
 	      true
