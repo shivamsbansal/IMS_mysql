@@ -1,5 +1,8 @@
 Test2::Application.routes.draw do
 
+  match '/items/category_update', to: 'items#category_update', via: 'post'
+  match '/items/edit_category/:id', to: 'items#edit_category', via: 'get'
+  match '/items/list_category', to: 'items#list_category', via: 'get'
   match '/items/create_category', to: 'items#create_category', via: 'post'
   match '/items/new_category', to: 'items#new_category', via: 'get'
   match '/transfer_print', to: 'stocks#transfer_print', via: 'post'

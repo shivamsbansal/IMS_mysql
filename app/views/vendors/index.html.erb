@@ -19,7 +19,11 @@
       <td><%=vendor.nameVendor %></td>
       <td><%=vendor.email %></td>
       <td><%=vendor.phone %></td>
-      <td><%=vendor.itemCategory %></td>
+      <% if vendor.category_id != nil %>
+      <td><%=vendor.category.nameCategory %></td>
+      <% else %>
+      <td><%='All' %></td>
+      <% end %>
       <td><%=link_to "edit", edit_vendor_path(vendor[:id]) %></td>
       <td><%= link_to "delete ", vendor, method: :delete, data: { confirm: "You sure?" } %></td>
     </tr>     

@@ -29,8 +29,10 @@
 
       <%= f.label 'Vendor' %>
       <%  if @category == 'All'
-              vendors = Vendor.all.map { |vendor| [vendor.nameVendor, vendor_id]}
-          else vendors = Vendor.where("itemCategory LIKE '#{@category}' OR itemCategory LIKE 'All' ").map { |vendor| [vendor.nameVendor, vendor.id]} 
+            vendors = Vendor.all.map { |vendor| [vendor.nameVendor, vendor_id]}
+          else 
+            vendors_list = Category.find_by_nameCategory(@category).vendors + Vendor.where(category_id: nil)
+            vendors = vendors_list.map { |vendor| [vendor.nameVendor, vendor.id]} 
           end
       %>
       <%= f.select :vendor_id, vendors %>

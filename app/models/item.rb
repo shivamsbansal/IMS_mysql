@@ -27,7 +27,7 @@ class Item < ActiveRecord::Base
 			if self.vendor_id.nil?
 				true
 			elsif Vendor.find(self.vendor_id).nil?
-				errors.add(:vendor_id, 'Vendor')
+				errors.add(:vendor_id, 'not exist')
 				false
 			else
 				true
@@ -38,7 +38,7 @@ class Item < ActiveRecord::Base
 			if self.category_id.nil?
 				true
 			elsif Category.find(self.category_id).nil?
-				errors.add(:category_id, 'Category')
+				errors.add(:category_id, 'not exist')
 				false
 			else
 				true

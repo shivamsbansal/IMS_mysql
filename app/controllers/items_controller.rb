@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   
   before_filter :signed_in_user 
-	before_filter :admin_user, except: [:index, :list, :details]
+	before_filter :admin_user, except: [:index, :list]
 
   def index
   	@itemCategory = categoryList
@@ -90,8 +90,34 @@ class ItemsController < ApplicationController
   end
 
   def create_category
-    Category.create(nameCategory: params[:category][:nameCategory])
-    flash[:success] = "Category created"
-    redirect_to items_path
+    if Category.create(nameCategory: params[:category][:nameCategory])
+      flash[:success] = "Category created"
+      redirect_to '/items/list_category'
+    else
+      flash[:error] = "Category name should be less than 30 characters"
+      render 'new_category'
+    end
+    
+  end
+
+  def list_category
+    @list = Category.all
+  end
+
+  def edit_category
+    @category = Category.find(params[:id])
+  end
+
+  def category_update
+    @category = Category.find(params[:id])
+    @category.nameCategory = params[:nameCategory]
+    if @category.save
+      flash[:success] = "Category updated"
+      redirect_to '/items/list_category'
+    else
+      flash[:error] = "Category name should be less than 30 characters"
+      render 'edit_category'
+    end
+    
   end
 end
