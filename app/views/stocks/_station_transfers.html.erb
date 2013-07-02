@@ -43,7 +43,11 @@
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock * list.item.cost%></td>
       <td><%= transfer.dateOfDispatch.strftime('%d/%m/%Y') %></td>
+      <% if transfer.chalanNo != nil %>
       <td><%= link_to "acknowledge", "/acknowledge_receipt_stock/#{transfer.id}" %></td>
+      <% else %>
+      <td>Cannot</td>
+      <% end %>
       <td><%=link_to "comments", "/transfer_comments/#{transfer[:id]}", remote: true %></td>
     </tr>     
   <% end %>

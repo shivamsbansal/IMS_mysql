@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :admin_user,     only: [:destroy, :assignLevel,  :index, :retainLevel, :chooseLevel, :assignUserform]
 
   def index
-    @users = User.where('level_id is not null').paginate(page: params[:page],per_page: 5, order: 'level_type')
+    @users = User.where('level_id is not null').paginate(page: params[:page],per_page: 20, order: 'level_type')
   end
 
 

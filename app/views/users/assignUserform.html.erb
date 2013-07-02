@@ -22,7 +22,7 @@
 
         <% end %>
     </div>
-    <div id="follow_form_<%= user.id %>" class="span3">
+    <div id="follow_form_<%= user.id %>" class="span6">
       <%= form_tag("/assignLevel", method: "put") do %>
   
         <%= hidden_field_tag(:id, user.id) %>

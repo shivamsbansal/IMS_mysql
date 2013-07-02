@@ -12,7 +12,7 @@ class Transfers < ActiveRecord::Base
 	private
 
 	 def date_is_not_in_future
-      if self.dateOfDispatch.strftime('%d/%m/%Y') > Date.today.strftime('%d/%m/%Y')
+      if self.dateOfDispatch > Date.today
         errors.add(:dateOfDispatch, 'cannot be in future')
         false
       else
