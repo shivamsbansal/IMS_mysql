@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702042519) do
+ActiveRecord::Schema.define(:version => 20130702055226) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
@@ -97,17 +97,22 @@ ActiveRecord::Schema.define(:version => 20130702042519) do
   create_table "stocks", :force => true do |t|
     t.integer  "item_id"
     t.integer  "station_id"
-    t.string   "poId",           :limit => 20
+    t.string   "poId",            :limit => 20
     t.date     "poDate"
-    t.string   "invoiceNo",      :limit => 40
+    t.string   "invoiceNo",       :limit => 40
     t.date     "invoiceDate"
     t.integer  "warrantyPeriod"
     t.integer  "initialStock"
     t.integer  "presentStock"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
-    t.boolean  "inTransit",                    :default => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.boolean  "inTransit",                     :default => false
     t.string   "comments"
+    t.integer  "issuedStock"
+    t.integer  "destroyedStock"
+    t.integer  "soldStock"
+    t.integer  "transferedStock"
+    t.integer  "soldValue"
   end
 
   create_table "territories", :force => true do |t|

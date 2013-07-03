@@ -11,8 +11,11 @@
 <% if @stocks!=nil %>
   <% current_station = nil %>
   <%  total_initial_stock = 0 
-       total_present_stock = 0 
+      total_present_stock = 0 
       total_issued_stock = 0
+      total_transfered_stock = 0
+      total_sold_stock = 0
+      total_destroyed_stock = 0
   %>
   <% @stocks.each do |list| %>
 
@@ -20,10 +23,13 @@
   
 <% if @item != nil && current_station != nil %>
   </table>
-  <strong><%= "Total stock supplied: #{total_initial_stock}, Total present stock: #{total_present_stock}, Total issued stock: #{total_issued_stock}, Total stock consumed/transfered/destroyed: #{total_initial_stock - total_present_stock - total_issued_stock}" %></strong><br><br>
+  <strong><%= "Total supplied: #{total_initial_stock}, Total present: #{total_present_stock}, Total issued: #{total_issued_stock}, Total transfered:#{total_transfered_stock}, Total destroyed: #{total_destroyed_stock}, Total sold: #{total_sold_stock}" %></strong><br><br>
   <%  total_initial_stock = 0 
       total_present_stock = 0 
       total_issued_stock = 0
+      total_transfered_stock = 0
+      total_sold_stock = 0
+      total_destroyed_stock = 0
   %>
 <% end %>
 <% current_station = list.station_id %>
@@ -32,17 +38,19 @@
   <caption><strong><%= Station.find(current_station).nameStation %></strong></caption>
   <thead>
     <tr>
-      <th>Item Name</th>
       <th>PO Id</th>
       <th>Procurement Date</th>
       <th>Invoice No.</th>
       <th>Invoice Date</th>
       <th>Warranty Period</th>
       <th>Stock Supplied</th>
-      <th>Present Stock</th>
-      <th>Issued Stock</th>
+      <th>Present</th>
+      <th>Issued</th>
+      <th>Transfered</th>
+      <th>Destroyed</th>
+      <th>Sold</th>
       <th>Issue stock</th>
-      <th>present stock</th>
+      <th>Update stock</th>
       <th>Transfer</th>
       <th>Comments</th>
       <% if current_user.admin? %>
@@ -55,8 +63,11 @@
   <% if list.inTransit == false %>
     <tr>
       <%  total_initial_stock += list.initialStock 
-          total_present_stock += list.presentStock %>
-      <td><%= list.item.nameItem %></td>
+          total_present_stock += list.presentStock
+          total_issued_stock += list.issuedStock
+          total_transfered_stock += list.transferedStock
+          total_destroyed_stock += list.destroyedStock
+          total_sold_stock += list.soldStock %>
       <td><%= list.poId %></td>
       <td><%= list.poDate.strftime('%d/%m/%Y') %></td>
       <td><%= list.invoiceNo %></td>
@@ -64,13 +75,13 @@
       <td><%= toSensibleWords toSensibleTime list.warrantyPeriod %></td>
       <td><%= list.initialStock %></td>
       <td><%= list.presentStock %></td>
+      <td><%= list.issuedStock %></td>
+      <td><%= list.transferedStock %></td>
+      <td><%= list.destroyedStock %></td>
+      <td><%= list.soldStock %></td>
       <% if list.item.assetType == 'fixed' %>
-      <td><%= issuedNo = list.assets.where(issued: true).size %></td>
-      <% total_issued_stock += issuedNo %>
       <td><%=link_to "issue", "/asset_list/#{list.id}"%></td>
       <% else %>
-      <td><%= issuedNo = list.issued_consumables.size %></td>
-      <% total_issued_stock += issuedNo %>
       <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
       <% end %>
       <% if list.presentStock > 0 || list.item.assetType != 'consumable'%>
@@ -91,5 +102,5 @@
  
 </table>
 <% if @item != nil %>
-<strong><%= "Total stock supplied: #{total_initial_stock}, Total present stock: #{total_present_stock}, Total issued stock: #{total_issued_stock}, Total stock consumed/transfered/destroyed: #{total_initial_stock - total_present_stock - total_issued_stock}" %></strong>
+<strong><%= "Total supplied: #{total_initial_stock}, Total present: #{total_present_stock}, Total issued: #{total_issued_stock}, Total transfered:#{total_transfered_stock}, Total destroyed: #{total_destroyed_stock}, Total sold: #{total_sold_stock}" %></strong>
 <% end %>

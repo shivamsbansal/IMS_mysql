@@ -35,6 +35,7 @@ class AssetsController < ApplicationController
 
     @stock = @asset.stock
     @stock.presentStock = @stock.presentStock - 1
+    @stock.issuedStock = @stock.issuedStock + 1
 
     if ([@stock, @asset, @issued_item].map(&:valid?)).all?
       @stock.save
@@ -78,6 +79,7 @@ class AssetsController < ApplicationController
       return
     end
     @stock.presentStock = @stock.presentStock + 1
+    @stock.issuedStock = @stock.issuedStock - 1
     @stock.save
     @asset.issued = false
     @asset.save

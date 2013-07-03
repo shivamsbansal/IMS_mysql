@@ -7,7 +7,7 @@ class Stock < ActiveRecord::Base
 
 	accepts_nested_attributes_for :assets, :transfers, :issued_consumables
 
-  attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :inTransit, :comments
+  attr_accessible :item_id, :station_id, :poId, :poDate, :invoiceNo, :invoiceDate, :warrantyPeriod, :initialStock, :presentStock, :inTransit, :comments, :issuedStock, :destroyedStock, :soldStock, :transferedStock, :soldValue
 
   validate :ensure_station_exist
   validate :ensure_item_exist
@@ -22,6 +22,11 @@ class Stock < ActiveRecord::Base
   validates :presentStock, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
   validates :inTransit, :inclusion => {:in => [true, false]}
   validate :date_is_not_in_future
+  validates :issuedStock, presence: true
+  validates :destroyedStock, presence: true
+  validates :soldStock, presence: true
+  validates :transferedStock, presence: true
+  validates :soldValue, presence: true
   
   private
 
