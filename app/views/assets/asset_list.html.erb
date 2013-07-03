@@ -10,7 +10,7 @@
       <th>Serial Number</th>
       <th>Issued to</th>
       <th>Issue to Associate</th>
-      <th>Delete</th>
+      <th>Destroy</th>
     </tr>
    </thead>
 
@@ -18,14 +18,15 @@
   <% @assets.each do |list| %>
     <tr>
       <td><%= list.assetSrNo %></td>
-      <% if list.issued == true %>
+      <% if list.state == 'issued' %>
       <td><%= link_to list.associate.email, "/assets/issued_list/#{list.associate.id}" %></td>
+      <td>N.A.</td>
       <td>N.A.</td>
       <% else %>
       <td>None</td>
       <td><%=link_to "issue", "/assets/issue_asset/#{list.id}"%></td>
+      <td><%= link_to "destroy", list, method: :delete, data: { confirm: "You sure?" } %></td>
       <% end %>
-      <td><%= link_to "delete ", list, method: :delete, data: { confirm: "You sure?" } %></td>
     </tr>     
   <% end %>
 <% end %>

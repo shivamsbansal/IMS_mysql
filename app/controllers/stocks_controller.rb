@@ -185,7 +185,7 @@ class StocksController < ApplicationController
       end
       
       @assetSrNo.each do |serialNo|
-        @asset = @stock.assets.build(assetSrNo: serialNo, issued: false)
+        @asset = @stock.assets.build(assetSrNo: serialNo, state: 'present')
         if @asset.save 
           @stock.presentStock = @stock.presentStock + 1
           @stock.save

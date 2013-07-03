@@ -3,10 +3,11 @@ class Asset < ActiveRecord::Base
 	has_one :issued_item, dependent: :destroy
   has_one :associate, through: :issued_item
 	accepts_nested_attributes_for :issued_item
-  attr_accessible :assetSrNo, :stock_id, :issued
+  attr_accessible :assetSrNo, :stock_id, :state
 
   validates :assetSrNo, presence: true, length: { maximum: 20 }
   validates :stock_id, presence: true
+  validates :state, presence: true
   validate :ensure_stock_exists
  
 

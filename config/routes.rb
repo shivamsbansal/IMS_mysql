@@ -1,5 +1,8 @@
 Test2::Application.routes.draw do
 
+  match '/sold_list', to: 'sell_stocks#sold_list', via: 'get'
+  match '/initialise_sell_stock/:id', to: 'sell_stocks#initialise_sell_stock', via: 'get'
+  match '/sell_stock', to: 'sell_stocks#sell_stock', via: 'post'
   match '/items/category_update', to: 'items#category_update', via: 'post'
   match '/items/edit_category/:id', to: 'items#edit_category', via: 'get'
   match '/items/list_category', to: 'items#list_category', via: 'get'

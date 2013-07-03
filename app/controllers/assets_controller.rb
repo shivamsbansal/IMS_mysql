@@ -31,7 +31,7 @@ class AssetsController < ApplicationController
     @issued_item = IssuedItem.new(asset_id: params[:asset_id], associate_id: params[:associate_id], dateOfIssue: @date)
 
     @asset = Asset.find(params[:asset_id])
-    @asset.issued = true
+    @asset.state = 'issued'
 
     @stock = @asset.stock
     @stock.presentStock = @stock.presentStock - 1
@@ -63,11 +63,14 @@ class AssetsController < ApplicationController
     if can_access_station(@stock.station) == false
       return
     end
-    if @asset.issued != true
-  	 @stock.presentStock = @stock.presentStock - 1
+    if @asset.state != 'present'
+  	  flash[:error] = "Asset not destroyed."
+      redirect_to "/asset_list/#{@stock.id}"
   	end
+    @stock.presentStock = @stock.presentStock - 1
+    @asset.state = 'destroyed'
     @stock.save
-  	@asset.destroy
+  	@asset.save
     flash[:success] = "Asset destroyed."
     redirect_to "/asset_list/#{@stock.id}"
   end
@@ -81,7 +84,7 @@ class AssetsController < ApplicationController
     @stock.presentStock = @stock.presentStock + 1
     @stock.issuedStock = @stock.issuedStock - 1
     @stock.save
-    @asset.issued = false
+    @asset.state = 'present'
     @asset.save
     @asset.issued_item.destroy
     flash[:success] = "Asset withdrawn."

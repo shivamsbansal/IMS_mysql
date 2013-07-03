@@ -38,6 +38,7 @@
   <caption><strong><%= Station.find(current_station).nameStation %></strong></caption>
   <thead>
     <tr>
+      <th>Item</th>
       <th>PO Id</th>
       <th>Procurement Date</th>
       <th>Invoice No.</th>
@@ -47,11 +48,12 @@
       <th>Present</th>
       <th>Issued</th>
       <th>Transfered</th>
-      <th>Destroyed</th>
+      <th>Destroyed/ Consumed</th>
       <th>Sold</th>
       <th>Issue stock</th>
-      <th>Update stock</th>
+      <th>Stock</th>
       <th>Transfer</th>
+      <th>Sell</th>
       <th>Comments</th>
       <% if current_user.admin? %>
       <th>Edit</th>
@@ -68,6 +70,7 @@
           total_transfered_stock += list.transferedStock
           total_destroyed_stock += list.destroyedStock
           total_sold_stock += list.soldStock %>
+      <td><%= list.item.nameItem %></td>
       <td><%= list.poId %></td>
       <td><%= list.poDate.strftime('%d/%m/%Y') %></td>
       <td><%= list.invoiceNo %></td>
@@ -80,16 +83,22 @@
       <td><%= list.destroyedStock %></td>
       <td><%= list.soldStock %></td>
       <% if list.item.assetType == 'fixed' %>
-      <td><%=link_to "issue", "/asset_list/#{list.id}"%></td>
+        <td><%=link_to "issue", "/asset_list/#{list.id}"%></td>
+        <td><%=link_to "add asset", "/present_stock_edit/#{list.id}" %></td>
       <% else %>
-      <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
+        <td><%=link_to "issue", "/consumable_issue/#{list.id}"%></td>
+        <% if list.presentStock > 0 %>
+          <td><%=link_to "consumed", "/present_stock_edit/#{list.id}" %></td>
+        <% else %>
+          <td>N.A.</td>
+        <% end %>
       <% end %>
-      <% if list.presentStock > 0 || list.item.assetType != 'consumable'%>
-      <td><%=link_to "update", "/present_stock_edit/#{list.id}" %></td>
-      <td><%=link_to "transfer", "/initialise_transfer_stock/#{list.id}" %></td>
+      <% if list.presentStock > 0 %>
+        <td><%=link_to "transfer", "/initialise_transfer_stock/#{list.id}" %></td>
+        <td><%=link_to "sell", "/initialise_sell_stock/#{list.id}" %></td>
       <% else %>
-      <td>N.A.</td>
-      <td>N.A.</td>
+        <td>N.A.</td>
+        <td>N.A.</td>
       <% end %>
       <td><%=link_to "comments", "/stock_comments/#{list[:id]}", remote: true %></td>
       <% if current_user.admin? %>

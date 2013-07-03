@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702055226) do
+ActiveRecord::Schema.define(:version => 20130703173434) do
 
   create_table "assets", :force => true do |t|
     t.string   "assetSrNo",  :limit => 40
     t.integer  "stock_id"
-    t.boolean  "issued"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "state",      :limit => 10
   end
 
   create_table "associates", :force => true do |t|

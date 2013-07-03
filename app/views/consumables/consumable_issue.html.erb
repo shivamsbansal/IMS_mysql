@@ -1,33 +1,7 @@
 <% provide(:title, 'Consumable Issue') %>
 <h1>Consumable Issue</h1>
 
-<div id="item_details">
-</div>
-
-<%= render 'stocks/itemDetails', item: @item %>
-
-<table class="table table-striped table-bordered table-condensed">
-  <caption>Consumable Details</caption>
-  <thead>
-    <tr>
-      <th>Station</th>
-      <th>Stock Id</th>
-      <th>Invoice Number</th>
-      <th>Item Name</th>
-      <th>Warranty Period</th>
-      <th>Present Stock</th>
-    </tr>
-  </thead>
-	<% if @stock!=nil %>
-    <tr>
-      <td><%= @station.nameStation %></td>
-      <td><%= @stock.id %></td>
-      <td><%= @stock.invoiceNo %></td>
-      <td><%= @stock.item.nameItem %></td>
-      <td><%= toSensibleWords toSensibleTime @stock.warrantyPeriod %></td>
-      <td><%= @stock.presentStock %></td>
-    </tr>
-	<% end %>
+<%= render 'stocks/stockList', item: @item %>
 
 </table>
 

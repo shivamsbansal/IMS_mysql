@@ -10,6 +10,7 @@ class ConsumablesController < ApplicationController
     end
     @associates = @station.associates
     @item = @stock.item
+    @stocks = [@stock]
   end
 
   def issueConsumable
@@ -26,11 +27,14 @@ class ConsumablesController < ApplicationController
     end
     if params[:quantity].to_i > @stock.presentStock
       flash[:notice] = "issued quantity should be less than present quantity"
+      @item = @stock.item
+      @stocks = [@stock]
       redirect_to "/consumable_issue/#{@stock.id}"
       return
     end
 
     @stock.presentStock = @stock.presentStock - params[:quantity].to_i
+    @stock.issuedStock = @stock.issuedStock + params[:quantity].to_i
 
     if ([@stock,@issued].map(&:valid?)).all?
       @stock.save
@@ -39,6 +43,9 @@ class ConsumablesController < ApplicationController
     else
       flash[:error] = "Unsuccessfull issue check date"
     end
+    @stock = Stock.find(params[:stock_id])
+    @item = @stock.item
+    @stocks = [@stock]
     redirect_to "/consumable_issue/#{@stock.id}"
   end
 
@@ -53,6 +60,7 @@ class ConsumablesController < ApplicationController
       return
     end
     @stock.presentStock = @stock.presentStock + @consumable.quantity
+    @stock.issuedStock = @stock.issuedStock - @consumable.quantity
     @stock.save
     @consumable.destroy
     flash[:success] = "Consumable withdrawn."

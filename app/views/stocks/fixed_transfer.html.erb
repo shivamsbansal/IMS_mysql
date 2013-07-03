@@ -22,7 +22,7 @@
 
 			<% if @assets!=nil %>
 			  <% @assets.each do |list| %>
-			  	<% if list.issued != true %>
+			  	<% if list.state == 'present' %>
 			  	<%= label_tag "assets_#{list.id}", list.assetSrNo, class: "checkbox inline" %>
 			  	<%= check_box_tag "assets[]", list.id,false,  :id => "assets_#{list.id}" %>
 			  	<% end %>        
