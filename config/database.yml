@@ -26,9 +26,9 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: imsdb
+  database: 
   pool: 5
-  username: awsuser 
-  password: welcometoims
-  host: ats-ims.cudvrq2mv49n.us-west-2.rds.amazonaws.com
+  username: 
+  password: 
+  host: 
   port: 3306

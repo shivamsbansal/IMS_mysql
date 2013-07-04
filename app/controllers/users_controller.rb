@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   	@user = User.new(params[:user])
   	if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Inventory Management System!"
+      flash[:success] = "Welcome to the Jolie!"
   		redirect_to @user
   	else
   		render 'new'
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   end
 
   def assignUserform
-    @users = User.where('level_id is null').paginate(page: params[:page], per_page: 5)
+    @users = User.where('level_id is null').paginate(page: params[:page], per_page: 10)
     @level_type = "Region"
     @array = Region.all.map { |region| ["#{region.nameRegion}", region.id]}
   end
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
       flash[:success] = "User authorised"
       redirect_to users_url
     else
-      @users = User.where(:level_id => nil).paginate(page: params[:page], per_page: 5)
+      @users = User.where(:level_id => nil).paginate(page: params[:page], per_page: 10)
       @level_type = "Region"
       @array = Region.all.map { |region| ["#{region.nameRegion}", region.id]}
       render 'assignUserform'
