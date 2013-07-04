@@ -7,7 +7,7 @@ class Asset < ActiveRecord::Base
 
   validates :assetSrNo, presence: true, length: { maximum: 20 }
   validates :stock_id, presence: true
-  validates :state, presence: true
+  validates :state, presence: true, length: { maximum: 10 }
   validate :ensure_stock_exists
  
 
